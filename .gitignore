@@ -1,0 +1,6 @@
+#Java
+*.class
+
+#VisualParadigm
+*.vpp.bak_000f
+
