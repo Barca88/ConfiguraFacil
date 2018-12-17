@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.FabricanteController">
+   <children>
+      <AnchorPane fx:id="topBar" prefHeight="73.0" prefWidth="606.0" style="-fx-background-color: #376888;">
+         <children>
+            <Button fx:id="btnSair" layoutX="30.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleBtnSair" style="-fx-background-color: #195988; -fx-background-radius: 5em;" text="Sair" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Cantarell Bold" size="18.0" />
+               </font>
+            </Button>
+            <Label layoutX="405.0" layoutY="25.0" text="Fabricante" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font></Label>
+            <ImageView fitHeight="56.0" fitWidth="68.0" layoutX="320.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fitHeight="56.0" fitWidth="51.0" layoutX="525.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/factory.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutY="91.0" prefHeight="308.0" prefWidth="310.0" style="-fx-background-color: #376888;">
+         <children>
+            <ImageView fitHeight="216.0" fitWidth="310.0" layoutX="48.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/car.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="btnConfig" layoutX="78.0" layoutY="253.0" mnemonicParsing="false" onAction="#handleBtnConfiguracoes" prefHeight="41.0" prefWidth="154.0" style="-fx-background-color: #195988; -fx-background-radius: 5em;" text="Configuraçoes" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="309.0" layoutY="91.0" prefHeight="308.0" prefWidth="297.0" style="-fx-background-color: #376888;">
+         <children>
+            <ImageView fitHeight="216.0" fitWidth="297.0" layoutX="41.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/warehouse.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="btnStock" layoutX="63.0" layoutY="253.0" mnemonicParsing="false" onAction="#handleBtnStock" prefHeight="41.0" prefWidth="171.0" style="-fx-background-color: #195988; -fx-background-radius: 5em;" text="Stock" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
