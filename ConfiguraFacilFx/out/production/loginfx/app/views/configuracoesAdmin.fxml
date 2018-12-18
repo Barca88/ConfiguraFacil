@@ -4,11 +4,11 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.ConfiguracoesAdminController">
    <children>
@@ -24,7 +24,6 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <ImageView fitHeight="56.0" fitWidth="68.0" layoutX="320.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true" />
             <ImageView fitHeight="56.0" fitWidth="51.0" layoutX="525.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../images/car.png" />
@@ -32,14 +31,29 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <TableView layoutY="92.0" prefHeight="314.0" prefWidth="607.0" style="-fx-background-color: #376888;">
-         <columns>
-            <TableColumn prefWidth="112.0" text="Cliente" />
-            <TableColumn prefWidth="141.0" text="Modelo" />
-            <TableColumn prefWidth="132.0" text="Cor" />
-            <TableColumn prefWidth="123.0" text="Data" />
-            <TableColumn prefWidth="98.0" text="Custo" />
-         </columns>
-      </TableView>
+      <AnchorPane layoutY="93.0" prefHeight="323.0" prefWidth="607.0" style="-fx-background-color: #376888;">
+         <children>
+            <TableView fx:id="tblConfigAdmin" onKeyPressed="#handleViewConfigAction" prefHeight="228.0" prefWidth="607.0" style="-fx-background-color: #376888;">
+               <columns>
+                  <TableColumn fx:id="clnIdConfig" prefWidth="112.0" text="Id" />
+                  <TableColumn fx:id="clnEstadoConfig" prefWidth="98.0" text="Estado" />
+               </columns>
+            </TableView>
+            <Button fx:id="btnRemoverConfig" layoutX="449.0" layoutY="228.0" mnemonicParsing="false" onAction="#handleBtnRemoverConfigAction" prefHeight="35.0" prefWidth="144.0" style="-fx-background-color: #195988; -fx-background-radius: 5em;" text="Remover" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnAdicionarConfig" layoutX="449.0" layoutY="273.0" mnemonicParsing="false" onAction="#handleBtnAdicionarConfigAction" prefHeight="35.0" prefWidth="144.0" style="-fx-background-color: #195988; -fx-background-radius: 5em;" text="Adicionar" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <TextField fx:id="tfIdConfig" layoutX="34.0" layoutY="241.0" promptText="Id" />
+            <TextField fx:id="tfEstadoConfig" layoutX="34.0" layoutY="286.0" promptText="Estado" />
+            <TextField layoutX="243.0" layoutY="286.0" />
+            <TextField layoutX="243.0" layoutY="241.0" />
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

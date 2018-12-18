@@ -1,12 +1,9 @@
 package app.controllers;
 
 import Facade.ConfiguraFacil;
+import Facade.SceneManager;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -22,58 +19,25 @@ public class FabricanteController  {
     }
 
     public void handleBtnSair(ActionEvent actionEvent) throws IOException {
-        //new presentation
-        URL url = getClass().getResource("../views/login.fxml");
-        FXMLLoader loader = new FXMLLoader(url);
-        Parent configValScene = (Parent) loader.load();
-
-        //new scene
-        Scene scene = new Scene(configValScene , 300, 275);
-        scene.setFill(Color.TRANSPARENT);
-
-        //load window with new scene
-        Stage primaryWindow = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        primaryWindow.setScene(scene);
-        primaryWindow.show();
+        URL url =  getClass().getResource("../views/login.fxml");
+        Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        SceneManager sm = new SceneManager(url, window);
+        sm.newScene(-1, cf);
     }
 
     public void handleBtnConfiguracoes(ActionEvent actionEvent) throws IOException {
         //new presentation
         URL url = getClass().getResource("../views/configuracoesFabricantes.fxml");
-        FXMLLoader loader = new FXMLLoader(url);
-        Parent configValScene = (Parent) loader.load();
-
-        //init with model fabricante controller
-        ConfiguracoesFabricanteController cvc = loader.getController();
-        cvc.init(cf);
-
-        //new scene
-        Scene scene = new Scene(configValScene , 300, 275);
-        scene.setFill(Color.TRANSPARENT);
-
-        //load window with new scene
-        Stage primaryWindow = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        primaryWindow.setScene(scene);
-        primaryWindow.show();
+        Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        SceneManager sm = new SceneManager(url, window);
+        sm.newScene(5, cf);
     }
 
     public void handleBtnStock(ActionEvent actionEvent) throws IOException {
         //new presentation
         URL url = getClass().getResource("../views/stockFabrica.fxml");
-        FXMLLoader loader = new FXMLLoader(url);
-        Parent configValScene = (Parent) loader.load();
-
-        //init with model fabricante controller
-        StockFabricaController sfc = loader.getController();
-        sfc.init(cf);
-
-        //new scene
-        Scene scene = new Scene(configValScene , 300, 275);
-        scene.setFill(Color.TRANSPARENT);
-
-        //load window with new scene
-        Stage primaryWindow = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        primaryWindow.setScene(scene);
-        primaryWindow.show();
+        Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        SceneManager sm = new SceneManager(url, window);
+        sm.newScene(8, cf);
     }
 }
