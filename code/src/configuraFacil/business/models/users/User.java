@@ -1,4 +1,4 @@
-package configuraFacil.business.models;
+package configuraFacil.business.models.users;
 
 public class User {
     private int id;

@@ -1,9 +1,9 @@
 package configuraFacil.business;
 
-import configuraFacil.business.models.Administrador;
+import configuraFacil.business.models.users.Administrador;
 import configuraFacil.business.models.Configuracao;
-import configuraFacil.business.models.Fabricante;
-import configuraFacil.business.models.Vendedor;
+import configuraFacil.business.models.users.Fabricante;
+import configuraFacil.business.models.users.Vendedor;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class ConfiguraFacil {
 
