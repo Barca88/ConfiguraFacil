@@ -14,8 +14,10 @@ public class Cliente {
         this.telemovel = null;
     }
     public Cliente(Cliente c){
-        this.id = c.setId();
-        this.
+        this.id = c.getId();
+        this.nome = c.getNome();
+        this.email = c.getEmail();
+        this.telemovel = c.getTelemovel();
     }
     public Cliente(long id, String nome, String email, String telemovel) {
         this.id = id;
