@@ -4,7 +4,6 @@ import configuraFacil.business.models.items.Item;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.locks.Lock;
 
 public class Pacote {
 
