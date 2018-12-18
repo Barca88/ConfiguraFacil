@@ -23,6 +23,8 @@ public class Pacote {
         return id;
     }
 
+    public void setId(int id) { this.id = id; }
+
     public float getDesconto() {
         return desconto;
     }
