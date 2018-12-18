@@ -12,6 +12,18 @@ public class Pacote {
     private String nome;
     private Map<Long, Item> items;
 
+    public Pacote(){
+        this.id = -1;
+        this.desconto = 0;
+        this.nome = null;
+        this.items = new HashMap<>();
+    }
+    public Pacote(Pacote p){
+        this.id = p.getId();
+        this.desconto = p.getDesconto();
+        this.nome = p.getNome();
+        this.items = p.getItems();
+    }
     public Pacote(int id, float desconto, String nome) {
         this.id = id;
         this.desconto = desconto;
@@ -55,12 +67,7 @@ public class Pacote {
         this.items = r;
     }
 
-    @Override
-    public String toString() {
-        return "Pacote{" +
-                "id=" + id +
-                ", desconto=" + desconto +
-                ", nome='" + nome + '\'' +
-                '}';
+    public Pacote clone(){
+        return new Pacote(this);
     }
 }
