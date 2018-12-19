@@ -21,7 +21,7 @@ public class UtilizadorDao implements Map<String, Utilizador> {
 
 
 
-    public boolean containsKey(Object key){
+    public boolean containsKey(Object key) throws NullPointerException{
         boolean ret = false;
 
         try{

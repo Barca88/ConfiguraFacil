@@ -13,7 +13,7 @@ public class Connect {
     private static final String URL = "localhost";
     private static final String DB = "ConfiguraFacil";
     private static final String USERNAME = "root"; //TODO: alterar
-    private static final String PASSWORD = "root"; //TODO: alterar
+    private static final String PASSWORD = ""; //TODO: alterar
 
     /**
      * Estabelece ligação à base de dados
