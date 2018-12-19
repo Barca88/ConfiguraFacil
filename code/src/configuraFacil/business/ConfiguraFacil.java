@@ -43,6 +43,23 @@ public class ConfiguraFacil {
                 us = utilizadorDao.get(email);
 
                 if (us.getPassword().equals(password)) {
+                    String tipo = us.getClass().getSimpleName();
+                    switch (i){
+                        case 0:
+                            if (!tipo.equals("Administrador"))
+                                return 2;
+                            break;
+
+                        case 1:
+                            if (!tipo.equals("Fabricante"))
+                                return 2;
+                            break;
+
+                        case 2:
+                            if (!tipo.equals("Vendedor"))
+                                return 2;
+                            break;
+                    }
                     u = us.clone();
                     return 1;
                 } else return 0;

@@ -134,7 +134,7 @@ public class LoginController implements Initializable {
             Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             SceneManager sm = new SceneManager(url, window);
             sm.newScene(3, cf);
-        }else if(cf.login(username, password, 1) == 2){
+        }else if(cf.login(username, password, 2) == 2){
             lbAviso.setText("Vendedor inexistente.");
         }else
             lbAviso.setText("Password inválida");
