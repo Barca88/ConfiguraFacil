@@ -1,27 +1,27 @@
 package configuraFacil.business.models.users;
 
-public class User {
+public class Utilizador {
     private int id;
     private String nome;
     private String password;
     private String email;
     private String tel;
     
-    public User(){
+    public Utilizador(){
         this.id = -1;
         this.nome = null;
         this.password = null;
         this.email = null;
         this.tel = null;
     }
-    public User(User u){
+    public Utilizador(Utilizador u){
         this.id = u.getId();
         this.nome = u.getNome();
         this.password = u.getPassword();
         this.email = u.getEmail();
         this.tel = u.getTel();
     }
-    public User(int id, String nome, String password, String email, String tel) {
+    public Utilizador(int id, String nome, String password, String email, String tel) {
         this.id = id;
         this.nome = nome;
         this.password = password;
@@ -69,7 +69,7 @@ public class User {
         this.tel = tel;
     }
 
-    public User Clone(){
-        return new User(this);
+    public Utilizador clone(){
+        return new Utilizador(this);
     }
 }

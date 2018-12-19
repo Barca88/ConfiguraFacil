@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="configuraFacil.presentation.controllers.ConsultarConfiguracaoController">
+   <children>
+      <AnchorPane fx:id="topBar" layoutX="-3.0" prefHeight="73.0" prefWidth="607.0" style="-fx-background-color: #376888;">
+         <children>
+            <Button fx:id="btnSair" layoutX="30.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleBtnBack" style="-fx-background-color: #195988; -fx-background-radius: 5em;" text="&lt;" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Cantarell Bold" size="18.0" />
+               </font>
+            </Button>
+            <Label layoutX="315.0" layoutY="24.0" prefHeight="25.0" prefWidth="191.0" text="Configuraçao ???" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="56.0" fitWidth="51.0" layoutX="525.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../images/carconfigurado.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="-3.0" layoutY="90.0" prefHeight="323.0" prefWidth="607.0" style="-fx-background-color: #376888;">
+         <children>
+            <Circle fill="DODGERBLUE" layoutX="144.0" layoutY="99.0" radius="17.0" stroke="BLACK" strokeType="INSIDE" />
+            <Label layoutX="28.0" layoutY="39.0" prefHeight="25.0" prefWidth="89.0" text="Modelo:" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="28.0" layoutY="86.0" prefHeight="25.0" prefWidth="89.0" text="Cor:" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="127.0" layoutY="39.0" prefHeight="25.0" prefWidth="191.0" text="?????setText???" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <ScrollPane layoutX="27.0" layoutY="141.0" prefHeight="168.0" prefWidth="552.0">
+               <content>
+                  <SplitPane dividerPositions="0.48623853211009177, 0.5009174311926605, 0.5155963302752293" prefHeight="160.0" prefWidth="547.0">
+                     <items>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                           <children>
+                              <Label text="Item1" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="125.0" prefWidth="131.0">
+                           <children>
+                              <Label text="Item2" />
+                           </children>
+                        </AnchorPane>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                           <children>
+                              <Label text="Item3" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="158.0" prefWidth="135.0">
+                           <children>
+                              <Label text="Item4" />
+                           </children>
+                        </AnchorPane>
+                     </items>
+                  </SplitPane>
+               </content>
+            </ScrollPane>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

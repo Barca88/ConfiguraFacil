@@ -2,7 +2,7 @@ package configuraFacil.dataBase;
 
 import configuraFacil.business.models.users.Administrador;
 import configuraFacil.business.models.users.Fabricante;
-import configuraFacil.business.models.users.User;
+import configuraFacil.business.models.users.Utilizador;
 import configuraFacil.business.models.users.Vendedor;
 
 import java.sql.Connection;
@@ -13,9 +13,12 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-public class UserDao implements Map<String, User> {
+public class UtilizadorDao implements Map<String, Utilizador> {
 
     private Connection conn;
+
+
+
 
 
     public boolean containsKey(Object key){
@@ -45,8 +48,8 @@ public class UserDao implements Map<String, User> {
     }
 
 
-    public User get(Object key){
-        User u = null;
+    public Utilizador get(Object key){
+        Utilizador u = null;
         try{
             conn = Connect.connect();
             String sql = "SELECT * FROM 'utilizador' WHERE email=?";
@@ -57,15 +60,15 @@ public class UserDao implements Map<String, User> {
                 switch (rs.getString("tipo")){
 
                     case "a":
-                        u = (Administrador) new User(rs.getInt("id"),rs.getString("nome"),rs.getString("password"),rs.getString("email"),rs.getString("telemovel"));
+                        u = (Administrador) new Utilizador(rs.getInt("id"),rs.getString("nome"),rs.getString("password"),rs.getString("email"),rs.getString("telemovel"));
                         break;
 
                     case "f":
-                        u = (Fabricante) new User(rs.getInt("id"),rs.getString("nome"),rs.getString("password"),rs.getString("email"),rs.getString("telemovel"));
+                        u = (Fabricante) new Utilizador(rs.getInt("id"),rs.getString("nome"),rs.getString("password"),rs.getString("email"),rs.getString("telemovel"));
                         break;
 
                     case "v":
-                        u = (Vendedor) new User(rs.getInt("id"),rs.getString("nome"),rs.getString("password"),rs.getString("email"),rs.getString("telemovel"));
+                        u = (Vendedor) new Utilizador(rs.getInt("id"),rs.getString("nome"),rs.getString("password"),rs.getString("email"),rs.getString("telemovel"));
                         break;
                 }
             }
@@ -78,18 +81,18 @@ public class UserDao implements Map<String, User> {
     }
 
     @Override
-    public User put(String s, User user) {
-        User u = null;
+    public Utilizador put(String s, Utilizador Utilizador) {
+        Utilizador u = null;
         try{
             conn = Connect.connect();
             PreparedStatement stm = conn.prepareStatement("INSERT INTO utilizador\n" + "VALUES (?,?,?,?,?)\n" +
                     "ON DUPLICATE KEY UPDATE nome=VALUES(nome), password=VALUES(password), email=VALUES(email), telemovel=VALUES(telemovel)", Statement.RETURN_GENERATED_KEYS);
 
-            stm.setString(1,user.getNome());
-            stm.setString(2,user.getPassword());
-            stm.setString(4,user.getEmail());
-            stm.setString(5,user.getTel());
-            switch(user.getClass().getName()){
+            stm.setString(1,Utilizador.getNome());
+            stm.setString(2,Utilizador.getPassword());
+            stm.setString(4,Utilizador.getEmail());
+            stm.setString(5,Utilizador.getTel());
+            switch(Utilizador.getClass().getName()){
                 case "Administrador":
                     stm.setString(3,"a");
                     break;
@@ -107,9 +110,9 @@ public class UserDao implements Map<String, User> {
             ResultSet rs = stm.getGeneratedKeys();
             if(rs.next()){
                 int newid = rs.getInt(1);
-                user.setId(newid);
+                Utilizador.setId(newid);
             }
-            u = user;
+            u = Utilizador;
         }catch (Exception e) {
             e.printStackTrace();
 
@@ -121,12 +124,12 @@ public class UserDao implements Map<String, User> {
     }
 
     @Override
-    public User remove(Object o) {
+    public Utilizador remove(Object o) {
         return null;
     }
 
     @Override
-    public void putAll(Map<? extends String, ? extends User> map) {
+    public void putAll(Map<? extends String, ? extends Utilizador> map) {
 
     }
 
@@ -141,12 +144,12 @@ public class UserDao implements Map<String, User> {
     }
 
     @Override
-    public Collection<User> values() {
+    public Collection<Utilizador> values() {
         return null;
     }
 
     @Override
-    public Set<Entry<String, User>> entrySet() {
+    public Set<Entry<String, Utilizador>> entrySet() {
         return null;
     }
 
