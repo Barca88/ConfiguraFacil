@@ -30,15 +30,15 @@ public class ConfiguraFacil {
 
         logged = -1;
 
-        Administrador ad1 = new Administrador(1,"shaman","leal");
+        Administrador ad1 = new Administrador(1,"shaman","leal","a","123");
         admins.put(ad1.getNome(),ad1);
 
-        Fabricante fa1 = new Fabricante(1,"donatello","curopos");
+        Fabricante fa1 = new Fabricante(1,"donatello","curopos","a","123");
         fabricantes.put(fa1.getNome(),fa1);
-        Fabricante fa2 = new Fabricante(1,"ana","cerineu72");
+        Fabricante fa2 = new Fabricante(1,"ana","cerineu72","a","123");
         fabricantes.put(fa2.getNome(),fa2);
 
-        Vendedor vd1 = new Vendedor(1,"barca","matias");
+        Vendedor vd1 = new Vendedor(1,"barca","matias","a","123");
         vendedores.put(vd1.getNome(),vd1);
 
         configuracoes.put("PRODUZIDA",new Configuracao(0,"PRODUZIDA"));
