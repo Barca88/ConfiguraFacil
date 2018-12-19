@@ -5,151 +5,175 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema ConfiguraFacil
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema ConfiguraFacil
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
-USE `mydb` ;
+CREATE SCHEMA IF NOT EXISTS `ConfiguraFacil` ;
+USE `ConfiguraFacil` ;
 
 -- -----------------------------------------------------
--- Table `mydb`.`Utilizadores`
+-- Table `ConfiguraFacil`.`Utilizador`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Utilizadores` (
-  `idUtilizadores` INT NOT NULL AUTO_INCREMENT,
-  `tipo` VARCHAR(1) NOT NULL,
+CREATE TABLE IF NOT EXISTS `ConfiguraFacil`.`Utilizador` (
+  `idUtilizador` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(45) NOT NULL,
+  `tipo` VARCHAR(1) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
   `telemovel` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`idUtilizadores`))
+  PRIMARY KEY (`idUtilizador`))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Configuracao`
+-- Table `ConfiguraFacil`.`Cliente`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Configuracao` (
+CREATE TABLE IF NOT EXISTS `ConfiguraFacil`.`Cliente` (
+  `idCliente` INT NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(45) NULL,
+  `email` VARCHAR(45) NULL,
+  `telemovel` VARCHAR(45) NULL,
+  PRIMARY KEY (`idCliente`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `ConfiguraFacil`.`Configuracao`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ConfiguraFacil`.`Configuracao` (
   `idConfiguracao` INT NOT NULL AUTO_INCREMENT,
+  `Modelo` VARCHAR(45) NOT NULL,
+  `Cor` VARCHAR(16) NOT NULL,
   `Validade` VARCHAR(1) NOT NULL,
-  `orcamento` FLOAT NULL,
-  `Utilizadores_idUtilizadores` INT NOT NULL,
-  `NomeCliente` VARCHAR(45) NOT NULL,
-  `emailCliente` VARCHAR(45) NOT NULL,
-  `telemovelCliente` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`idConfiguracao`),
-  INDEX `fk_Configuracao_Utilizadores_idx` (`Utilizadores_idUtilizadores` ASC),
-  CONSTRAINT `fk_Configuracao_Utilizadores`
-    FOREIGN KEY (`Utilizadores_idUtilizadores`)
-    REFERENCES `mydb`.`Utilizadores` (`idUtilizadores`)
+  `Orcamento` FLOAT NULL,
+  `Utilizador_idUtilizador` INT NOT NULL,
+  `Cliente_idCliente` INT NOT NULL,
+  PRIMARY KEY (`idConfiguracao`, `Cliente_idCliente`),
+  INDEX `fk_Configuracao_Utilizador_idx` (`Utilizador_idUtilizador` ASC),
+  INDEX `fk_Configuracao_Cliente1_idx` (`Cliente_idCliente` ASC),
+  CONSTRAINT `fk_Configuracao_Utilizador`
+    FOREIGN KEY (`Utilizador_idUtilizador`)
+    REFERENCES `ConfiguraFacil`.`Utilizador` (`idUtilizador`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Configuracao_Cliente1`
+    FOREIGN KEY (`Cliente_idCliente`)
+    REFERENCES `ConfiguraFacil`.`Cliente` (`idCliente`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Items`
+-- Table `ConfiguraFacil`.`Item`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Items` (
-  `idItems` INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `ConfiguraFacil`.`Item` (
+  `idItem` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(45) NOT NULL,
   `preco` FLOAT NOT NULL,
   `stock` INT NULL,
   `tipo` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`idItems`))
+  PRIMARY KEY (`idItem`))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Configuracao/Items`
+-- Table `ConfiguraFacil`.`Configuracao/Item`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Configuracao/Items` (
+CREATE TABLE IF NOT EXISTS `ConfiguraFacil`.`Configuracao_Item` (
   `Configuracao_idConfiguracao` INT NOT NULL,
-  `Items_idItems` INT NOT NULL,
-  PRIMARY KEY (`Configuracao_idConfiguracao`, `Items_idItems`),
-  INDEX `fk_Configuracao_has_Items_Items1_idx` (`Items_idItems` ASC),
-  INDEX `fk_Configuracao_has_Items_Configuracao1_idx` (`Configuracao_idConfiguracao` ASC),
-  CONSTRAINT `fk_Configuracao_has_Items_Configuracao1`
+  `Item_idItem` INT NOT NULL,
+  PRIMARY KEY (`Configuracao_idConfiguracao`, `Item_idItem`),
+  INDEX `fk_Configuracao_has_Item_Item1_idx` (`Item_idItem` ASC),
+  INDEX `fk_Configuracao_has_Item_Configuracao1_idx` (`Configuracao_idConfiguracao` ASC),
+  CONSTRAINT `fk_Configuracao_has_Item_Configuracao1`
     FOREIGN KEY (`Configuracao_idConfiguracao`)
-    REFERENCES `mydb`.`Configuracao` (`idConfiguracao`)
+    REFERENCES `ConfiguraFacil`.`Configuracao` (`idConfiguracao`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Configuracao_has_Items_Items1`
-    FOREIGN KEY (`Items_idItems`)
-    REFERENCES `mydb`.`Items` (`idItems`)
+  CONSTRAINT `fk_Configuracao_has_Item_Item1`
+    FOREIGN KEY (`Item_idItem`)
+    REFERENCES `ConfiguraFacil`.`Item` (`idItem`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Incompatibilidades`
+-- Table `ConfiguraFacil`.`Incompatibilidade`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Incompatibilidades` (
-  `Items_idItems1` INT NOT NULL,
-  `Items_idItems2` INT NOT NULL,
-  PRIMARY KEY (`Items_idItems1`, `Items_idItems2`),
-  CONSTRAINT `fk_Items_has_table_Items1`
-    FOREIGN KEY (`Items_idItems1` )
-    REFERENCES `mydb`.`Items` (`idItems`)
+CREATE TABLE IF NOT EXISTS `ConfiguraFacil`.`Incompatibilidade` (
+  `Item_idItem1` INT NOT NULL,
+  `Item_idItem2` INT NOT NULL,
+  PRIMARY KEY (`Item_idItem1`, `Item_idItem2`),
+  INDEX `fk_incomp1` (`Item_idItem1` ASC),
+  INDEX `fk_incomp2` (`Item_idItem2` ASC),
+  CONSTRAINT `fk_Item_has_table_Item1`
+    FOREIGN KEY (`Item_idItem1`)
+    REFERENCES `ConfiguraFacil`.`Item` (`idItem`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Items_has_table_Items2`
-    FOREIGN KEY (`Items_idItems2`)
-    REFERENCES `mydb`.`Items` (`idItems`)
+  CONSTRAINT `fk_Item_has_table_Item2`
+    FOREIGN KEY (`Item_idItem2`)
+    REFERENCES `ConfiguraFacil`.`Item` (`idItem`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Dependencias`
+-- Table `ConfiguraFacil`.`Dependencia`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Dependencias` (
-  `Items_idItems1` INT NOT NULL,
-  `Items_idItems2` INT NOT NULL,
-  PRIMARY KEY (`Items_idItems1`, `Items_idItems2`),
-  CONSTRAINT `fk_Items_has_table_Items10`
-    FOREIGN KEY (`Items_idItems1`)
-    REFERENCES `mydb`.`Items` (`idItems`)
+CREATE TABLE IF NOT EXISTS `ConfiguraFacil`.`Dependencia` (
+  `Item_idItem1` INT NOT NULL,
+  `Item_idItem2` INT NOT NULL,
+  PRIMARY KEY (`Item_idItem1`, `Item_idItem2`),
+  INDEX `fk_depend1` (`Item_idItem1` ASC),
+  INDEX `fk_depend2` (`Item_idItem2` ASC),
+  CONSTRAINT `fk_Item_has_table_Item10`
+    FOREIGN KEY (`Item_idItem1`)
+    REFERENCES `ConfiguraFacil`.`Item` (`idItem`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Items_has_table_Items20`
-    FOREIGN KEY (`Items_idItems2`)
-    REFERENCES `mydb`.`Items` (`idItems`)
+  CONSTRAINT `fk_Item_has_table_Item20`
+    FOREIGN KEY (`Item_idItem2`)
+    REFERENCES `ConfiguraFacil`.`Item` (`idItem`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Pacote`
+-- Table `ConfiguraFacil`.`Pacote`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Pacote` (
+CREATE TABLE IF NOT EXISTS `ConfiguraFacil`.`Pacote` (
   `idPacote` INT NOT NULL AUTO_INCREMENT,
   `desconto` FLOAT NOT NULL,
+  `nome` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idPacote`))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Pacote_has_Items`
+-- Table `ConfiguraFacil`.`Pacote/Itens`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Pacote_has_Items` (
+CREATE TABLE IF NOT EXISTS `ConfiguraFacil`.`Pacote_Item` (
   `Pacote_idPacote` INT NOT NULL,
-  `Items_idItems` INT NOT NULL,
-  PRIMARY KEY (`Pacote_idPacote`, `Items_idItems`),
-  INDEX `fk_Pacote_has_Items_Items1_idx` (`Items_idItems` ASC),
-  INDEX `fk_Pacote_has_Items_Pacote1_idx` (`Pacote_idPacote` ASC),
-  CONSTRAINT `fk_Pacote_has_Items_Pacote1`
+  `Item_idItem` INT NOT NULL,
+  PRIMARY KEY (`Pacote_idPacote`, `Item_idItem`),
+  INDEX `fk_Pacote_has_Item_Item1_idx` (`Item_idItem` ASC),
+  INDEX `fk_Pacote_has_Item_Pacote1_idx` (`Pacote_idPacote` ASC),
+  CONSTRAINT `fk_Pacote_has_Item_Pacote1`
     FOREIGN KEY (`Pacote_idPacote`)
-    REFERENCES `mydb`.`Pacote` (`idPacote`)
+    REFERENCES `ConfiguraFacil`.`Pacote` (`idPacote`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Pacote_has_Items_Items1`
-    FOREIGN KEY (`Items_idItems`)
-    REFERENCES `mydb`.`Items` (`idItems`)
+  CONSTRAINT `fk_Pacote_has_Item_Item1`
+    FOREIGN KEY (`Item_idItem`)
+    REFERENCES `ConfiguraFacil`.`Item` (`idItem`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
