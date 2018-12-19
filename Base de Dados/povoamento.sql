@@ -12,12 +12,12 @@ insert into Cliente (nome, email, telemovel) values ('Maxie Sawle', 'msawle8@wor
 
 -- Utilizador --
 
-insert into Utilizador (nome, password, tipo, email,  telemovel) values ('Donn Chaperling',    'barca', 'v', 'dchaperling0@ning.com', '327-200-5486');
+insert into Utilizador (nome, password, tipo, email,  telemovel) values ('Donn Chaperling',    'barca', 'v', '88', '327-200-5486');
 insert into Utilizador (nome, password, tipo, email,  telemovel) values ('Kelwin Kas',         'barca', 'v', 'kkas1@wordpress.org', '516-740-2319');
 insert into Utilizador (nome, password, tipo, email,  telemovel) values ('Rosalinde Roistone', 'barca', 'f', 'rroistone2@senate.gov', '331-726-7035');
 insert into Utilizador (nome, password, tipo, email,  telemovel) values ('Calida Ferrillio',   'barca', 'f', 'cferrillio3@edublogs.org', '581-996-1365');
 insert into Utilizador (nome, password, tipo, email,  telemovel) values ('Aile Glenister',     'barca', 'f', 'aglenister4@theglobeandmail.com', '919-728-3706');
-insert into Utilizador (nome, password, tipo, email,  telemovel) values ('Marcello Schust',    'barca', 'f', 'mschust5@gravatar.com', '142-638-6615');
+insert into Utilizador (nome, password, tipo, email,  telemovel) values ('Marcello Schust',    'barca', 'f', '68', '142-638-6615');
 insert into Utilizador (nome, password, tipo, email,  telemovel) values ('Barca',              'barca', 'a', 'shaman', '393-431-6397');
 insert into Utilizador (nome, password, tipo, email,  telemovel) values ('Rosamund Amies',     'barca', 'f', 'ramies7@canalblog.com', '302-309-9053');
 insert into Utilizador (nome, password, tipo, email,  telemovel) values ('Eldridge Neylan',    'barca', 'f', 'eneylan8@hibu.com', '782-967-6449');

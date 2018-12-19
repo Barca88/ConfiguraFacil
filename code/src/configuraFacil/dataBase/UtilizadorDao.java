@@ -9,14 +9,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class UtilizadorDao implements Map<String, Utilizador> {
 
     private Connection conn;
-
 
 
 
@@ -26,7 +23,7 @@ public class UtilizadorDao implements Map<String, Utilizador> {
 
         try{
             conn = Connect.connect();
-            String sql = "SELECT 'email' FROM 'utilizador' WHERE email=?";
+            String sql = "SELECT 'email' FROM Utilizador WHERE email=?";
             PreparedStatement stm = conn.prepareStatement(sql);
             stm.setString(1,(String)key);
             ResultSet rs = stm.executeQuery();
@@ -52,7 +49,7 @@ public class UtilizadorDao implements Map<String, Utilizador> {
         Utilizador u = null;
         try{
             conn = Connect.connect();
-            String sql = "SELECT * FROM 'utilizador' WHERE email=?";
+            String sql = "SELECT * FROM Utilizador WHERE email=?";
             PreparedStatement stm = conn.prepareStatement(sql);
             stm.setString(1,(String)key);
             ResultSet rs = stm.executeQuery();
@@ -60,15 +57,15 @@ public class UtilizadorDao implements Map<String, Utilizador> {
                 switch (rs.getString("tipo")){
 
                     case "a":
-                        u = (Administrador) new Utilizador(rs.getInt("id"),rs.getString("nome"),rs.getString("password"),rs.getString("email"),rs.getString("telemovel"));
+                        u = new Administrador(rs.getInt("idUtilizador"),rs.getString("nome"),rs.getString("password"),rs.getString("email"),rs.getString("telemovel"));
                         break;
 
                     case "f":
-                        u = (Fabricante) new Utilizador(rs.getInt("id"),rs.getString("nome"),rs.getString("password"),rs.getString("email"),rs.getString("telemovel"));
+                        u = new Fabricante(rs.getInt("idUtilizador"),rs.getString("nome"),rs.getString("password"),rs.getString("email"),rs.getString("telemovel"));
                         break;
 
                     case "v":
-                        u = (Vendedor) new Utilizador(rs.getInt("id"),rs.getString("nome"),rs.getString("password"),rs.getString("email"),rs.getString("telemovel"));
+                        u = new Vendedor(rs.getInt("idUtilizador"),rs.getString("nome"),rs.getString("password"),rs.getString("email"),rs.getString("telemovel"));
                         break;
                 }
             }
@@ -85,12 +82,12 @@ public class UtilizadorDao implements Map<String, Utilizador> {
         Utilizador u = null;
         try{
             conn = Connect.connect();
-            PreparedStatement stm = conn.prepareStatement("INSERT INTO utilizador\n" + "VALUES (?,?,?,?,?)\n" +
+            PreparedStatement stm = conn.prepareStatement("INSERT INTO Utilizador\n" + "VALUES (?,?,?,?,?)\n" +
                     "ON DUPLICATE KEY UPDATE nome=VALUES(nome), password=VALUES(password), email=VALUES(email), telemovel=VALUES(telemovel)", Statement.RETURN_GENERATED_KEYS);
 
             stm.setString(1,Utilizador.getNome());
             stm.setString(2,Utilizador.getPassword());
-            stm.setString(4,Utilizador.getEmail());
+            stm.setString(4,s);
             stm.setString(5,Utilizador.getTel());
             switch(Utilizador.getClass().getName()){
                 case "Administrador":
@@ -125,26 +122,79 @@ public class UtilizadorDao implements Map<String, Utilizador> {
 
     @Override
     public Utilizador remove(Object o) {
-        return null;
+        Utilizador u = this.get(o);
+        try{
+            conn = Connect.connect();
+            String sql = "DELETE FROM Utilizador WHERE email=?";
+            PreparedStatement stm = conn.prepareStatement(sql);
+            stm.setString(1,(String)o);
+            stm.executeUpdate();
+        }catch (Exception e){
+            throw new NullPointerException(e.getMessage());
+        }finally {
+            Connect.close(conn);
+        }
+        return u;
     }
 
     @Override
     public void putAll(Map<? extends String, ? extends Utilizador> map) {
-
+        for(Utilizador a : map.values()){
+            put(a.getEmail(),a);
+        }
     }
 
     @Override
     public void clear() {
-
+        try{
+            conn = Connect.connect();
+            String sql = "DELETE FROM Utilizador";
+            Statement stm = conn.createStatement();
+            stm.executeUpdate(sql);
+        }catch (Exception e){
+            throw new NullPointerException(e.getMessage());
+        }finally {
+            Connect.close(conn);
+        }
     }
 
     @Override
     public Set<String> keySet() {
-        return null;
+        throw new NullPointerException("Not implemented!");
     }
 
     @Override
     public Collection<Utilizador> values() {
+        Collection<Utilizador> col = new HashSet<Utilizador>();
+        try{
+            conn = Connect.connect();
+            String sql = "SELECT * FROM Utilizador";
+            Statement stm = conn.createStatement();
+            ResultSet rs = stm.executeQuery(sql);
+            while(rs.next()){
+                Utilizador u = null;
+                switch (rs.getString("tipo")){
+
+                    case "a":
+                        u = new Administrador(rs.getInt("idUtilizador"),rs.getString("nome"),rs.getString("password"),rs.getString("email"),rs.getString("telemovel"));
+                        break;
+                    case "f":
+                        u = new Fabricante(rs.getInt("idUtilizador"),rs.getString("nome"),rs.getString("password"),rs.getString("email"),rs.getString("telemovel"));
+                        break;
+
+                    case "v":
+                        u = new Vendedor(rs.getInt("idUtilizador"),rs.getString("nome"),rs.getString("password"),rs.getString("email"),rs.getString("telemovel"));
+                        break;
+                }
+                col.add(u);
+            }
+
+
+        }catch (Exception e){
+            throw new NullPointerException(e.getMessage());
+        }finally {
+            Connect.close(conn);
+        }
         return null;
     }
 
@@ -157,7 +207,7 @@ public class UtilizadorDao implements Map<String, Utilizador> {
         int size = 0;
         try{
             conn = Connect.connect();
-            String sql = "SELECT count(*) FROM utilizador";
+            String sql = "SELECT count(*) FROM Utilizador";
             Statement stm = conn.createStatement();
             ResultSet rs = stm.executeQuery(sql);
             if(rs.next()){
@@ -174,7 +224,22 @@ public class UtilizadorDao implements Map<String, Utilizador> {
 
     @Override
     public boolean isEmpty() {
-        return false;
+        boolean ret = true;
+        try{
+            conn = Connect.connect();
+            String sql = "SELECT * FROM Utilizador";
+            Statement stm = conn.createStatement();
+            ResultSet rs = stm.executeQuery(sql);
+            if(rs.next()){
+                ret = false;
+            }
+
+        }
+        catch (Exception e){ throw new NullPointerException(e.getMessage());}
+        finally {
+            Connect.close(conn);
+        }
+        return ret;
     }
 
 }

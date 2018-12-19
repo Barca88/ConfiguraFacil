@@ -22,7 +22,7 @@ public class Connect {
      * @throws ClassNotFoundException
      */
     public static Connection connect() throws SQLException, ClassNotFoundException {
-        Class.forName("com.mysql.jdbc.Driver");
+        Class.forName("com.mysql.cj.jdbc.Driver");
         //cliente deve fechar conexão!
         return DriverManager.getConnection("jdbc:mysql://"+URL+"/"+DB+"?user="+USERNAME+"&password="+PASSWORD);
     }
