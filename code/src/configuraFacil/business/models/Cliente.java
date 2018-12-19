@@ -7,6 +7,18 @@ public class Cliente {
     private String email;
     private String telemovel;
 
+    public Cliente(){
+        this.id = -1;
+        this.nome = null;
+        this.email = null;
+        this.telemovel = null;
+    }
+    public Cliente(Cliente c){
+        this.id = c.getId();
+        this.nome = c.getNome();
+        this.email = c.getEmail();
+        this.telemovel = c.getTelemovel();
+    }
     public Cliente(long id, String nome, String email, String telemovel) {
         this.id = id;
         this.nome = nome;
@@ -46,13 +58,7 @@ public class Cliente {
         this.telemovel = telemovel;
     }
 
-    @Override
-    public String toString() {
-        return "Cliente{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", email='" + email + '\'' +
-                ", telemovel='" + telemovel + '\'' +
-                '}';
+    public Cliente clone(){
+        return new Cliente(this);
     }
 }

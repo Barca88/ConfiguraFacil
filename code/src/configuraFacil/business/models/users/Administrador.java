@@ -1,12 +1,13 @@
 package configuraFacil.business.models.users;
 
-import configuraFacil.business.models.users.User;
-
 public class Administrador extends User {
 
-
-    public Administrador(int id, String nome, String password) {
-        super(id,nome,password);
+    public Administrador(int id, String nome, String password, String email, String tel){
+        super(id, nome, password, email, tel);
     }
 
+    @Override
+    public User Clone() {
+        return super.Clone();
+    }
 }
