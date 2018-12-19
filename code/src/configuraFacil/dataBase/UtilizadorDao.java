@@ -1,5 +1,6 @@
 package configuraFacil.dataBase;
 
+import configuraFacil.business.models.Configuracao;
 import configuraFacil.business.models.users.Administrador;
 import configuraFacil.business.models.users.Fabricante;
 import configuraFacil.business.models.users.Utilizador;
@@ -17,32 +18,6 @@ public class UtilizadorDao implements Map<String, Utilizador> {
 
 
 
-
-    public boolean containsKey(Object key) throws NullPointerException{
-        boolean ret = false;
-
-        try{
-            conn = Connect.connect();
-            String sql = "SELECT 'email' FROM Utilizador WHERE email=?";
-            PreparedStatement stm = conn.prepareStatement(sql);
-            stm.setString(1,(String)key);
-            ResultSet rs = stm.executeQuery();
-            ret = rs.next();
-
-        } catch (Exception e){
-            throw  new NullPointerException(e.getMessage());
-
-        } finally {
-             Connect.close(conn);
-        }
-
-        return ret;
-    }
-
-    @Override
-    public boolean containsValue(Object o) {
-        return false;
-    }
 
 
     public Utilizador get(Object key){
@@ -241,5 +216,34 @@ public class UtilizadorDao implements Map<String, Utilizador> {
         }
         return ret;
     }
+
+
+    public boolean containsKey(Object key) throws NullPointerException{
+        boolean ret = false;
+
+        try{
+            conn = Connect.connect();
+            String sql = "SELECT 'email' FROM Utilizador WHERE email=?";
+            PreparedStatement stm = conn.prepareStatement(sql);
+            stm.setString(1,(String)key);
+            ResultSet rs = stm.executeQuery();
+            ret = rs.next();
+
+        } catch (Exception e){
+            throw  new NullPointerException(e.getMessage());
+
+        } finally {
+            Connect.close(conn);
+        }
+
+        return ret;
+    }
+
+    @Override
+    public boolean containsValue(Object o) {
+        Utilizador u = (Utilizador) o;
+        return containsKey(u.getId());
+    }
+
 
 }

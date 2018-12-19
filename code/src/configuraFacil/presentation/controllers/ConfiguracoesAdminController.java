@@ -62,7 +62,7 @@ public class ConfiguracoesAdminController {
     }
 
     public void handleBtnAdicionarConfigAction(ActionEvent actionEvent) {
-        Configuracao c = new Configuracao(Integer.parseInt(tfIdConfig.getText()), tfEstadoConfig.getText());
+        Configuracao c = new Configuracao(Integer.parseInt(tfIdConfig.getText()),"Civic","Preto",tfEstadoConfig.getText(),0,null,null,null);
         cf.adicionarConfiguracao(c);
         cf.getConfiguracoes();
         initTable();

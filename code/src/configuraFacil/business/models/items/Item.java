@@ -2,16 +2,18 @@ package configuraFacil.business.models.items;
 
 public class Item {
 
-    private long id;
+    private int id;
     private String nome;
     private float preco;
     private int stock;
 
-    public Item(long id, String nome, float preco, int stock) {
+
+    public Item(int id, String nome, float preco, int stock) {
         this.id = id;
         this.nome = nome;
         this.preco = preco;
         this.stock = stock;
+
     }
 
     public Item(Item i){
@@ -21,7 +23,7 @@ public class Item {
         this.stock = i.getStock();
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 

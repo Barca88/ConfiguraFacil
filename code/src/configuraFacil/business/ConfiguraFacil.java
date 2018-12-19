@@ -6,6 +6,7 @@ import configuraFacil.business.models.users.Fabricante;
 import configuraFacil.business.models.users.Utilizador;
 import configuraFacil.business.models.users.Vendedor;
 
+import configuraFacil.dataBase.ConfiguracaoDao;
 import configuraFacil.dataBase.UtilizadorDao;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,6 +19,7 @@ import java.util.Map;
 public class ConfiguraFacil {
 
     private UtilizadorDao utilizadorDao;
+    private ConfiguracaoDao configDao;
     private Map<String, Configuracao> configuracoes;
     private ObservableList<Configuracao> oc;
     private int logged;
@@ -25,14 +27,9 @@ public class ConfiguraFacil {
 
     public ConfiguraFacil() {
         utilizadorDao = new UtilizadorDao();
-        configuracoes = new HashMap<>();
+        configDao = new ConfiguracaoDao();
 
         logged = -1;
-
-
-        configuracoes.put("PRODUZIDA",new Configuracao(0,"PRODUZIDA"));
-        configuracoes.put( "NAOVALIDA", new Configuracao(1,"NAOVALIDA"));
-        configuracoes.put("VALIDA", new Configuracao(2,"VALIDA"));
     }
 
     public int login(String email, String password,int i) throws NullPointerException {
@@ -81,7 +78,7 @@ public class ConfiguraFacil {
     }
 
     public ObservableList<Configuracao> getConfiguracoes(){
-        List<Configuracao> lc = new ArrayList<>(configuracoes.values());
+        List<Configuracao> lc = new ArrayList<>(configDao.values());
         oc = FXCollections.observableArrayList(lc);
         return oc;
     }
