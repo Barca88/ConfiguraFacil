@@ -20,9 +20,10 @@ public class UserDao implements Map<String, User> {
 
     public boolean containsKey(Object key){
         boolean ret = false;
+
         try{
             conn = Connect.connect();
-            String sql = "SELECT 'nome' FROM 'utilizador' WHERE nome=?";
+            String sql = "SELECT 'email' FROM 'utilizador' WHERE email=?";
             PreparedStatement stm = conn.prepareStatement(sql);
             stm.setString(1,(String)key);
             ResultSet rs = stm.executeQuery();
@@ -34,6 +35,7 @@ public class UserDao implements Map<String, User> {
         } finally {
              Connect.close(conn);
         }
+
         return ret;
     }
 
@@ -47,7 +49,7 @@ public class UserDao implements Map<String, User> {
         User u = null;
         try{
             conn = Connect.connect();
-            String sql = "SELECT * FROM 'utilizador' WHERE nome=?";
+            String sql = "SELECT * FROM 'utilizador' WHERE email=?";
             PreparedStatement stm = conn.prepareStatement(sql);
             stm.setString(1,(String)key);
             ResultSet rs = stm.executeQuery();
