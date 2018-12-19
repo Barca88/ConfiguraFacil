@@ -6,7 +6,21 @@ public class User {
     private String password;
     private String email;
     private String tel;
-
+    
+    public User(){
+        this.id = -1;
+        this.nome = null;
+        this.password = null;
+        this.email = null;
+        this.tel = null;
+    }
+    public User(User u){
+        this.id = u.getId();
+        this.nome = u.getNome();
+        this.password = u.getPassword();
+        this.email = u.getEmail();
+        this.tel = u.getTel();
+    }
     public User(int id, String nome, String password, String email, String tel) {
         this.id = id;
         this.nome = nome;
@@ -53,5 +67,9 @@ public class User {
 
     public void setTel(String tel) {
         this.tel = tel;
+    }
+
+    public User Clone(){
+        return new User(this);
     }
 }

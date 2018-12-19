@@ -76,23 +76,19 @@ public class PacoteDao implements Map<Integer, Pacote> {
     @Override
     public Collection<Pacote> values() { //Todo Shaman
         List<Pacote> ret = new ArrayList<>();
+        Pacote p = new Pacote();
         try {
             conn = Connect.connect();
             String sql = "SELECT * FROM 'Pacote' sortby 'id'" + "inner join 'Pacote_has_Item' on 'Pacote.idPacote'='Pacote_has_Item.'\n" + "inerjoin 'Item'\n" + "where Pacote_idPacote=?";
             PreparedStatement stm = conn.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             while(rs.next()){
-                p = new Pacote(rs.getInt("id"),
-                               rs.getFloat("desconto"),
-                               rs.getString("nome"))
-
+                p.setId(rs.getInt("id"));
+                p.setDesconto(rs.getFloat("desconto"));
+                p.setNome(rs.getString("nome"));
+                //Todo!
                 ret.add(p);
             }
-            sql = "SELECT * FROM 'Pacote_has_Item' sortby 'Pacote_idPacote'";
-            PreparedStatement stm = conn.prepareStatement(sql);
-            ResultSet rs = stm.executeQuery();
-            int i = 0;
-            while(rs.next())
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
