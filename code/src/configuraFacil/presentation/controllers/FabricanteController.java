@@ -28,10 +28,10 @@ public class FabricanteController  {
 
     public void handleBtnConfiguracoes(ActionEvent actionEvent) throws IOException {
         //new presentation
-        URL url = getClass().getResource("../views/configuracoesFabricantes.fxml");
+        URL url = getClass().getResource("../views/configuracoesAdmin.fxml");
         Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         SceneManager sm = new SceneManager(url, window);
-        sm.newScene(5, cf);
+        sm.newScene(4, cf);
     }
 
     public void handleBtnStock(ActionEvent actionEvent) throws IOException {

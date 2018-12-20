@@ -1,10 +1,8 @@
 package configuraFacil.business;
-
-import configuraFacil.business.models.users.Administrador;
 import configuraFacil.business.models.Configuracao;
+import configuraFacil.business.models.users.Administrador;
 import configuraFacil.business.models.users.Fabricante;
 import configuraFacil.business.models.users.Utilizador;
-import configuraFacil.business.models.users.Vendedor;
 
 import configuraFacil.dataBase.ConfiguracaoDao;
 import configuraFacil.dataBase.UtilizadorDao;
@@ -21,15 +19,13 @@ public class ConfiguraFacil {
     private ConfiguracaoDao configDao;
     private Map<String, Configuracao> configuracoes;
     private ObservableList<Configuracao> oc;
-    private int logged;
-    private Utilizador u;
+    private Utilizador logged;
     private Configuracao configConsulta;
 
     public ConfiguraFacil() {
         utilizadorDao = new UtilizadorDao();
         configDao = new ConfiguracaoDao();
-
-        logged = -1;
+        logged = null;
     }
 
     public int login(String email, String password,int i) throws NullPointerException {
@@ -57,7 +53,8 @@ public class ConfiguraFacil {
                                 return 2;
                             break;
                     }
-                    u = us.clone();
+                    logged = us;
+
                     return 1;
                 } else return 0;
             } else return 2;
@@ -91,11 +88,11 @@ public class ConfiguraFacil {
         this.configConsulta = configConsulta;
     }
 
-    public int getLogged() {
+    public Utilizador getLogged() {
         return logged;
     }
 
-    public void setLogged(int logged) {
+    public void setLogged(Utilizador logged) {
         this.logged = logged;
     }
 }

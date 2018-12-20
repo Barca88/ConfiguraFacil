@@ -1,5 +1,7 @@
 package configuraFacil.presentation.controllers;
 
+import configuraFacil.business.models.users.Administrador;
+import configuraFacil.business.models.users.Fabricante;
 import configuraFacil.presentation.controllers.SceneManager;
 import configuraFacil.business.ConfiguraFacil;
 import configuraFacil.business.models.Configuracao;
@@ -19,7 +21,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
-public class ConfiguracoesAdminController {
+public class ConfiguracoesController {
 
     private ConfiguraFacil cf;
 
@@ -56,10 +58,18 @@ public class ConfiguracoesAdminController {
     }
 
     public void handleBtnBack(ActionEvent actionEvent) throws IOException {
-        URL url = getClass().getResource("../views/administrador.fxml");
-        Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        SceneManager sm = new SceneManager(url, window);
-        sm.newScene(1, cf);
+        URL url;
+        if(cf.getLogged().getClass().getSimpleName().equals("Administrador")) {
+            url = getClass().getResource("../views/administrador.fxml");
+            Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            SceneManager sm = new SceneManager(url, window);
+            sm.newScene(1, cf);
+        } else if(cf.getLogged().getClass().getSimpleName().equals("Fabricante")) {
+            url = getClass().getResource("../views/fabricante.fxml");
+            Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            SceneManager sm = new SceneManager(url, window);
+            sm.newScene(2, cf);
+        }
     }
 
     public void handleBtnAdicionarConfigAction(ActionEvent actionEvent) {

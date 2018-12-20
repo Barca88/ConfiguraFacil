@@ -38,7 +38,7 @@ public class SceneManager{
                 vc.init(cf);
                 break;
             case 4 : 
-                ConfiguracoesAdminController cac = loader.getController();
+                ConfiguracoesController cac = loader.getController();
                 cac.init(cf);
                 break;
             case 5 : 
