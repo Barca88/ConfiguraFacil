@@ -13,12 +13,8 @@ import java.sql.Statement;
 import java.util.*;
 
 public class UtilizadorDao implements Map<String, Utilizador> {
-
+    
     private Connection conn;
-
-
-
-
 
     public Utilizador get(Object key){
         Utilizador u = null;
@@ -53,18 +49,18 @@ public class UtilizadorDao implements Map<String, Utilizador> {
     }
 
     @Override
-    public Utilizador put(String s, Utilizador Utilizador) {
+    public Utilizador put(String s, Utilizador usr) {
         Utilizador u = null;
         try{
             conn = Connect.connect();
             PreparedStatement stm = conn.prepareStatement("INSERT INTO Utilizador\n" + "VALUES (?,?,?,?,?)\n" +
                     "ON DUPLICATE KEY UPDATE nome=VALUES(nome), password=VALUES(password), email=VALUES(email), telemovel=VALUES(telemovel)", Statement.RETURN_GENERATED_KEYS);
 
-            stm.setString(1,Utilizador.getNome());
-            stm.setString(2,Utilizador.getPassword());
+            stm.setString(1,usr.getNome());
+            stm.setString(2,usr.getPassword());
             stm.setString(4,s);
-            stm.setString(5,Utilizador.getTel());
-            switch(Utilizador.getClass().getName()){
+            stm.setString(5,usr.getTel());
+            switch(usr.getClass().getName()){
                 case "Administrador":
                     stm.setString(3,"a");
                     break;
@@ -82,9 +78,9 @@ public class UtilizadorDao implements Map<String, Utilizador> {
             ResultSet rs = stm.getGeneratedKeys();
             if(rs.next()){
                 int newid = rs.getInt(1);
-                Utilizador.setId(newid);
+                usr.setId(newid);
             }
-            u = Utilizador;
+            u = usr;
         }catch (Exception e) {
             e.printStackTrace();
 
@@ -163,14 +159,12 @@ public class UtilizadorDao implements Map<String, Utilizador> {
                 }
                 col.add(u);
             }
-
-
         }catch (Exception e){
             throw new NullPointerException(e.getMessage());
         }finally {
             Connect.close(conn);
         }
-        return null;
+        return col;
     }
 
     @Override
@@ -178,6 +172,7 @@ public class UtilizadorDao implements Map<String, Utilizador> {
         return null;
     }
 
+    @Override
     public int size(){
         int size = 0;
         try{
@@ -217,7 +212,6 @@ public class UtilizadorDao implements Map<String, Utilizador> {
         return ret;
     }
 
-
     public boolean containsKey(Object key) throws NullPointerException{
         boolean ret = false;
 
@@ -244,6 +238,4 @@ public class UtilizadorDao implements Map<String, Utilizador> {
         Utilizador u = (Utilizador) o;
         return containsKey(u.getId());
     }
-
-
 }
