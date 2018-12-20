@@ -6,11 +6,13 @@ import configuraFacil.business.models.items.Item;
 import configuraFacil.business.models.users.Utilizador;
 import configuraFacil.business.models.users.Vendedor;
 
+import java.awt.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class ConfiguracaoDao implements Map<Integer,Configuracao> {
 
@@ -187,16 +189,19 @@ public class ConfiguracaoDao implements Map<Integer,Configuracao> {
                 PreparedStatement stm1 = conn.prepareStatement(sql);
                 stm1.setInt(1,cId);
                 ResultSet rs1 = stm1.executeQuery();
+
                 while(rs1.next()){
                     Item i = itensDao.get(rs1.getInt("idItem"));
                     itens.put(i.getId(),i);
                 }
+
                 sql = "SELECT * FROM Configuracao\n" +
                         "INNER JOIN Utilizador ON Utilizador_idUtilizador = idUtilizador\n" +
                         "WHERE idConfiguracao=?";
                 PreparedStatement stm2 = conn.prepareStatement(sql);
                 stm2.setInt(1,cId);
                 ResultSet rs2 = stm2.executeQuery();
+
                 if(rs2.next()){
                     u = users.get(rs2.getString("email"));
                 }
@@ -206,18 +211,24 @@ public class ConfiguracaoDao implements Map<Integer,Configuracao> {
                 PreparedStatement stm3 = conn.prepareStatement(sql);
                 stm3.setInt(1,cId);
                 ResultSet rs3 = stm3.executeQuery();
+
+                String cor = itens.values().stream().filter(i -> i.getTipo().equals("Cor")).map(i-> i.getNome()).collect(Collectors.joining());
+                String modelo = itens.values().stream().filter(i -> i.getTipo().equals("Modelo")).map(i-> i.getNome()).collect(Collectors.joining());
+
                 if(rs3.next()){
                     cli = new Cliente(rs3.getInt("idCliente"),rs3.getString("nome"),rs3.getString("email"),rs3.getString("telemovel"));
                 }
 
-                c = new Configuracao(cId,rs.getString("modelo"),rs.getString("cor"),rs.getString("validade"),rs.getFloat("orcamento"),cli,u,itens);
+                c = new Configuracao(cId,modelo,cor,rs.getString("validade"),rs.getFloat("orcamento"),cli,u,itens);
                 configs.add(c);
             }
+
         }catch (Exception e) {
             e.printStackTrace();
         }finally {
             Connect.close(conn);
         }
+
         return configs;
     }
 

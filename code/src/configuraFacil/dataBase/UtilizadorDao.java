@@ -17,9 +17,6 @@ public class UtilizadorDao implements Map<String, Utilizador> {
     private Connection conn;
 
 
-
-
-
     public Utilizador get(Object key){
         Utilizador u = null;
         try{

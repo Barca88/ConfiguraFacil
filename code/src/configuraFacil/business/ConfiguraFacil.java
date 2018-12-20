@@ -104,13 +104,13 @@ public class ConfiguraFacil {
 
     public List<String> getCores(){
         List<String> cores = new ArrayList<>();
-        cores = itemDao.values().stream().filter(i -> i.getTipo().equals("Cor")).map(i-> i.getTipo()).collect(Collectors.toList());
+        cores = itemDao.values().stream().filter(i -> i.getTipo().equals("Cor")).map(i-> i.getNome()).collect(Collectors.toList());
         return  cores;
     }
 
     public List<String> getModelos(){
         List<String> modelos = new ArrayList<>();
-        modelos = itemDao.values().stream().filter(i -> i.getTipo().equals("Modelo")).map(i-> i.getTipo()).collect(Collectors.toList());
+        modelos = itemDao.values().stream().filter(i -> i.getTipo().equals("Modelo")).map(i-> i.getNome()).collect(Collectors.toList());
         return  modelos;
     }
 }
