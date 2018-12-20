@@ -4,6 +4,7 @@ import configuraFacil.business.models.users.Administrador;
 import configuraFacil.business.models.users.Fabricante;
 import configuraFacil.business.models.users.Utilizador;
 
+import configuraFacil.dataBase.ClienteDao;
 import configuraFacil.dataBase.ConfiguracaoDao;
 import configuraFacil.dataBase.UtilizadorDao;
 import javafx.collections.FXCollections;
@@ -17,6 +18,7 @@ public class ConfiguraFacil {
 
     private UtilizadorDao utilizadorDao;
     private ConfiguracaoDao configDao;
+    private ClienteDao clienteDao;
     private Map<String, Configuracao> configuracoes;
     private ObservableList<Configuracao> oc;
     private Utilizador logged;

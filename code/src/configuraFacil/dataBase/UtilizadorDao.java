@@ -64,7 +64,7 @@ public class UtilizadorDao implements Map<String, Utilizador> {
             stm.setString(2,Utilizador.getPassword());
             stm.setString(4,s);
             stm.setString(5,Utilizador.getTel());
-            switch(Utilizador.getClass().getName()){
+            switch(Utilizador.getClass().getSimpleName()){
                 case "Administrador":
                     stm.setString(3,"a");
                     break;
