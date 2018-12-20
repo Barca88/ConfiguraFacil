@@ -69,6 +69,11 @@ public class ConfiguracoesController {
             Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             SceneManager sm = new SceneManager(url, window);
             sm.newScene(2, cf);
+        } else if(cf.getLogged().getClass().getSimpleName().equals("Vendedor")) {
+            url = getClass().getResource("../views/vendedor.fxml");
+            Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            SceneManager sm = new SceneManager(url, window);
+            sm.newScene(3, cf);
         }
     }
 

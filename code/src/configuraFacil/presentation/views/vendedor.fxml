@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -33,20 +34,38 @@
          <children>
             <ScrollPane layoutX="-1.0" layoutY="-1.0" prefHeight="306.0" prefWidth="602.0" style="-fx-background-color: #376888;">
                <content>
-                  <AnchorPane fx:id="apFabrLogin" prefHeight="304.0" prefWidth="212.0" style="-fx-background-color: #376888;">
-                     <children>
-                        <Button fx:id="btnCriarGonfig" layoutX="4.0" layoutY="222.0" mnemonicParsing="false" onAction="#handleBtnCriarConfigAction" prefHeight="53.0" prefWidth="199.0" style="-fx-background-color: #195988; -fx-background-radius: 5em;" text="Criar Configuracao" textFill="WHITE">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Button>
-                        <ImageView fitHeight="173.0" fitWidth="200.0" layoutX="20.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../images/robot.png" />
-                           </image>
-                        </ImageView>
-                     </children>
-                  </AnchorPane>
+                  <SplitPane dividerPositions="0.29797979797979796" prefHeight="302.0" prefWidth="599.0" style="-fx-background-color: #376888;">
+                    <items>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <ImageView fitHeight="165.0" fitWidth="176.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../images/car.png" />
+                                 </image>
+                              </ImageView>
+                              <Button fx:id="btnConfig" layoutX="8.0" layoutY="220.0" mnemonicParsing="false" onAction="#handleBtnConfig" prefHeight="53.0" prefWidth="173.0" style="-fx-background-color: #195988; -fx-background-radius: 5em;" text="Configuracoes" textFill="WHITE">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="apFabrLogin" prefHeight="304.0" prefWidth="212.0" style="-fx-background-color: #376888;">
+                           <children>
+                              <Button fx:id="btnCriarGonfig" layoutX="4.0" layoutY="222.0" mnemonicParsing="false" onAction="#handleBtnCriarConfigAction" prefHeight="53.0" prefWidth="199.0" style="-fx-background-color: #195988; -fx-background-radius: 5em;" text="Criar Configuracao" textFill="WHITE">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Button>
+                              <ImageView fitHeight="173.0" fitWidth="200.0" layoutX="20.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../images/robot.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </AnchorPane>
+                    </items>
+                  </SplitPane>
                </content>
             </ScrollPane>
          </children>

@@ -26,9 +26,17 @@ public class VendedorController {
     }
 
     public void handleBtnCriarConfigAction(ActionEvent actionEvent) throws IOException {
-        URL url = getClass().getResource("../views/modelo.fxml");
+        URL url = getClass().getResource("../views/configbase.fxml");
         Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         SceneManager sm = new SceneManager(url, window);
         sm.newScene(6, cf);
+    }
+
+    public void handleBtnConfig(ActionEvent actionEvent) throws IOException {
+        //new presentation
+        URL url = getClass().getResource("../views/configuracoes.fxml");
+        Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        SceneManager sm = new SceneManager(url, window);
+        sm.newScene(4, cf);
     }
 }

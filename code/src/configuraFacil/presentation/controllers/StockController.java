@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 
-public class StockAdminController {
+public class StockController {
     ConfiguraFacil cf;
 
     public void init(ConfiguraFacil cfo) {

@@ -28,7 +28,7 @@ public class FabricanteController  {
 
     public void handleBtnConfiguracoes(ActionEvent actionEvent) throws IOException {
         //new presentation
-        URL url = getClass().getResource("../views/configuracoesAdmin.fxml");
+        URL url = getClass().getResource("../views/configuracoes.fxml");
         Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         SceneManager sm = new SceneManager(url, window);
         sm.newScene(4, cf);
