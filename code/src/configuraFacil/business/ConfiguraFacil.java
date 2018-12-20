@@ -1,11 +1,13 @@
 package configuraFacil.business;
 import configuraFacil.business.models.Configuracao;
+import configuraFacil.business.models.items.Item;
 import configuraFacil.business.models.users.Administrador;
 import configuraFacil.business.models.users.Fabricante;
 import configuraFacil.business.models.users.Utilizador;
 
 import configuraFacil.dataBase.ClienteDao;
 import configuraFacil.dataBase.ConfiguracaoDao;
+import configuraFacil.dataBase.ItemDao;
 import configuraFacil.dataBase.UtilizadorDao;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,9 +20,11 @@ public class ConfiguraFacil {
 
     private UtilizadorDao utilizadorDao;
     private ConfiguracaoDao configDao;
+    private ItemDao itemDao;
     private ClienteDao clienteDao;
     private Map<String, Configuracao> configuracoes;
     private ObservableList<Configuracao> oc;
+    private ObservableList<Item> oi;
     private Utilizador logged;
     private Configuracao configConsulta;
 
@@ -80,6 +84,11 @@ public class ConfiguraFacil {
         List<Configuracao> lc = new ArrayList<>(configDao.values());
         oc = FXCollections.observableArrayList(lc);
         return oc;
+    }
+    public ObservableList<Item> getStockitems(){
+        List<Item> li = new ArrayList<>(itemDao.values());
+        oi = FXCollections.observableArrayList(li);
+        return oi;
     }
 
     public Configuracao getConfigConsulta() {

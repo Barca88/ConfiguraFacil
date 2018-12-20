@@ -51,7 +51,7 @@ public class StockFabricaController {
         clnNomeStock.setCellValueFactory(new PropertyValueFactory<>("nome"));
         clnTipoStock.setCellValueFactory(new PropertyValueFactory<>("tipo"));
         clnStockStock.setCellValueFactory(new PropertyValueFactory<>("stock"));
-        //tblStockFabricante.setItems(cf.getConfiguracoes());
+        tblStockFabricante.setItems(cf.getStockitems());
     }
     public void handlerBtnAdicionStock(ActionEvent actionEvent) throws NumberFormatException{
         try {
