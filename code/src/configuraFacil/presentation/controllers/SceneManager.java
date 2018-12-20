@@ -41,12 +41,16 @@ public class SceneManager{
                 ConfiguracoesController cac = loader.getController();
                 cac.init(cf);
                 break;
+            case 5 :
+                FormClienteController fcc = loader.getController();
+                fcc.init(cf);
+                break;
             case 6 :
-                ModeloController mc = loader.getController();
+                ConfigBaseController mc = loader.getController();
                 mc.init(cf);
                 break;
             case 7 : 
-                StockAdminController sac = loader.getController();
+                StockController sac = loader.getController();
                 sac.init(cf);
                 break;
             case 9 :
