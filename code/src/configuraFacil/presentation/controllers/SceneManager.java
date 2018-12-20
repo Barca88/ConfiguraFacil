@@ -57,10 +57,11 @@ public class SceneManager{
         }
 
         //new scene
-        scene = new Scene(root, 300, 275);
+        scene = new Scene(root, 600, 400);
         scene.setFill(Color.TRANSPARENT);
 
         //load window with new scene
+        window.setResizable(false);
         window.setScene(scene);
     }
 
