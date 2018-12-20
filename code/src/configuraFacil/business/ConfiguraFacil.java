@@ -1,11 +1,13 @@
 package configuraFacil.business;
 import configuraFacil.business.models.Configuracao;
+import configuraFacil.business.models.items.Item;
 import configuraFacil.business.models.users.Administrador;
 import configuraFacil.business.models.users.Fabricante;
 import configuraFacil.business.models.users.Utilizador;
 
 import configuraFacil.dataBase.ClienteDao;
 import configuraFacil.dataBase.ConfiguracaoDao;
+import configuraFacil.dataBase.ItemDao;
 import configuraFacil.dataBase.UtilizadorDao;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,12 +15,14 @@ import javafx.collections.ObservableList;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ConfiguraFacil {
 
     private UtilizadorDao utilizadorDao;
     private ConfiguracaoDao configDao;
     private ClienteDao clienteDao;
+    private ItemDao itemDao;
     private Map<String, Configuracao> configuracoes;
     private ObservableList<Configuracao> oc;
     private Utilizador logged;
@@ -97,4 +101,17 @@ public class ConfiguraFacil {
     public void setLogged(Utilizador logged) {
         this.logged = logged;
     }
+
+    public List<String> getCores(){
+        List<String> cores = new ArrayList<>();
+        cores = itemDao.values().stream().filter(i -> i.getTipo().equals("Cor")).map(i-> i.getTipo()).collect(Collectors.toList());
+        return  cores;
+    }
+
+    public List<String> getModelos(){
+        List<String> modelos = new ArrayList<>();
+        modelos = itemDao.values().stream().filter(i -> i.getTipo().equals("Modelo")).map(i-> i.getTipo()).collect(Collectors.toList());
+        return  modelos;
+    }
 }
+
