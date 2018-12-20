@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -24,7 +25,7 @@
             </Label>
             <ImageView fitHeight="56.0" fitWidth="51.0" layoutX="525.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../images/robot.png" />
+                  <Image url="@../../../images/customer.png" />
                </image>
             </ImageView>
             <Button fx:id="btnSeginte12" layoutX="135.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleBtnFinalizarAction" prefHeight="35.0" prefWidth="104.0" style="-fx-background-color: #195988; -fx-background-radius: 5em;" text="Finalizar" textFill="WHITE">
@@ -32,6 +33,28 @@
                   <Font name="Cantarell Bold" size="18.0" />
                </font>
             </Button>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="apFabrLogin" layoutY="96.0" prefHeight="304.0" prefWidth="602.0" style="-fx-background-color: #376888;">
+         <children>
+            <ChoiceBox fx:id="cbModelo" layoutX="191.0" layoutY="46.0" prefHeight="26.0" prefWidth="339.0" style="-fx-background-color: #195988;" />
+            <Label layoutX="30.0" layoutY="46.0" text="Nome" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="30.0" layoutY="93.0" text="Email" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="30.0" layoutY="142.0" text="Telemovel" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <ChoiceBox fx:id="cbModelo1" layoutX="191.0" layoutY="93.0" prefHeight="26.0" prefWidth="339.0" style="-fx-background-color: #195988;" />
+            <ChoiceBox fx:id="cbModelo2" layoutX="191.0" layoutY="139.0" prefHeight="26.0" prefWidth="339.0" style="-fx-background-color: #195988;" />
          </children>
       </AnchorPane>
    </children>
