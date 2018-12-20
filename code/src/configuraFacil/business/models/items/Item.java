@@ -57,12 +57,10 @@ public class Item {
 
     @Override
     public String toString() {
-        return "Item{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", preco=" + preco +
-                ", stock=" + stock +
-                '}';
+        return "Item " + id +
+                "\n     nome : '" + nome + '\'' +
+                "\n     preço: " + preco +
+                "\n     stock: " + stock;
     }
 }
 

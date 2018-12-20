@@ -26,6 +26,7 @@ public class Main extends Application {
         //start window with scene
         primaryWindow.setOnCloseRequest(e->onClose());
         //primaryWindow.initStyle(StageStyle.TRANSPARENT);
+
         primaryWindow.setScene(scene);
         primaryWindow.show();
     }

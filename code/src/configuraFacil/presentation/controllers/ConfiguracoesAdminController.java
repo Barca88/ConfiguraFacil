@@ -28,7 +28,13 @@ public class ConfiguracoesAdminController {
     @FXML
     private TableColumn<Configuracao,Integer> clnIdConfig;
     @FXML
+    private TableColumn<Configuracao,Integer> clnModeloConfig;
+    @FXML
+    private TableColumn<Configuracao,Integer> clnCorConfig;
+    @FXML
     private TableColumn<Configuracao,String> clnEstadoConfig;
+    @FXML
+    private TableColumn<Configuracao,Integer> clnOrcamentoConfig;
     @FXML
     private TextField tfIdConfig;
     @FXML
@@ -42,7 +48,10 @@ public class ConfiguracoesAdminController {
 
     private void initTable(){
         clnIdConfig.setCellValueFactory(new PropertyValueFactory<>("id"));
+        clnModeloConfig.setCellValueFactory(new PropertyValueFactory<>("modelo"));
+        clnCorConfig.setCellValueFactory(new PropertyValueFactory<>("cor"));
         clnEstadoConfig.setCellValueFactory(new PropertyValueFactory<>("estado"));
+        clnOrcamentoConfig.setCellValueFactory(new PropertyValueFactory<>("orcamento"));
         tblConfigAdmin.setItems(cf.getConfiguracoes());
     }
 
@@ -53,24 +62,21 @@ public class ConfiguracoesAdminController {
         sm.newScene(1, cf);
     }
 
-    public void handleBtnRemoverConfigAction(ActionEvent actionEvent) {
-        ObservableList<Configuracao> configuracaoSelecionada,todasAsConfiguracoes;
-        todasAsConfiguracoes = tblConfigAdmin.getItems();
-        configuracaoSelecionada = tblConfigAdmin.getSelectionModel().getSelectedItems();
-        configuracaoSelecionada.forEach(todasAsConfiguracoes::remove);
-        //initTable();
-    }
-
     public void handleBtnAdicionarConfigAction(ActionEvent actionEvent) {
-        Configuracao c = new Configuracao(Integer.parseInt(tfIdConfig.getText()),"Civic","Preto",tfEstadoConfig.getText(),0,null,null,null);
-        cf.adicionarConfiguracao(c);
-        cf.getConfiguracoes();
-        initTable();
+        if(tfIdConfig.getText().equals("") || tfEstadoConfig.getText().equals("")) {
+            System.out.println("TODO SHOW Aviso");
+        }else{Configuracao c = new Configuracao(Integer.parseInt(tfIdConfig.getText()), "Civic", "Preto", tfEstadoConfig.getText(), 0, null, null, null);
+            cf.adicionarConfiguracao(c);
+            cf.getConfiguracoes();
+            initTable();
+        }
     }
 
     public void handleViewConfigAction(KeyEvent keyEvent) throws IOException {
         if (keyEvent.getCode().equals(KeyCode.ENTER))
         {
+            Configuracao c = tblConfigAdmin.getSelectionModel().getSelectedItem();
+            cf.setConfigConsulta(c);
             URL url = getClass().getResource("../views/consultarConfiguracao.fxml");
             Stage window = (Stage) ((Node) keyEvent.getSource()).getScene().getWindow();
             SceneManager sm = new SceneManager(url, window);

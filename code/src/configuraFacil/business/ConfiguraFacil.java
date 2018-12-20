@@ -12,7 +12,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +23,7 @@ public class ConfiguraFacil {
     private ObservableList<Configuracao> oc;
     private int logged;
     private Utilizador u;
+    private Configuracao configConsulta;
 
     public ConfiguraFacil() {
         utilizadorDao = new UtilizadorDao();
@@ -83,6 +83,13 @@ public class ConfiguraFacil {
         return oc;
     }
 
+    public Configuracao getConfigConsulta() {
+        return configConsulta;
+    }
+
+    public void setConfigConsulta(Configuracao configConsulta) {
+        this.configConsulta = configConsulta;
+    }
 
     public int getLogged() {
         return logged;

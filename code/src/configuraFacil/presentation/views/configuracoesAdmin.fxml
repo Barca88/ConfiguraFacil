@@ -33,26 +33,22 @@
       </AnchorPane>
       <AnchorPane layoutY="93.0" prefHeight="323.0" prefWidth="607.0" style="-fx-background-color: #376888;">
          <children>
-            <TableView fx:id="tblConfigAdmin" onKeyPressed="#handleViewConfigAction" prefHeight="228.0" prefWidth="607.0" style="-fx-background-color: #376888;">
+            <TableView fx:id="tblConfigAdmin" blendMode="LIGHTEN" onKeyPressed="#handleViewConfigAction" prefHeight="259.0" prefWidth="607.0" style="-fx-background-color: #376888;">
                <columns>
-                  <TableColumn fx:id="clnIdConfig" prefWidth="112.0" text="Id" />
-                  <TableColumn fx:id="clnEstadoConfig" prefWidth="98.0" text="Estado" />
+                  <TableColumn fx:id="clnIdConfig" prefWidth="95.0" text="Id" />
+                  <TableColumn fx:id="clnModeloConfig" prefWidth="142.0" text="Modelo" />
+                  <TableColumn fx:id="clnCorConfig" prefWidth="132.0" text="Cor" />
+                  <TableColumn fx:id="clnEstadoConfig" prefWidth="111.0" text="Estado" />
+                  <TableColumn fx:id="clnOrcamentoConfig" prefWidth="126.0" text="Orçamento" />
                </columns>
             </TableView>
-            <Button fx:id="btnRemoverConfig" layoutX="449.0" layoutY="228.0" mnemonicParsing="false" onAction="#handleBtnRemoverConfigAction" prefHeight="35.0" prefWidth="144.0" style="-fx-background-color: #195988; -fx-background-radius: 5em;" text="Remover" textFill="WHITE">
+            <Button fx:id="btnAdicionarConfig" layoutX="435.0" layoutY="274.0" mnemonicParsing="false" onAction="#handleBtnAdicionarConfigAction" prefHeight="35.0" prefWidth="144.0" style="-fx-background-color: #195988; -fx-background-radius: 5em;" text="Adicionar" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button fx:id="btnAdicionarConfig" layoutX="449.0" layoutY="273.0" mnemonicParsing="false" onAction="#handleBtnAdicionarConfigAction" prefHeight="35.0" prefWidth="144.0" style="-fx-background-color: #195988; -fx-background-radius: 5em;" text="Adicionar" textFill="WHITE">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Button>
-            <TextField fx:id="tfIdConfig" layoutX="34.0" layoutY="241.0" promptText="Id" />
-            <TextField fx:id="tfEstadoConfig" layoutX="34.0" layoutY="286.0" promptText="Estado" />
-            <TextField layoutX="243.0" layoutY="286.0" />
-            <TextField layoutX="243.0" layoutY="241.0" />
+            <TextField fx:id="tfIdConfig" layoutX="38.0" layoutY="278.0" promptText="Id" />
+            <TextField fx:id="tfEstadoConfig" layoutX="236.0" layoutY="278.0" promptText="Estado" />
          </children>
       </AnchorPane>
    </children>
