@@ -25,6 +25,10 @@ public class VendedorController {
         sm.newScene(-1, cf);
     }
 
-    public void handleBtnCriarConfigAction(ActionEvent actionEvent) {
+    public void handleBtnCriarConfigAction(ActionEvent actionEvent) throws IOException {
+        URL url = getClass().getResource("../views/modelo.fxml");
+        Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        SceneManager sm = new SceneManager(url, window);
+        sm.newScene(6, cf);
     }
 }

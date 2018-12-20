@@ -82,6 +82,8 @@ public class LoginController implements Initializable {
 
     public void handleBtnBackLogin(ActionEvent actionEvent) {
         lbAviso.setText("");
+        tfNome.setText("");
+        pfPass.setText("");
         btnBack.setVisible(false);
         apAdminLogin.setTranslateX(0);
         apAdminLogin.setVisible(true);

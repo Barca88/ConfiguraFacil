@@ -41,6 +41,10 @@ public class SceneManager{
                 ConfiguracoesController cac = loader.getController();
                 cac.init(cf);
                 break;
+            case 6 :
+                ModeloController mc = loader.getController();
+                mc.init(cf);
+                break;
             case 7 : 
                 StockAdminController sac = loader.getController();
                 sac.init(cf);
@@ -53,13 +57,11 @@ public class SceneManager{
         }
 
         //new scene
-        scene = new Scene(root, 600, 400);
+        scene = new Scene(root, 300, 275);
         scene.setFill(Color.TRANSPARENT);
 
         //load window with new scene
-        window.setResizable(false);
         window.setScene(scene);
-
     }
 
 }
