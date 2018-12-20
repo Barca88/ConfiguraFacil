@@ -39,7 +39,10 @@ public class ConfigBaseController {
         sm.newScene(3, cf);
     }
 
-    public void handleBtnFinalizarAction(ActionEvent actionEvent) {
-        cf.getConfigConsulta().setModelo(cbModelo.getValue()) ;
+    public void handleBtnFinalizarAction(ActionEvent actionEvent) throws IOException {
+        URL url = getClass().getResource("../views/formcliente.fxml");
+        Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        SceneManager sm = new SceneManager(url, window);
+        sm.newScene(5, cf);
     }
 }
