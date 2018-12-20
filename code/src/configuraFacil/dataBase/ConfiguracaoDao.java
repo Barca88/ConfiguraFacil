@@ -87,6 +87,8 @@ public class ConfiguracaoDao implements Map<Integer,Configuracao> {
 
     @Override
     public Configuracao get(Object o) {
+        UtilizadorDao users = new UtilizadorDao();
+        ItemDao itensDao = new ItemDao();
         Cliente cli = null;
         Utilizador u = null;
         Map<Integer, Item> itens = new HashMap<>();
@@ -106,7 +108,7 @@ public class ConfiguracaoDao implements Map<Integer,Configuracao> {
                 stm1.setInt(1,(int) o);
                 ResultSet rs1 = stm1.executeQuery();
                 while(rs1.next()){
-                    Item i = new Item(rs1.getInt("Item_idItem"),rs1.getString("nome"),rs1.getFloat("preco"),rs1.getInt("stock"));
+                    Item i = itensDao.get(rs1.getInt("idItem"));
                     itens.put(i.getId(),i);
                 }
                 sql = "SELECT * FROM Configuracao\n" +
@@ -116,7 +118,7 @@ public class ConfiguracaoDao implements Map<Integer,Configuracao> {
                 stm2.setInt(1,(int) o);
                 ResultSet rs2 = stm2.executeQuery();
                 if(rs2.next()){
-                    u = new Vendedor(rs2.getInt("idUtilizador"),rs2.getString("nome"),rs2.getString("password"),rs2.getString("email"),rs2.getString("telemovel"));
+                    u = users.get(rs2.getInt("idConfiguracao"));
                 }
                 sql = "SELECT * FROM Configuracao\n" +
                         "INNER JOIN Cliente ON Cliente_idCliente = idCliente\n" +
@@ -164,8 +166,9 @@ public class ConfiguracaoDao implements Map<Integer,Configuracao> {
         return null;
     }
 
-    @Override
     public Collection<Configuracao> values() {
+        UtilizadorDao users = new UtilizadorDao();
+        ItemDao itensDao = new ItemDao();
         Collection<Configuracao> configs = new HashSet<>();
         try {
             conn = Connect.connect();
@@ -185,7 +188,7 @@ public class ConfiguracaoDao implements Map<Integer,Configuracao> {
                 stm1.setInt(1,cId);
                 ResultSet rs1 = stm1.executeQuery();
                 while(rs1.next()){
-                    Item i = new Item(rs1.getInt("Item_idItem"),rs1.getString("nome"),rs1.getFloat("preco"),rs1.getInt("stock"));
+                    Item i = itensDao.get(rs1.getInt("idItem"));
                     itens.put(i.getId(),i);
                 }
                 sql = "SELECT * FROM Configuracao\n" +
@@ -195,7 +198,7 @@ public class ConfiguracaoDao implements Map<Integer,Configuracao> {
                 stm2.setInt(1,cId);
                 ResultSet rs2 = stm2.executeQuery();
                 if(rs2.next()){
-                    u = new Vendedor(rs2.getInt("idUtilizador"),rs2.getString("nome"),rs2.getString("password"),rs2.getString("email"),rs2.getString("telemovel"));
+                    u = users.get(rs2.getString("email"));
                 }
                 sql = "SELECT * FROM Configuracao\n" +
                         "INNER JOIN Cliente ON Cliente_idCliente = idCliente\n" +
