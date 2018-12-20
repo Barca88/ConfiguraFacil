@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="configuraFacil.presentation.controllers.StockFabricanteController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="configuraFacil.presentation.controllers.StockFabricaController">
    <children>
       <AnchorPane fx:id="topBar" prefHeight="73.0" prefWidth="604.0" style="-fx-background-color: #376888;">
          <children>
@@ -23,7 +20,7 @@
                   <Font name="Cantarell Bold" size="18.0" />
                </font>
             </Button>
-            <Label layoutX="434.0" layoutY="24.0" text="Stock" textFill="WHITE">
+            <Label fx:id="lbErro" layoutX="449.0" layoutY="24.0" text="Stock" textFill="WHITE">
                <font>
                   <Font size="20.0" />
                </font>
@@ -33,15 +30,29 @@
                   <Image url="@../../../images/warehouse.png" />
                </image>
             </ImageView>
+            <Button fx:id="btnAdicionaStock" layoutX="346.0" layoutY="7.0" mnemonicParsing="false" onAction="#handlerBtnAdicionStock" prefHeight="26.0" prefWidth="80.0" text="Adiciona" />
+            <TextField fx:id="tfId" layoutX="217.0" layoutY="7.0" prefHeight="25.0" prefWidth="117.0" />
+            <TextField fx:id="tfQuantidade" layoutX="217.0" layoutY="42.0" prefHeight="25.0" prefWidth="117.0" />
+            <Button fx:id="btnFinalizarStock" layoutX="346.0" layoutY="42.0" mnemonicParsing="false" onAction="#handlerBtnFinalizarStock" prefHeight="26.0" prefWidth="80.0" text="Finalizar" />
+            <Text fill="WHITE" layoutX="183.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Id:">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="104.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quantidade:">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+            <Label fx:id="lblerror" layoutY="6.0" prefHeight="16.0" prefWidth="182.0" textFill="RED" />
          </children>
       </AnchorPane>
       <TableView layoutY="87.0" prefHeight="314.0" prefWidth="604.0" style="-fx-background-color: #376888;">
          <columns>
-            <TableColumn prefWidth="112.0" text="Nome" />
-            <TableColumn prefWidth="141.0" text="Modelo" />
-            <TableColumn prefWidth="132.0" text="Cor" />
-            <TableColumn prefWidth="123.0" text="Data" />
-            <TableColumn prefWidth="98.0" text="Custo" />
+            <TableColumn prefWidth="98.0" text="Id" />
+            <TableColumn prefWidth="171.0" text="Nome" />
+            <TableColumn prefWidth="182.0" text="Tipo" />
+            <TableColumn prefWidth="152.0" text="Stock" />
          </columns>
       </TableView>
    </children>

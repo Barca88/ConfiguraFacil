@@ -51,7 +51,6 @@ public class LoginController implements Initializable {
         cf = new ConfiguraFacil();
     }
 
-
     public void handleBtnVendedorAction(ActionEvent event) {
         btnBack.setVisible(true);
         apAdminLogin.setVisible(false);
@@ -143,7 +142,6 @@ public class LoginController implements Initializable {
     }
 
     public void handleBtnAutenticarLogin(ActionEvent actionEvent) throws IOException {
-
 
         String username = tfNome.getText();
         String password = pfPass.getText();
