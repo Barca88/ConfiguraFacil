@@ -12,7 +12,7 @@ public class Configuracao {
     private String modelo;
     private String cor;
     private String estado;
-    private float orc;
+    private float orcamento;
     private Cliente cliente;
     private Utilizador vendedor;
     private Map<Integer, Item> itens;
@@ -23,7 +23,7 @@ public class Configuracao {
         this.modelo = null;
         this.cor = null;
         this.estado = null;
-        this.orc = 0;
+        this.orcamento = 0;
         this.cliente = null;
         this.vendedor = null;
         this.itens = new HashMap<>();
@@ -35,7 +35,7 @@ public class Configuracao {
         this.modelo = modelo;
         this.cor = cor;
         this.estado = estado;
-        this.orc = orc;
+        this.orcamento = orc;
         this.cliente = cliente;
         this.vendedor = vendedor;
         this.itens = itens;
@@ -75,12 +75,12 @@ public class Configuracao {
         this.estado = estado;
     }
 
-    public float getOrc() {
-        return orc;
+    public float getOrcamento() {
+        return orcamento;
     }
 
-    public void setOrc(float orc) {
-        this.orc = orc;
+    public void setOrcamento(float orc) {
+        this.orcamento = orc;
     }
 
     public Cliente getCliente() {

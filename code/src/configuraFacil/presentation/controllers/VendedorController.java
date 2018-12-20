@@ -24,4 +24,7 @@ public class VendedorController {
         SceneManager sm = new SceneManager(url, window);
         sm.newScene(-1, cf);
     }
+
+    public void handleBtnCriarConfigAction(ActionEvent actionEvent) {
+    }
 }

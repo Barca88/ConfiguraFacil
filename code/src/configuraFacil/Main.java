@@ -27,6 +27,7 @@ public class Main extends Application {
         primaryWindow.setResizable(false);
         primaryWindow.setOnCloseRequest(e->onClose());
         //primaryWindow.initStyle(StageStyle.TRANSPARENT);
+
         primaryWindow.setScene(scene);
         primaryWindow.show();
     }
