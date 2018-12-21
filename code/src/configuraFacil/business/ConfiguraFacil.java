@@ -5,10 +5,7 @@ import configuraFacil.business.models.users.Administrador;
 import configuraFacil.business.models.users.Fabricante;
 import configuraFacil.business.models.users.Utilizador;
 
-import configuraFacil.dataBase.ClienteDao;
-import configuraFacil.dataBase.ConfiguracaoDao;
-import configuraFacil.dataBase.ItemDao;
-import configuraFacil.dataBase.UtilizadorDao;
+import configuraFacil.dataBase.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import sun.nio.cs.UTF_32LE;
@@ -26,6 +23,7 @@ public class ConfiguraFacil {
     private ConfiguracaoDao configDao;
     private ClienteDao clienteDao;
     private ItemDao itemDao;
+    private PacoteDao pacoteDao;
     private Map<String, Configuracao> configuracoes;
     private ObservableList<Configuracao> oc;
     private ObservableList<Utilizador> ov;
@@ -40,6 +38,7 @@ public class ConfiguraFacil {
     private ObservableList<String> o_bancos;
     private ObservableList<String> o_estofos;
     private ObservableList<String> o_op;
+    private ObservableList<String> o_pacote;
     private Utilizador logged;
     private Configuracao configConsulta;
 
@@ -175,6 +174,13 @@ public class ConfiguraFacil {
         o_op = FXCollections.observableArrayList(lm);
         return o_op;
     }
+
+    public ObservableList<String> getPacotes(){
+        List<String> lm = new ArrayList<>(pacoteDao.values().stream().map(p -> p.getNome()).collect(Collectors.toList()) );
+        o_pacote = FXCollections.observableArrayList(lm);
+        return o_pacote;
+    }
+
 
 
 
