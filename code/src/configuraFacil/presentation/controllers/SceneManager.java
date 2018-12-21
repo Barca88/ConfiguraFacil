@@ -56,6 +56,15 @@ public class SceneManager{
             case 9 :
                 ConsultarConfiguracaoController ccc = loader.getController();
                 ccc.init(cf);
+                break;
+            case 10 :
+                FabricantesController fcs = loader.getController();
+                fcs.init(cf);
+                break;
+            case 11 :
+                VendedoresController vcs = loader.getController();
+                vcs.init(cf);
+                break;
             default :
                 break;
         }

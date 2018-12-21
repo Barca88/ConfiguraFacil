@@ -39,10 +39,17 @@ public class AdministradorController {
         sm.newScene(4, cf);
     }
 
-    public void handleBtnVendedores(ActionEvent actionEvent) {
-
+    public void handleBtnVendedores(ActionEvent actionEvent) throws IOException {
+        URL url = getClass().getResource("../views/vendedores.fxml");
+        Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        SceneManager sm = new SceneManager(url, window);
+        sm.newScene(11, cf);
     }
 
-    public void handleBtnFabricantes(ActionEvent actionEvent) {
+    public void handleBtnFabricantes(ActionEvent actionEvent) throws IOException {
+        URL url = getClass().getResource("../views/fabricantes.fxml");
+        Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        SceneManager sm = new SceneManager(url, window);
+        sm.newScene(10, cf);
     }
 }
