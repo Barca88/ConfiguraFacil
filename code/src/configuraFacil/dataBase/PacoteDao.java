@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class PacoteDao implements Map<Integer, Pacote> {
 
@@ -160,6 +161,9 @@ public class PacoteDao implements Map<Integer, Pacote> {
         } finally {
             Connect.close(conn);
         }
+
+        ret = ret.stream().sorted(Comparator.comparingInt(Pacote::getId)).collect(Collectors.toList());
+
         return ret;
     }
 

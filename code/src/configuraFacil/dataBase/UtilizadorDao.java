@@ -1,6 +1,7 @@
 package configuraFacil.dataBase;
 
 import configuraFacil.business.models.Configuracao;
+import configuraFacil.business.models.items.Item;
 import configuraFacil.business.models.users.Administrador;
 import configuraFacil.business.models.users.Fabricante;
 import configuraFacil.business.models.users.Utilizador;
@@ -11,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class UtilizadorDao implements Map<String, Utilizador> {
 
@@ -167,6 +169,9 @@ public class UtilizadorDao implements Map<String, Utilizador> {
         }finally {
             Connect.close(conn);
         }
+
+        col = col.stream().sorted(Comparator.comparingInt(Utilizador::getId)).collect(Collectors.toList());
+
         return col;
     }
 

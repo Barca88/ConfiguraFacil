@@ -229,6 +229,8 @@ public class ConfiguracaoDao implements Map<Integer,Configuracao> {
             Connect.close(conn);
         }
 
+        configs = configs.stream().sorted(Comparator.comparingInt(Configuracao::getId)).collect(Collectors.toList());
+
         return configs;
     }
 

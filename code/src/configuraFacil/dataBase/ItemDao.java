@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 public class ItemDao implements Map<Integer, Item> {
@@ -215,6 +216,9 @@ public class ItemDao implements Map<Integer, Item> {
         finally {
             Connect.close(conn);
         }
+
+        col = col.stream().sorted(Comparator.comparingInt(Item::getId)).collect(Collectors.toList());
+
         return col;
     }
 

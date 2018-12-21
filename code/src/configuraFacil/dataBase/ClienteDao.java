@@ -1,12 +1,14 @@
 package configuraFacil.dataBase;
 
 import configuraFacil.business.models.Cliente;
+import configuraFacil.business.models.items.Item;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class ClienteDao implements Map<Long, Cliente> {
 
@@ -192,6 +194,9 @@ public class ClienteDao implements Map<Long, Cliente> {
         } finally {
             Connect.close(conn);
         }
+
+       // col = col.stream().sorted(Comparator.comparingInt(Cliente::getId)).collect(Collectors.toList());
+
         return col;
     }
     @Override
