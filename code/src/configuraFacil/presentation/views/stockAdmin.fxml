@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="configuraFacil.presentation.controllers.StockController">
    <children>
       <AnchorPane fx:id="topBar" prefHeight="73.0" prefWidth="607.0" style="-fx-background-color: #376888;">
@@ -31,13 +30,11 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <TableView layoutY="85.0" prefHeight="322.0" prefWidth="607.0" style="-fx-background-color: #376888;">
+      <TableView fx:id="tblStockAdmin" layoutY="85.0" prefHeight="322.0" prefWidth="607.0" style="-fx-background-color: #376888;">
          <columns>
-            <TableColumn prefWidth="112.0" text="Nome" />
-            <TableColumn prefWidth="141.0" text="Modelo" />
-            <TableColumn prefWidth="132.0" text="Cor" />
-            <TableColumn prefWidth="123.0" text="Data" />
-            <TableColumn prefWidth="98.0" text="Custo" />
+            <TableColumn fx:id="clnIdItem" prefWidth="112.0" text="ID" />
+            <TableColumn fx:id="clnNome" prefWidth="270.0" text="Nome" />
+            <TableColumn fx:id="clnQuantidade" prefWidth="224.0" text="Quantidade" />
          </columns>
       </TableView>
    </children>

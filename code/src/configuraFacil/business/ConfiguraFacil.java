@@ -30,6 +30,7 @@ public class ConfiguraFacil {
     private ObservableList<Configuracao> oc;
     private ObservableList<Utilizador> ov;
     private ObservableList<Utilizador> of;
+    private ObservableList<Item> oi;
     private ObservableList<String> o_modelo;
     private ObservableList<String> o_cor;
     private ObservableList<String> o_jantes;
@@ -111,6 +112,12 @@ public class ConfiguraFacil {
         List<Utilizador> lv = new ArrayList<>(utilizadorDao.values().stream().filter(i -> i.getClass().getSimpleName().equals("Fabricante")).collect(toList()));
         of = FXCollections.observableArrayList(lv);
         return of;
+    }
+
+    public ObservableList<Item> getItems(){
+        List<Item> li = new ArrayList<>(itemDao.values());
+        oi = FXCollections.observableArrayList(li);
+        return oi;
     }
 
     public ObservableList<String> getModelos(){
