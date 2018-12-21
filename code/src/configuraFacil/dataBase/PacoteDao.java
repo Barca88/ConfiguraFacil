@@ -142,19 +142,28 @@ public class PacoteDao implements Map<Integer, Pacote> {
 
     @Override
     public Collection<Pacote> values() { //Todo Shaman
-        List<Pacote> ret = new ArrayList<>();
-        Pacote p = new Pacote();
+        Collection<Pacote> ret = new HashSet<>();
+        Pacote p = null;
+        ItemDao itemDao = new ItemDao();
         try {
             conn = Connect.connect();
-            String sql = "SELECT * FROM 'Pacote'" + "inner join 'Pacote_has_Item' on 'Pacote.idPacote'='Pacote_has_Item.'\n" + "inerjoin 'Item'\n" + "where Pacote_idPacote=?";
+            String sql = "SELECT * FROM 'Pacote";
             PreparedStatement stm = conn.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             while(rs.next()){
-                p.setId(rs.getInt("id"));
-                p.setDesconto(rs.getFloat("desconto"));
-                p.setNome(rs.getString("nome"));
-                //Todo!
+                sql = "SELECT * FROM Pacote_Item\n" +
+                        "INNER JOIN Item  ON Item_idItem = idItem WHERE idPacote = ?";
+                PreparedStatement stm1 = conn.prepareStatement(sql);
+                ResultSet rs1 = stm.executeQuery();
+                Map<Integer,Item> itens = new HashMap<>();
+                while(rs1.next()){
+                    Item i = itemDao.get(rs1.getInt("idItem"));
+                    itens.put(i.getId(),i);
+                }
+                p = new Pacote(rs.getInt("id"),rs.getFloat("desconto"),rs.getString("nome"),itens);
                 ret.add(p);
+
+
             }
         } catch (Exception e) {
             e.printStackTrace();
