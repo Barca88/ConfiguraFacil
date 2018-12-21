@@ -2,7 +2,7 @@ package configuraFacil.business.models;
 
 public class Cliente {
 
-    private long id;
+    private int id;
     private String nome;
     private String email;
     private String telemovel;
@@ -19,18 +19,18 @@ public class Cliente {
         this.email = c.getEmail();
         this.telemovel = c.getTelemovel();
     }
-    public Cliente(long id, String nome, String email, String telemovel) {
+    public Cliente(int id, String nome, String email, String telemovel) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.telemovel = telemovel;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

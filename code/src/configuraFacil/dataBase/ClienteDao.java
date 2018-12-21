@@ -10,7 +10,7 @@ import java.sql.Statement;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class ClienteDao implements Map<Long, Cliente> {
+public class ClienteDao implements Map<Integer, Cliente> {
 
     private Connection conn;
 
@@ -104,7 +104,7 @@ public class ClienteDao implements Map<Long, Cliente> {
     }
 
     @Override
-    public Cliente put(Long key, Cliente cli) {
+    public Cliente put(Integer key, Cliente cli) {
         Cliente c = null;
         try{
             conn = Connect.connect();
@@ -150,7 +150,7 @@ public class ClienteDao implements Map<Long, Cliente> {
     }
 
     @Override
-    public void putAll(Map<? extends Long, ? extends Cliente> m) {
+    public void putAll(Map<? extends Integer, ? extends Cliente> m) {
         for(Cliente a : m.values()){
             put(a.getId(),a);
         }
@@ -171,7 +171,7 @@ public class ClienteDao implements Map<Long, Cliente> {
     }
 
     @Override
-    public Set<Long> keySet() {throw new NullPointerException("Not implemented!"); }
+    public Set<Integer> keySet() {throw new NullPointerException("Not implemented!"); }
 
     @Override
     public Collection<Cliente> values() {
@@ -195,10 +195,10 @@ public class ClienteDao implements Map<Long, Cliente> {
             Connect.close(conn);
         }
 
-       // col = col.stream().sorted(Comparator.comparingInt(Cliente::getId)).collect(Collectors.toList());
+       col = col.stream().sorted(Comparator.comparingInt(Cliente::getId)).collect(Collectors.toList());
 
         return col;
     }
     @Override
-    public Set<Entry<Long, Cliente>> entrySet() {throw new NullPointerException("Not implemented!");}
+    public Set<Entry<Integer, Cliente>> entrySet() {throw new NullPointerException("Not implemented!");}
 }
