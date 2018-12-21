@@ -174,34 +174,39 @@ public class ItemDao implements Map<Integer, Item> {
     @Override
     public Collection<Item> values() {
         Collection<Item> col = new HashSet<>();
-        int id=0;
+
         try{
             conn = Connect.connect();
             String sql = "SELECT * FROM Item";
             Statement stm = conn.createStatement();
             ResultSet rs = stm.executeQuery(sql);
+
             while(rs.next()){
-                id = rs.getInt("idItem");
-                Item i = null;
+                int id = rs.getInt("idItem");
                 List<Integer> incomp = new ArrayList<>();
                 List<Integer> depend = new ArrayList<>();
+
                 sql = "SELECT * FROM Incompatibilidade\n" +
                         "INNER JOIN Item ON idItem = Item_idItem2 WHERE Item_idItem1 = ?";
                 PreparedStatement stm1 = conn.prepareStatement(sql);
                 stm1.setInt(1,id);
                 ResultSet rs1 = stm1.executeQuery();
+
                 while(rs1.next()){
                     incomp.add(rs1.getInt("idItem"));
                 }
+
                 sql = "SELECT * FROM Dependencia\n" +
                         "INNER JOIN Item ON idItem = Item_idItem2 WHERE Item_idItem1 = ?";
                 PreparedStatement stm2 = conn.prepareStatement(sql);
                 stm2.setInt(1,id);
                 ResultSet rs2 = stm2.executeQuery();
+
                 while (rs2.next()){
                     depend.add(rs2.getInt("idItem"));
                 }
-                i = new Item(id,rs.getString("nome"),rs.getFloat("preco"),rs.getInt("stock"),rs.getString("tipo"),incomp,depend);
+
+                Item i = new Item(id,rs.getString("nome"),rs.getFloat("preco"),rs.getInt("stock"),rs.getString("tipo"),incomp,depend);
                 col.add(i);
             }
 

@@ -18,6 +18,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toList;
+
 public class ConfiguraFacil {
 
     private UtilizadorDao utilizadorDao;
@@ -28,12 +30,22 @@ public class ConfiguraFacil {
     private ObservableList<Configuracao> oc;
     private ObservableList<Utilizador> ov;
     private ObservableList<Utilizador> of;
+    private ObservableList<String> o_modelo;
+    private ObservableList<String> o_cor;
+    private ObservableList<String> o_jantes;
+    private ObservableList<String> o_pneu;
+    private ObservableList<String> o_corpo;
+    private ObservableList<String> o_volante;
+    private ObservableList<String> o_bancos;
+    private ObservableList<String> o_estofos;
+    private ObservableList<String> o_op;
     private Utilizador logged;
     private Configuracao configConsulta;
 
     public ConfiguraFacil() {
         utilizadorDao = new UtilizadorDao();
         configDao = new ConfiguracaoDao();
+        itemDao = new ItemDao();
         logged = null;
     }
 
@@ -90,16 +102,74 @@ public class ConfiguraFacil {
     }
 
     public ObservableList<Utilizador> getVendedores(){
-        List<Utilizador> lv = new ArrayList<>(utilizadorDao.values().stream().filter(i -> i.getClass().getSimpleName().equals("Vendedor")).collect(Collectors.toList()));
+        List<Utilizador> lv = new ArrayList<>(utilizadorDao.values().stream().filter(i -> i.getClass().getSimpleName().equals("Vendedor")).collect(toList()));
         ov = FXCollections.observableArrayList(lv);
         return ov;
     }
 
     public ObservableList<Utilizador> getFabricantes(){
-        List<Utilizador> lv = new ArrayList<>(utilizadorDao.values().stream().filter(i -> i.getClass().getSimpleName().equals("Fabricante")).collect(Collectors.toList()));
+        List<Utilizador> lv = new ArrayList<>(utilizadorDao.values().stream().filter(i -> i.getClass().getSimpleName().equals("Fabricante")).collect(toList()));
         of = FXCollections.observableArrayList(lv);
         return of;
     }
+
+    public ObservableList<String> getModelos(){
+        List<String> lm = new ArrayList<>(itemDao.values().stream().filter(i -> i.getTipo().equals("Modelo")).map(i -> i.getNome()).collect(toList()));
+        o_modelo= FXCollections.observableArrayList(lm);
+        return o_modelo;
+    }
+
+    public ObservableList<String> getCores(){
+        List<String> lm = new ArrayList<>(itemDao.values().stream().filter(i -> i.getTipo().equals("Cor")).map(i -> i.getNome()).collect(toList()));
+        o_cor = FXCollections.observableArrayList(lm);
+        return o_cor;
+    }
+
+    public ObservableList<String> getJantes(){
+        List<String> lm = new ArrayList<>(itemDao.values().stream().filter(i -> i.getTipo().equals("Jantes")).map(i -> i.getNome()).collect(toList()));
+        o_jantes = FXCollections.observableArrayList(lm);
+        return o_jantes;
+    }
+
+    public ObservableList<String> getPneus(){
+        List<String> lm = new ArrayList<>(itemDao.values().stream().filter(i -> i.getTipo().equals("Pneus")).map(i -> i.getNome()).collect(toList()));
+        o_pneu = FXCollections.observableArrayList(lm);
+        return o_pneu;
+    }
+
+    public ObservableList<String> getCorpos(){
+        List<String> lm = new ArrayList<>(itemDao.values().stream().filter(i -> i.getTipo().equals("Corpo")).map(i -> i.getNome()).collect(toList()));
+        o_corpo = FXCollections.observableArrayList(lm);
+        return o_corpo;
+    }
+
+    public ObservableList<String> getVolantes(){
+        List<String> lm = new ArrayList<>(itemDao.values().stream().filter(i -> i.getTipo().equals("Volante")).map(i -> i.getNome()).collect(toList()));
+        o_volante = FXCollections.observableArrayList(lm);
+        return o_volante;
+    }
+
+
+    public ObservableList<String> getBancos(){
+        List<String> lm = new ArrayList<>(itemDao.values().stream().filter(i -> i.getTipo().equals("Bancos")).map(i -> i.getNome()).collect(toList()));
+        o_bancos = FXCollections.observableArrayList(lm);
+        return o_bancos;
+    }
+
+
+    public ObservableList<String> getEstofos(){
+        List<String> lm = new ArrayList<>(itemDao.values().stream().filter(i -> i.getTipo().equals("Estofos")).map(i -> i.getNome()).collect(toList()));
+        o_estofos = FXCollections.observableArrayList(lm);
+        return o_estofos;
+    }
+
+    public ObservableList<String> getOpcionais(){
+        List<String> lm = new ArrayList<>(itemDao.values().stream().filter(i -> i.getTipo().equals("Opcional")).map(i -> i.getNome()).collect(toList()));
+        o_op = FXCollections.observableArrayList(lm);
+        return o_op;
+    }
+
+
 
     public Configuracao getConfigConsulta() {
         return configConsulta;
@@ -115,18 +185,6 @@ public class ConfiguraFacil {
 
     public void setLogged(Utilizador logged) {
         this.logged = logged;
-    }
-
-    public List<String> getCores(){
-        List<String> cores = new ArrayList<>();
-        cores = itemDao.values().stream().filter(i -> i.getTipo().equals("Cor")).map(i-> i.getNome()).collect(Collectors.toList());
-        return  cores;
-    }
-
-    public List<String> getModelos(){
-        List<String> modelos = new ArrayList<>();
-        modelos = itemDao.values().stream().filter(i -> i.getTipo().equals("Modelo")).map(i-> i.getNome()).collect(Collectors.toList());
-        return  modelos;
     }
 }
 

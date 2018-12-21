@@ -20,15 +20,42 @@ public class ConfigBaseController {
     @FXML
     private ChoiceBox<String> cbCor;
 
+    @FXML
+    private ChoiceBox<String> cbVolante;
+
+    @FXML
+    private ChoiceBox<String> cbBancos;
+
+    @FXML
+    private ChoiceBox<String> cbEstofos;
+
+    @FXML
+    private ChoiceBox<String> cbPneus;
+
+    @FXML
+    private ChoiceBox<String> cbJantes;
+
+    @FXML
+    private ChoiceBox<String> cbCorpo;
+
+    @FXML
+    private ChoiceBox<String> cbOpcional;
+
+
     ConfiguraFacil cf;
 
     public void init(ConfiguraFacil cfo) {
         cf = cfo;
 
-        cbModelo.getItems().add("X5");
-        cbModelo.getItems().add("X3");
-        cbModelo.getItems().add("X2");
-
+        cbModelo.setItems(cf.getModelos());
+        cbCor.setItems(cf.getCores());
+        cbVolante.setItems(cf.getVolantes());
+        cbBancos.setItems(cf.getBancos());
+        cbEstofos.setItems(cf.getEstofos());
+        cbJantes.setItems(cf.getJantes());
+        cbPneus.setItems(cf.getPneus());
+        cbCorpo.setItems(cf.getCorpos());
+        cbOpcional.setItems(cf.getOpcionais());
         cf.setConfigConsulta(new Configuracao());
     }
 
