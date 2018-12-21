@@ -11,10 +11,12 @@ import configuraFacil.dataBase.ItemDao;
 import configuraFacil.dataBase.UtilizadorDao;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import sun.nio.cs.UTF_32LE;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ConfiguraFacil {
 
@@ -89,6 +91,12 @@ public class ConfiguraFacil {
         return oi;
     }
 
+    public ObservableList<Utilizador> getUtilizadores(){
+        List<Utilizador> lu = new ArrayList<>(utilizadorDao.values());
+        ObservableList<Utilizador> ou = FXCollections.observableArrayList(lu);
+        return ou;
+    }
+
     public Configuracao getConfigConsulta() {
         return configConsulta;
     }
@@ -104,4 +112,17 @@ public class ConfiguraFacil {
     public void setLogged(Utilizador logged) {
         this.logged = logged;
     }
+
+    public List<String> getCores(){
+        List<String> cores = new ArrayList<>();
+        cores = itemDao.values().stream().filter(i -> i.getTipo().equals("Cor")).map(i-> i.getNome()).collect(Collectors.toList());
+        return  cores;
+    }
+
+    public List<String> getModelos(){
+        List<String> modelos = new ArrayList<>();
+        modelos = itemDao.values().stream().filter(i -> i.getTipo().equals("Modelo")).map(i-> i.getNome()).collect(Collectors.toList());
+        return  modelos;
+    }
 }
+

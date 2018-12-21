@@ -24,11 +24,11 @@ public class Pacote {
         this.nome = p.getNome();
         this.itens = p.getItens();
     }
-    public Pacote(int id, float desconto, String nome) {
+    public Pacote(int id, float desconto, String nome,Map<Integer,Item> i) {
         this.id = id;
         this.desconto = desconto;
         this.nome = nome;
-        this.itens = new HashMap<>();
+        this.itens = i;
     }
 
     public int getId() {

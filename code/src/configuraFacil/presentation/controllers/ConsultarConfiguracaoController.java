@@ -38,7 +38,7 @@ public class ConsultarConfiguracaoController {
 
     public void init(ConfiguraFacil cfo) {
         cf = cfo;
-        lblConfig.setText("Configurção " + Integer.toString(cf.getConfigConsulta().getId()));
+        lblConfig.setText("Configuração " + Integer.toString(cf.getConfigConsulta().getId()));
         lblModelo.setText(cf.getConfigConsulta().getModelo());
         crCor.setFill(javafx.scene.paint.Color.RED);
         for(Item i : cf.getConfigConsulta().getItens().values()) {
