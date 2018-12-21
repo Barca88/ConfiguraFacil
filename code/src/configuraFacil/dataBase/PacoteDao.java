@@ -95,7 +95,7 @@ public class PacoteDao implements Map<Integer, Pacote> {
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
                 sql = "SELECT * FROM Pacote_Item\n" +
-                        "INNER JOIN Item ON Item_idItem = idItem WHERE idPacote = ?";
+                        "INNER JOIN Item ON Item_idItem = idItem WHERE Pacote_idPacote = ?";
                 PreparedStatement stm1 = conn.prepareStatement(sql);
                 stm1.setInt(1, (int) o);
                 ResultSet rs1 = stm1.executeQuery();
@@ -147,20 +147,22 @@ public class PacoteDao implements Map<Integer, Pacote> {
         ItemDao itemDao = new ItemDao();
         try {
             conn = Connect.connect();
-            String sql = "SELECT * FROM 'Pacote";
-            PreparedStatement stm = conn.prepareStatement(sql);
-            ResultSet rs = stm.executeQuery();
+            String sql = "SELECT * FROM Pacote";
+            Statement stm = conn.createStatement();
+            ResultSet rs = stm.executeQuery(sql);
             while(rs.next()){
+                int pId = rs.getInt("idPacote");
                 sql = "SELECT * FROM Pacote_Item\n" +
-                        "INNER JOIN Item  ON Item_idItem = idItem WHERE idPacote = ?";
+                        "INNER JOIN Item ON Item_idItem = idItem WHERE Pacote_idPacote = ?";
                 PreparedStatement stm1 = conn.prepareStatement(sql);
-                ResultSet rs1 = stm.executeQuery();
+                stm1.setInt(1,pId);
+                ResultSet rs1 = stm1.executeQuery();
                 Map<Integer,Item> itens = new HashMap<>();
                 while(rs1.next()){
                     Item i = itemDao.get(rs1.getInt("idItem"));
                     itens.put(i.getId(),i);
                 }
-                p = new Pacote(rs.getInt("id"),rs.getFloat("desconto"),rs.getString("nome"),itens);
+                p = new Pacote(pId,rs.getFloat("desconto"),rs.getString("nome"),itens);
                 ret.add(p);
 
 

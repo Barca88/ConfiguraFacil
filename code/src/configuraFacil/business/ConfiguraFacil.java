@@ -46,6 +46,7 @@ public class ConfiguraFacil {
         utilizadorDao = new UtilizadorDao();
         configDao = new ConfiguracaoDao();
         itemDao = new ItemDao();
+        pacoteDao = new PacoteDao();
         logged = null;
     }
 
@@ -176,7 +177,7 @@ public class ConfiguraFacil {
     }
 
     public ObservableList<String> getPacotes(){
-        List<String> lm = new ArrayList<>(pacoteDao.values().stream().map(p -> p.getNome()).collect(Collectors.toList()) );
+        List<String> lm = new ArrayList<>(pacoteDao.values().stream().map(p -> p.getNome()).collect(toList()));
         o_pacote = FXCollections.observableArrayList(lm);
         return o_pacote;
     }
