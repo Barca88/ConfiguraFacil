@@ -45,8 +45,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ConfiguraFacil`.`Configuracao` (
   `idConfiguracao` INT NOT NULL AUTO_INCREMENT,
-  `Modelo` VARCHAR(45) NOT NULL,
-  `Cor` VARCHAR(16) NOT NULL,
   `Validade` VARCHAR(1) NOT NULL,
   `Orcamento` FLOAT NULL,
   `Utilizador_idUtilizador` INT NOT NULL,
@@ -72,7 +70,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ConfiguraFacil`.`Item` (
   `idItem` INT NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(45) NOT NULL,
+  `nome` VARCHAR(64) NOT NULL,
   `preco` FLOAT NOT NULL,
   `stock` INT NULL,
   `tipo` VARCHAR(45) NOT NULL,

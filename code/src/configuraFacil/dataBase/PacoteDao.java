@@ -146,7 +146,7 @@ public class PacoteDao implements Map<Integer, Pacote> {
         Pacote p = new Pacote();
         try {
             conn = Connect.connect();
-            String sql = "SELECT * FROM 'Pacote' sortby 'id'" + "inner join 'Pacote_has_Item' on 'Pacote.idPacote'='Pacote_has_Item.'\n" + "inerjoin 'Item'\n" + "where Pacote_idPacote=?";
+            String sql = "SELECT * FROM 'Pacote'" + "inner join 'Pacote_has_Item' on 'Pacote.idPacote'='Pacote_has_Item.'\n" + "inerjoin 'Item'\n" + "where Pacote_idPacote=?";
             PreparedStatement stm = conn.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             while(rs.next()){
