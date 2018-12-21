@@ -28,7 +28,7 @@ public class StockFabricaController {
     @FXML
     private TableColumn<Item,Integer> clnIdStock;
     @FXML
-    private TableColumn<Item,Integer> clnNomeStock;
+    private TableColumn<Item,String> clnNomeStock;
     @FXML
     private TableColumn<Item,Integer> clnTipoStock;
     @FXML
@@ -54,19 +54,23 @@ public class StockFabricaController {
         tblStockFabricante.setItems(cf.getStockitems());
     }
     public void handlerBtnAdicionStock(ActionEvent actionEvent) throws NumberFormatException{
-        try {
-            lbErro.setText("");
-            int id = Integer.parseInt(tfId.getText());
-            int quantidade = Integer.parseInt(tfQuantidade.getText());
-            int aux;
-            if (encomenda.containsKey(id)) {
-                aux = encomenda.get(id);
-                encomenda.replace(id, quantidade + aux);
-            } else {
-                encomenda.put(id, quantidade);
+        if(tfId.getText()=="" || tfId.getText()=="") {
+            lbErro.setText("Inseira os dados!");
+        } else{
+            try {
+                lbErro.setText("");
+                int id = Integer.parseInt(tfId.getText());
+                int quantidade = Integer.parseInt(tfQuantidade.getText());
+                int aux;
+                if (encomenda.containsKey(id)) {
+                    aux = encomenda.get(id);
+                    encomenda.replace(id, quantidade + aux);
+                } else {
+                    encomenda.put(id, quantidade);
+                }
+            } catch(NumberFormatException e){
+                lbErro.setText("Numeros Errados!");
             }
-        } catch(NumberFormatException e){
-            lbErro.setText("Numeros Errados!");
         }
     }
     public void handlerBtnFinalizarStock(){

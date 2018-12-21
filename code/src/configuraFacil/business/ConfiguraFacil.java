@@ -23,8 +23,6 @@ public class ConfiguraFacil {
     private ItemDao itemDao;
     private ClienteDao clienteDao;
     private Map<String, Configuracao> configuracoes;
-    private ObservableList<Configuracao> oc;
-    private ObservableList<Item> oi;
     private Utilizador logged;
     private Configuracao configConsulta;
 
@@ -82,12 +80,12 @@ public class ConfiguraFacil {
 
     public ObservableList<Configuracao> getConfiguracoes(){
         List<Configuracao> lc = new ArrayList<>(configDao.values());
-        oc = FXCollections.observableArrayList(lc);
+        ObservableList<Configuracao> oc = FXCollections.observableArrayList(lc);
         return oc;
     }
     public ObservableList<Item> getStockitems(){
         List<Item> li = new ArrayList<>(itemDao.values());
-        oi = FXCollections.observableArrayList(li);
+        ObservableList<Item> oi = FXCollections.observableArrayList(li);
         return oi;
     }
 
