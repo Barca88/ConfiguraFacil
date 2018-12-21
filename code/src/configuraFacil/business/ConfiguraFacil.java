@@ -11,6 +11,7 @@ import configuraFacil.dataBase.ItemDao;
 import configuraFacil.dataBase.UtilizadorDao;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import sun.nio.cs.UTF_32LE;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,7 @@ public class ConfiguraFacil {
     private ItemDao itemDao;
     private Map<String, Configuracao> configuracoes;
     private ObservableList<Configuracao> oc;
+    private ObservableList<Utilizador> ou;
     private Utilizador logged;
     private Configuracao configConsulta;
 
@@ -84,6 +86,12 @@ public class ConfiguraFacil {
         List<Configuracao> lc = new ArrayList<>(configDao.values());
         oc = FXCollections.observableArrayList(lc);
         return oc;
+    }
+
+    public ObservableList<Utilizador> getUtilizadores(){
+        List<Utilizador> lu = new ArrayList<>(utilizadorDao.values());
+        ou = FXCollections.observableArrayList(lu);
+        return ou;
     }
 
     public Configuracao getConfigConsulta() {
