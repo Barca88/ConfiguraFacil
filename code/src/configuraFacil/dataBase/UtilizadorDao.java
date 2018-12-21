@@ -167,7 +167,7 @@ public class UtilizadorDao implements Map<String, Utilizador> {
         }finally {
             Connect.close(conn);
         }
-        return null;
+        return col;
     }
 
     @Override

@@ -26,7 +26,8 @@ public class ConfiguraFacil {
     private ItemDao itemDao;
     private Map<String, Configuracao> configuracoes;
     private ObservableList<Configuracao> oc;
-    private ObservableList<Utilizador> ou;
+    private ObservableList<Utilizador> ov;
+    private ObservableList<Utilizador> of;
     private Utilizador logged;
     private Configuracao configConsulta;
 
@@ -88,10 +89,16 @@ public class ConfiguraFacil {
         return oc;
     }
 
-    public ObservableList<Utilizador> getUtilizadores(){
-        List<Utilizador> lu = new ArrayList<>(utilizadorDao.values());
-        ou = FXCollections.observableArrayList(lu);
-        return ou;
+    public ObservableList<Utilizador> getVendedores(){
+        List<Utilizador> lv = new ArrayList<>(utilizadorDao.values().stream().filter(i -> i.getClass().getSimpleName().equals("Vendedor")).collect(Collectors.toList()));
+        ov = FXCollections.observableArrayList(lv);
+        return ov;
+    }
+
+    public ObservableList<Utilizador> getFabricantes(){
+        List<Utilizador> lv = new ArrayList<>(utilizadorDao.values().stream().filter(i -> i.getClass().getSimpleName().equals("Fabricante")).collect(Collectors.toList()));
+        of = FXCollections.observableArrayList(lv);
+        return of;
     }
 
     public Configuracao getConfigConsulta() {
