@@ -50,8 +50,12 @@ public class SceneManager{
                 mc.init(cf);
                 break;
             case 7 : 
-                StockController sac = loader.getController();
+                StockAdminController sac = loader.getController();
                 sac.init(cf);
+                break;
+            case 8 :
+                StockFabricanteController sfc = loader.getController();
+                sfc.init(cf);
                 break;
             case 9 :
                 ConsultarConfiguracaoController ccc = loader.getController();
