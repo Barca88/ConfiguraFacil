@@ -182,6 +182,26 @@ public class ConfiguraFacil {
         return o_pacote;
     }
 
+    public List<Item> incompatibilidades (Item item, Map<Integer,Item> conf){
+        List<Item> incomp = new ArrayList<>();
+        for(int id : item.getIncomp()){
+            if (conf.containsKey(id))
+                incomp.add(itemDao.get(id));
+        }
+        return incomp;
+    }
+
+    public List<Item> dependencias (Item item, Map<Integer,Item> conf){
+        List<Item> depend = new ArrayList<>();
+        for(int id : item.getDepend()){
+            if (conf.containsKey(id))
+                depend.add(itemDao.get(id));
+        }
+        return depend;
+    }
+
+    
+
 
 
 
