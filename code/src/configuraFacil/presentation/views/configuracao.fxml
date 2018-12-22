@@ -42,7 +42,7 @@
                <content>
                   <AnchorPane fx:id="apFabrLogin" prefHeight="171.0" prefWidth="393.0" style="-fx-background-color: #376888;">
                      <children>
-                        <ChoiceBox fx:id="cbModelo" layoutX="166.0" layoutY="14.0" prefHeight="26.0" prefWidth="422.0" style="-fx-background-color: #195988;" />
+                        <ChoiceBox fx:id="cbModelo" layoutX="166.0" layoutY="14.0" prefHeight="26.0" prefWidth="422.0" style="1-fx-background-color: #195988;" />
                         <Label layoutX="14.0" layoutY="14.0" text="Modelo " textFill="WHITE">
                            <font>
                               <Font size="20.0" />

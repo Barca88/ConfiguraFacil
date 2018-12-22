@@ -80,7 +80,9 @@ public class ConfiguracaoController {
     }
 
     public void ModeloChanged() {
+
         cf.getInUseConfig().setModelo(cbModelo.getValue());
+        AlertBox.display("Item incompativel", "Deseja substituir o item?");
         System.out.println(cf.getInUseConfig().getModelo());
     }
 }
