@@ -200,7 +200,9 @@ public class ConfiguraFacil {
         return depend;
     }
 
-    
+
+
+
 
 
 
@@ -220,5 +222,9 @@ public class ConfiguraFacil {
     public void setLogged(Utilizador logged) {
         this.logged = logged;
     }
+
+
+
+
 }
 

@@ -41,7 +41,8 @@ public class ConsultarConfiguracaoController {
         lblConfig.setText("Configuração " + Integer.toString(cf.getConfigConsulta().getId()));
         lblModelo.setText(cf.getConfigConsulta().getModelo());
         crCor.setFill(javafx.scene.paint.Color.RED);
-        for(Item i : cf.getConfigConsulta().getItens().values()) {
+        for(Item i : cf.getConfigConsulta().getItens().values()){
+            if(!i.getTipo().equals("Modelo") && !i.getTipo().equals("Cor"))
             lvItens.getItems().add(i);
         }
         lblCliente.setText(cf.getConfigConsulta().getCliente().getNome());
