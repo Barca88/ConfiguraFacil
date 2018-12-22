@@ -1,5 +1,6 @@
 package configuraFacil.business;
 import configuraFacil.business.models.Configuracao;
+import configuraFacil.business.models.Pacote;
 import configuraFacil.business.models.items.Item;
 import configuraFacil.business.models.users.Administrador;
 import configuraFacil.business.models.users.Fabricante;
@@ -24,7 +25,7 @@ public class ConfiguraFacil {
     private ClienteDao clienteDao;
     private ItemDao itemDao;
     private PacoteDao pacoteDao;
-    private Map<String, Configuracao> configuracoes;
+
     private ObservableList<Configuracao> oc;
     private ObservableList<Utilizador> ov;
     private ObservableList<Utilizador> of;
@@ -39,8 +40,9 @@ public class ConfiguraFacil {
     private ObservableList<String> o_estofos;
     private ObservableList<String> o_op;
     private ObservableList<String> o_pacote;
+
     private Utilizador logged;
-    private Configuracao configConsulta;
+    private Configuracao inUseConfig;
 
     public ConfiguraFacil() {
         utilizadorDao = new UtilizadorDao();
@@ -75,8 +77,7 @@ public class ConfiguraFacil {
                                 return 2;
                             break;
                     }
-                    logged = us;
-
+                    this.setLogged(us);
                     return 1;
                 } else return 0;
             } else return 2;
@@ -86,14 +87,6 @@ public class ConfiguraFacil {
             throw new NullPointerException(e.getMessage());
         }
 
-    }
-
-    public void adicionarConfiguracao(Configuracao config){
-        configuracoes.put(config.getEstado(),config);
-    }
-
-    public void removeConfiguracao(Configuracao config){
-        configuracoes.put(config.getEstado(),config);
     }
 
     public ObservableList<Configuracao> getConfiguracoes(){
@@ -121,63 +114,63 @@ public class ConfiguraFacil {
     }
 
     public ObservableList<String> getModelos(){
-        List<String> lm = new ArrayList<>(itemDao.values().stream().filter(i -> i.getTipo().equals("Modelo")).map(i -> i.getNome()).collect(toList()));
+        List<String> lm = itemDao.values().stream().filter(i -> i.getTipo().equals("Modelo")).map(Item::getNome).collect(Collectors.toList());
         o_modelo= FXCollections.observableArrayList(lm);
         return o_modelo;
     }
 
     public ObservableList<String> getCores(){
-        List<String> lm = new ArrayList<>(itemDao.values().stream().filter(i -> i.getTipo().equals("Cor")).map(i -> i.getNome()).collect(toList()));
+        List<String> lm = itemDao.values().stream().filter(i -> i.getTipo().equals("Cor")).map(Item::getNome).collect(Collectors.toList());
         o_cor = FXCollections.observableArrayList(lm);
         return o_cor;
     }
 
     public ObservableList<String> getJantes(){
-        List<String> lm = new ArrayList<>(itemDao.values().stream().filter(i -> i.getTipo().equals("Jantes")).map(i -> i.getNome()).collect(toList()));
+        List<String> lm = itemDao.values().stream().filter(i -> i.getTipo().equals("Jantes")).map(Item::getNome).collect(Collectors.toList());
         o_jantes = FXCollections.observableArrayList(lm);
         return o_jantes;
     }
 
     public ObservableList<String> getPneus(){
-        List<String> lm = new ArrayList<>(itemDao.values().stream().filter(i -> i.getTipo().equals("Pneus")).map(i -> i.getNome()).collect(toList()));
+        List<String> lm = itemDao.values().stream().filter(i -> i.getTipo().equals("Pneus")).map(Item::getNome).collect(Collectors.toList());
         o_pneu = FXCollections.observableArrayList(lm);
         return o_pneu;
     }
 
     public ObservableList<String> getCorpos(){
-        List<String> lm = new ArrayList<>(itemDao.values().stream().filter(i -> i.getTipo().equals("Corpo")).map(i -> i.getNome()).collect(toList()));
+        List<String> lm = itemDao.values().stream().filter(i -> i.getTipo().equals("Corpo")).map(Item::getNome).collect(Collectors.toList());
         o_corpo = FXCollections.observableArrayList(lm);
         return o_corpo;
     }
 
     public ObservableList<String> getVolantes(){
-        List<String> lm = new ArrayList<>(itemDao.values().stream().filter(i -> i.getTipo().equals("Volante")).map(i -> i.getNome()).collect(toList()));
+        List<String> lm = itemDao.values().stream().filter(i -> i.getTipo().equals("Volante")).map(Item::getNome).collect(Collectors.toList());
         o_volante = FXCollections.observableArrayList(lm);
         return o_volante;
     }
 
 
     public ObservableList<String> getBancos(){
-        List<String> lm = new ArrayList<>(itemDao.values().stream().filter(i -> i.getTipo().equals("Bancos")).map(i -> i.getNome()).collect(toList()));
+        List<String> lm = itemDao.values().stream().filter(i -> i.getTipo().equals("Bancos")).map(Item::getNome).collect(Collectors.toList());
         o_bancos = FXCollections.observableArrayList(lm);
         return o_bancos;
     }
 
 
     public ObservableList<String> getEstofos(){
-        List<String> lm = new ArrayList<>(itemDao.values().stream().filter(i -> i.getTipo().equals("Estofos")).map(i -> i.getNome()).collect(toList()));
+        List<String> lm = itemDao.values().stream().filter(i -> i.getTipo().equals("Estofos")).map(Item::getNome).collect(Collectors.toList());
         o_estofos = FXCollections.observableArrayList(lm);
         return o_estofos;
     }
 
     public ObservableList<String> getOpcionais(){
-        List<String> lm = new ArrayList<>(itemDao.values().stream().filter(i -> i.getTipo().equals("Opcional")).map(i -> i.getNome()).collect(toList()));
+        List<String> lm = itemDao.values().stream().filter(i -> i.getTipo().equals("Opcional")).map(Item::getNome).collect(Collectors.toList());
         o_op = FXCollections.observableArrayList(lm);
         return o_op;
     }
 
     public ObservableList<String> getPacotes(){
-        List<String> lm = new ArrayList<>(pacoteDao.values().stream().map(p -> p.getNome()).collect(toList()));
+        List<String> lm = pacoteDao.values().stream().map(Pacote::getNome).collect(Collectors.toList());
         o_pacote = FXCollections.observableArrayList(lm);
         return o_pacote;
     }
@@ -200,21 +193,6 @@ public class ConfiguraFacil {
         return depend;
     }
 
-
-
-
-
-
-
-
-    public Configuracao getConfigConsulta() {
-        return configConsulta;
-    }
-
-    public void setConfigConsulta(Configuracao configConsulta) {
-        this.configConsulta = configConsulta;
-    }
-
     public Utilizador getLogged() {
         return logged;
     }
@@ -223,8 +201,12 @@ public class ConfiguraFacil {
         this.logged = logged;
     }
 
+    public Configuracao getInUseConfig() {
+        return inUseConfig;
+    }
 
-
-
+    public void setInUseConfig(Configuracao configConsulta) {
+        this.inUseConfig = configConsulta;
+    }
 }
 

@@ -1,12 +1,9 @@
 package configuraFacil.presentation.controllers;
 
-import configuraFacil.business.models.users.Administrador;
-import configuraFacil.business.models.users.Fabricante;
-import configuraFacil.presentation.controllers.SceneManager;
+
 import configuraFacil.business.ConfiguraFacil;
 import configuraFacil.business.models.Configuracao;
 
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -19,7 +16,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 
 public class ConfiguracoesController {
 
@@ -81,7 +77,7 @@ public class ConfiguracoesController {
         if(tfIdConfig.getText().equals("") || tfEstadoConfig.getText().equals("")) {
             System.out.println("TODO SHOW Aviso");
         }else{Configuracao c = new Configuracao(Integer.parseInt(tfIdConfig.getText()), "Civic", "Preto", tfEstadoConfig.getText(), 0, null, null, null);
-            cf.adicionarConfiguracao(c);
+           // cf.adicionarConfiguracao(c);
             cf.getConfiguracoes();
             initTable();
         }
@@ -91,7 +87,7 @@ public class ConfiguracoesController {
         if (keyEvent.getCode().equals(KeyCode.ENTER))
         {
             Configuracao c = tblConfigAdmin.getSelectionModel().getSelectedItem();
-            cf.setConfigConsulta(c);
+            cf.setInUseConfig(c);
             URL url = getClass().getResource("../views/consultarConfiguracao.fxml");
             Stage window = (Stage) ((Node) keyEvent.getSource()).getScene().getWindow();
             SceneManager sm = new SceneManager(url, window);

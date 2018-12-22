@@ -6,13 +6,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.input.InputMethodEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
 
 
-public class ConfigBaseController {
+public class ConfiguracaoController {
 
     @FXML
     private ChoiceBox<String> cbModelo;
@@ -51,6 +52,7 @@ public class ConfigBaseController {
         cf = cfo;
 
         cbModelo.setItems(cf.getModelos());
+        cbModelo.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> ModeloChanged());
         cbCor.setItems(cf.getCores());
         cbVolante.setItems(cf.getVolantes());
         cbBancos.setItems(cf.getBancos());
@@ -60,7 +62,7 @@ public class ConfigBaseController {
         cbCorpo.setItems(cf.getCorpos());
         cbPacote.setItems(cf.getPacotes());
         cbOpcional.setItems(cf.getOpcionais());
-        cf.setConfigConsulta(new Configuracao());
+        cf.setInUseConfig(new Configuracao());
     }
 
     public void handleBtnCancelar(ActionEvent actionEvent) throws IOException {
@@ -75,5 +77,10 @@ public class ConfigBaseController {
         Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         SceneManager sm = new SceneManager(url, window);
         sm.newScene(5, cf);
+    }
+
+    public void ModeloChanged() {
+        cf.getInUseConfig().setModelo(cbModelo.getValue());
+        System.out.println(cf.getInUseConfig().getModelo());
     }
 }

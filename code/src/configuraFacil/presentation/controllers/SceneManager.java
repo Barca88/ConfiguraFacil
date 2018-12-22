@@ -46,7 +46,7 @@ public class SceneManager{
                 fcc.init(cf);
                 break;
             case 6 :
-                ConfigBaseController mc = loader.getController();
+                ConfiguracaoController mc = loader.getController();
                 mc.init(cf);
                 break;
             case 7 : 
