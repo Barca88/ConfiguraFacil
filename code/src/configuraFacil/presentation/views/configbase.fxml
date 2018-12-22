@@ -120,6 +120,20 @@
             </Tab>
             <Tab text="Extra">
                <content>
+                  <AnchorPane fx:id="apFabrLogin1211" prefHeight="308.0" prefWidth="602.0" style="-fx-background-color: #376888;">
+                     <children>
+                        <ChoiceBox fx:id="cbPacote" layoutX="146.0" layoutY="80.0" prefHeight="26.0" prefWidth="291.0" style="-fx-background-color: #195988;" />
+                        <Label layoutX="14.0" layoutY="81.0" text="Pacote" textFill="WHITE">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Extra">
+               <content>
                   <AnchorPane fx:id="apFabrLogin121" prefHeight="308.0" prefWidth="602.0" style="-fx-background-color: #376888;">
                      <children>
                         <ChoiceBox fx:id="cbOpcional" layoutX="146.0" layoutY="80.0" prefHeight="26.0" prefWidth="291.0" style="-fx-background-color: #195988;" />

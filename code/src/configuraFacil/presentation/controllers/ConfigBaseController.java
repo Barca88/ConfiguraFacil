@@ -39,6 +39,9 @@ public class ConfigBaseController {
     private ChoiceBox<String> cbCorpo;
 
     @FXML
+    private ChoiceBox<String> cbPacote;
+
+    @FXML
     private ChoiceBox<String> cbOpcional;
 
 
@@ -55,6 +58,7 @@ public class ConfigBaseController {
         cbJantes.setItems(cf.getJantes());
         cbPneus.setItems(cf.getPneus());
         cbCorpo.setItems(cf.getCorpos());
+        cbPacote.setItems(cf.getPacotes());
         cbOpcional.setItems(cf.getOpcionais());
         cf.setConfigConsulta(new Configuracao());
     }
