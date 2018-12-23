@@ -3,6 +3,7 @@ package configuraFacil.presentation.controllers;
 import configuraFacil.business.ConfiguraFacil;
 import configuraFacil.business.models.Configuracao;
 import configuraFacil.business.models.items.Item;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -56,20 +57,28 @@ public class ConfiguracaoController {
 
         cbModelo.setItems(cf.getModelos());
         cbModelo.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbModelo,old));
+
         cbCor.setItems(cf.getCores());
         cbCor.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbCor,old));
+
         cbVolante.setItems(cf.getVolantes());
         cbVolante.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbVolante,old));
+
         cbBancos.setItems(cf.getBancos());
         cbBancos.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbBancos,old));
+
         cbEstofos.setItems(cf.getEstofos());
         cbEstofos.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbEstofos,old));
+
         cbJantes.setItems(cf.getJantes());
         cbJantes.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbJantes,old));
+
         cbPneus.setItems(cf.getPneus());
         cbPneus.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbPneus,old));
+
         cbCorpo.setItems(cf.getCorpos());
         cbCorpo.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbCorpo,old));
+
         cbPacote.setItems(cf.getPacotes());
 
         cbOpcional.setItems(cf.getOpcionais());
@@ -91,17 +100,11 @@ public class ConfiguracaoController {
         sm.newScene(5, cf);
     }
 
-    public void modeloChanged() {
-        cf.getInUseConfig().setModelo(cbModelo.getValue());
-    }
 
-    public void corChanged(){
-        cf.getInUseConfig().setCor(cbCor.getValue());
-    }
-
-        public void itemChanged(ChoiceBox<String> tipo, String old){
+    public void itemChanged(ChoiceBox<String> tipo, String old){
         Configuracao c = cf.getInUseConfig();
         Item item = cf.getItems().stream().filter(i -> i.getNome().equals(tipo.getValue())).collect(Collectors.toList()).get(0);
+
         if (old != null){
             Item oldItem = cf.getItems().stream().filter(i -> i.getNome().equals(old)).collect(Collectors.toList()).get(0);
             List <Item> remove = cf.oldDependent(c,oldItem);
@@ -110,19 +113,20 @@ public class ConfiguracaoController {
                 if(resp == true){
                     for (Item rem : remove){
                         cf.removeItem(rem,c);
+                        removeChoices(rem);
                     }
                 }
             }
 
-
-
         }
+
         List<Item> depend = cf.dependencias(item,c.getItens());
         List<Item> incomp = cf.incompatibilidades(item,c.getItens());
         if(depend.isEmpty() && incomp.isEmpty()){
             cf.removeSametype(c,item);
             cf.addItem(item,c);
         }
+
         else{
             //TO DO (Muito Importante)
             List<Item> dincomp = cf.dIncompativeis(c.getItens(),depend);
@@ -141,14 +145,56 @@ public class ConfiguracaoController {
                 }
                 for (Item i3 : incomp){
                     cf.removeItem(i3,c);
+                    //removeChoices(i3);
                 }
                 for (Item i4 : dincomp){
                     cf.removeItem(i4,c);
+                    //removeChoices(i4);
                 }
+
                 cf.addItem(item,c);
+
+
             }
         }
+
         if(!incomp.isEmpty() && !depend.isEmpty());//TO DO(Esta condição poderá não ser necessária)
 
+    }
+
+    public void removeChoices(Item item){
+        String tipo = item.getTipo();
+
+        switch(tipo) {
+
+            case "Modelo" : cbModelo.setValue(null); break;
+            case "Cor" : cbCor.setValue(null); break;
+            case "Jantes" : cbJantes.setValue(null); break;
+            case "Pneus" : cbPneus.setValue(null); break;
+            case "Corpo" : cbCorpo.setValue(null); break;
+            case "Volante" : cbVolante.setValue(null); break;
+            case "Bancos" : cbBancos.setValue(null); break;
+            case "Estofos" : cbEstofos.setValue(null); break;
+            default: break;
+
+        }
+    }
+
+    public void addChoices(Item item){
+        String tipo = item.getTipo();
+
+        switch(tipo) {
+
+            case "Modelo" : cbModelo.setValue(item.getNome()); break;
+            case "Cor" : cbCor.setValue(item.getNome()); break;
+            case "Jantes" : cbJantes.setValue(item.getNome()); break;
+            case "Pneus" : cbPneus.setValue(item.getNome()); break;
+            case "Corpo" : cbCorpo.setValue(item.getNome()); break;
+            case "Volante" : cbVolante.setValue(item.getNome()); break;
+            case "Bancos" : cbBancos.setValue(item.getNome()); break;
+            case "Estofos" : cbEstofos.setValue(item.getNome()); break;
+            default: break;
+
+        }
     }
 }
