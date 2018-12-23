@@ -107,14 +107,28 @@ public class ConfiguracaoController {
         if(depend.isEmpty() && incomp.isEmpty()){
             c = cf.addItem(item,c);
         }
-        if(incomp.isEmpty() && !depend.isEmpty()){
-            boolean reply = AlertBox.display("O Item tem dependências", "Deseja adicionar os seguintes item/ns? com o custo adicional: " + cf.price(depend));
+        else{
+            //TO DO (Muito Importante)
+            List<Item> dincomp = cf.dIncompativeis(c.getItens(),depend);
+            List<Item> idepend = cf.iDependentes(c.getItens(),incomp);
+            boolean reply = AlertBox.display("O Item tem dependências", "Deseja adicionar os seguintes itens com o custo adicional de " + cf.price(depend) + "?");
             if(reply == true){
+
                 for (Item i : depend){
                    c = cf.addItem(i,c);
                 }
+                for (Item i2 : idepend){
+                    c = cf.addItem(i2,c);
+                }
+                for (Item i3 : incomp){
+                    c = cf.removeItem(i3,c);
+                }
+                for (Item i4 : dincomp){
+                    c = cf.removeItem(i4,c);
+                }
             }
         }
+        if(!incomp.isEmpty() && !depend.isEmpty());//TO DO(Esta condição poderá não ser necessária)
 
     }
 }

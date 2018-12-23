@@ -186,7 +186,7 @@ public class ConfiguraFacil {
         return incomp;
     }
 
-    public List<Item> dependencias (Item item, Map<Integer,Item> conf){
+    public List<Item> dependencias (Item item, Map<Integer,Item> conf ){
         List<Item> depend = new ArrayList<>();
         for(int id : item.getDepend()){
             if (!conf.containsKey(id))
@@ -195,8 +195,45 @@ public class ConfiguraFacil {
         return depend;
     }
 
+
+    //Incompatibiliades das dependências(Não sei se estará correto)
+    public List<Item> dIncompativeis(Map<Integer,Item> conf, List <Item> depend){
+        List <Item> incomp = new ArrayList<>();
+        for(Item i : depend){
+            for(Item j : conf.values()){
+                if(i.getIncomp().contains(j.getId())){
+                    incomp.add(j);
+                }
+
+            }
+        }
+        return incomp;
+    }
+
+
+    //Dependências das Incompatibiliades(Não sei se estará correto)
+    public List<Item> iDependentes(Map<Integer,Item> conf, List <Item> incomp){
+        List <Item> depend = new ArrayList<>();
+        for(Item i : conf.values()){
+            for(Item j : incomp){
+                if(i.getDepend().contains(j.getId())){
+                    depend.add(j);
+                }
+
+            }
+        }
+        return depend;
+    }
+
+
+
     public Configuracao  addItem (Item i, Configuracao c){
         c.getItens().put(i.getId(),i);
+        return c;
+    }
+
+    public Configuracao removeItem(Item i, Configuracao c){
+        c.getItens().remove(i.getId());
         return c;
     }
 
