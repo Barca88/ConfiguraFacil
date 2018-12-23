@@ -26,7 +26,7 @@ public class VendedorController {
     }
 
     public void handleBtnCriarConfigAction(ActionEvent actionEvent) throws IOException {
-        URL url = getClass().getResource("../views/configbase.fxml");
+        URL url = getClass().getResource("../views/configuracao.fxml");
         Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         SceneManager sm = new SceneManager(url, window);
         sm.newScene(6, cf);

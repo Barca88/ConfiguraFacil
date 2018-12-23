@@ -38,21 +38,21 @@ public class ConsultarConfiguracaoController {
 
     public void init(ConfiguraFacil cfo) {
         cf = cfo;
-        lblConfig.setText("Configuração " + Integer.toString(cf.getConfigConsulta().getId()));
-        lblModelo.setText(cf.getConfigConsulta().getModelo());
+        lblConfig.setText("Configuração " + Integer.toString(cf.getInUseConfig().getId()));
+        lblModelo.setText(cf.getInUseConfig().getModelo());
         crCor.setFill(javafx.scene.paint.Color.RED);
-        for(Item i : cf.getConfigConsulta().getItens().values()){
+        for(Item i : cf.getInUseConfig().getItens().values()){
             if(!i.getTipo().equals("Modelo") && !i.getTipo().equals("Cor"))
             lvItens.getItems().add(i);
         }
-        lblCliente.setText(cf.getConfigConsulta().getCliente().getNome());
-        lblVendedor.setText(cf.getConfigConsulta().getVendedor().getNome());
+        lblCliente.setText(cf.getInUseConfig().getCliente().getNome());
+        lblVendedor.setText(cf.getInUseConfig().getVendedor().getNome());
 
 
     }
 
     public void handleBtnBack(ActionEvent actionEvent) throws IOException {
-        cf.setConfigConsulta(null);
+        cf.setInUseConfig(null);
         URL url = getClass().getResource("../views/configuracoes.fxml");
         Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         SceneManager sm = new SceneManager(url, window);
