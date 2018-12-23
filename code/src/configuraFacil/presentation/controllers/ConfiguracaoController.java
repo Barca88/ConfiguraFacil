@@ -55,25 +55,25 @@ public class ConfiguracaoController {
         cf = cfo;
 
         cbModelo.setItems(cf.getModelos());
-        cbModelo.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbModelo));
+        cbModelo.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbModelo,old));
         cbCor.setItems(cf.getCores());
-        cbCor.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbCor));
+        cbCor.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbCor,old));
         cbVolante.setItems(cf.getVolantes());
-        cbVolante.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbVolante));
+        cbVolante.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbVolante,old));
         cbBancos.setItems(cf.getBancos());
-        cbBancos.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbBancos));
+        cbBancos.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbBancos,old));
         cbEstofos.setItems(cf.getEstofos());
-        cbEstofos.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbEstofos));
+        cbEstofos.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbEstofos,old));
         cbJantes.setItems(cf.getJantes());
-        cbJantes.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbJantes));
+        cbJantes.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbJantes,old));
         cbPneus.setItems(cf.getPneus());
-        cbPneus.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbPneus));
+        cbPneus.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbPneus,old));
         cbCorpo.setItems(cf.getCorpos());
-        cbCorpo.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbCorpo));
+        cbCorpo.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbCorpo,old));
         cbPacote.setItems(cf.getPacotes());
 
         cbOpcional.setItems(cf.getOpcionais());
-        cbOpcional.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbOpcional));
+        cbOpcional.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbOpcional,old));
         cf.setInUseConfig(new Configuracao());
     }
 
@@ -99,9 +99,24 @@ public class ConfiguracaoController {
         cf.getInUseConfig().setCor(cbCor.getValue());
     }
 
-        public void itemChanged(ChoiceBox<String> tipo){
+        public void itemChanged(ChoiceBox<String> tipo, String old){
         Configuracao c = cf.getInUseConfig();
         Item item = cf.getItems().stream().filter(i -> i.getNome().equals(tipo.getValue())).collect(Collectors.toList()).get(0);
+        if (old != null){
+            Item oldItem = cf.getItems().stream().filter(i -> i.getNome().equals(old)).collect(Collectors.toList()).get(0);
+            List <Item> remove = cf.oldDependent(c,oldItem);
+            if(!remove.isEmpty()){
+                boolean resp = AlertBox.display("O Item tem incompatibilidades", "Deseja adicionar o seguinte item?");
+                if(resp == true){
+                    for (Item rem : remove){
+                        cf.removeItem(rem,c);
+                    }
+                }
+            }
+
+
+
+        }
         List<Item> depend = cf.dependencias(item,c.getItens());
         List<Item> incomp = cf.incompatibilidades(item,c.getItens());
         if(depend.isEmpty() && incomp.isEmpty()){

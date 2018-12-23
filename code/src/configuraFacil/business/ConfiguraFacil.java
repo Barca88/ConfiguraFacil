@@ -210,6 +210,16 @@ public class ConfiguraFacil {
         return incomp;
     }
 
+    public List<Item> oldDependent(Configuracao c, Item old){
+        List <Item> dependentes = new ArrayList<>();
+        for(Item i : c.getItens().values()){
+            if(i.getDepend().contains(old.getId())){
+                dependentes.add(i);
+            }
+        }
+        return dependentes;
+    }
+
 
     //Dependências das Incompatibiliades(Não sei se estará correto)
     public List<Item> iDependentes(Map<Integer,Item> conf, List <Item> incomp){
