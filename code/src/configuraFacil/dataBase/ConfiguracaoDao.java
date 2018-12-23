@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class ConfiguracaoDao implements Map<Integer,Configuracao> {
@@ -144,28 +145,101 @@ public class ConfiguracaoDao implements Map<Integer,Configuracao> {
     }
 
     @Override
-    public Configuracao put(Integer integer, Configuracao configuracao) {
-        return null;
+    public Configuracao put(Integer integer, Configuracao configuracao){
+        Configuracao config = null;
+        Set<Integer> i_set = configuracao.getItens().keySet();
+        Cliente cliente = configuracao.getCliente();
+        int id_Cli = 0 ,id_Config = 0;
+        int id_V = configuracao.getVendedor().getId();
+
+        try {
+            conn = Connect.connect();
+            String sql = "SELECT * FROM Cliente WHERE email=?";
+            PreparedStatement stm = conn.prepareStatement(sql);
+
+            stm.setString(1,cliente.getEmail());
+
+            ResultSet rs = stm.executeQuery();
+
+            if(rs.next()){ // EXISTE CLIENTE -> METEMOS O ID CERTO
+                id_Cli = rs.getInt(1);
+                cliente.setId(id_Cli);
+
+            }else{ //NÃO EXISTE CLIENTE -> INSERE NA BD
+                sql = "INSERT INTO Cliente (nome,email,telemovel)\n" +
+                        "VALUES (?,?,?)\n";
+                stm = conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+                stm.executeUpdate();
+
+                ResultSet rs1 = stm.getGeneratedKeys();
+
+
+                if(rs1.next()){ // METEMOS O ID CERTO
+                    id_Cli = rs1.getInt(1);
+                    cliente.setId(id_Cli);
+                }
+
+
+            }
+
+            // PROCEDEMOS A INSERIR A CONFIGURAÇÃO
+            sql = "INSERT INTO Configuracao (validade,orcamento,Utilizador_idUtilizador,Cliente_idCliente)\n" +
+                    "VALUES (?,?,?,?)\n";
+
+            stm = conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+            stm.setString(1,configuracao.getEstado());
+            stm.setFloat(2,configuracao.getOrcamento());
+            stm.setInt(3,id_V);
+            stm.setInt(4,id_Cli);
+            stm.executeUpdate();
+
+            ResultSet rs2 = stm.getGeneratedKeys();
+
+            if(rs2.next()){ // METER ID CERTO
+                id_Config = rs2.getInt(1);
+                configuracao.setId(id_Config);
+            }
+
+            // PROCEDEMOS A INSERIR OS ITEMS NA TABELA CONFIGURAÇÃO_ITEM
+            for(Integer i: i_set){
+                sql = "INSERT INTO Configuracao_Item\n" +
+                        "VALUES (?,?)";
+
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1,id_Config);
+                stm.setInt(2,i);
+            }
+
+            config = configuracao;
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            Connect.close(conn);
+        }
+
+        return config;
     }
 
     @Override
     public Configuracao remove(Object o) {
+        //TODO - REMOVE
         return null;
     }
 
     @Override
     public void putAll(Map<? extends Integer, ? extends Configuracao> map) {
-
+        //TODO - PUT_ALL
     }
 
     @Override
     public void clear() {
-
+        //TODO - CLEAR
     }
 
     @Override
     public Set<Integer> keySet() {
-        return null;
+        throw new NullPointerException("Not implemented!");
     }
 
     public Collection<Configuracao> values() {

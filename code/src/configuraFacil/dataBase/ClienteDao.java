@@ -108,8 +108,8 @@ public class ClienteDao implements Map<Integer, Cliente> {
         Cliente c = null;
         try{
             conn = Connect.connect();
-            PreparedStatement stm = conn.prepareStatement("INSERT INTO Cliente\n" + "VALUES (?,?,?)\n" +
-                    "ON DUPLICATE KEY UPDATE nome=VALUES(nome), password=VALUES(password), email=VALUES(email), telemovel=VALUES(telemovel)", Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement stm = conn.prepareStatement("INSERT INTO Cliente (nome,email,telemovel)\n" + "VALUES (?,?,?)\n" +
+                    "ON DUPLICATE KEY UPDATE nome=VALUES(nome), email=VALUES(email), telemovel=VALUES(telemovel)", Statement.RETURN_GENERATED_KEYS);
 
             stm.setString(1,cli.getNome());
             stm.setString(2,cli.getEmail());

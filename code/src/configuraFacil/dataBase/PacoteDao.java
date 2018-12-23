@@ -117,27 +117,29 @@ public class PacoteDao implements Map<Integer, Pacote> {
 
     @Override
     public Pacote put(Integer integer, Pacote pacote) {
+        //TODO - PUT
         return null;
     }
 
     @Override
     public Pacote remove(Object o) {
+        //TODO - REMOVE
         return null;
     }
 
     @Override
     public void putAll(Map<? extends Integer, ? extends Pacote> map) {
-
+        //TODO - PUT_ALL
     }
 
     @Override
     public void clear() {
-
+        //TODO - CLEAR
     }
 
     @Override
     public Set<Integer> keySet() {
-        return null;
+        throw new NullPointerException("Not implemented!");
     }
 
     @Override
@@ -180,7 +182,7 @@ public class PacoteDao implements Map<Integer, Pacote> {
 
     @Override
     public Set<Entry<Integer, Pacote>> entrySet() {
-        return null;
+        throw new NullPointerException("Not implemented!");
     }
 
 }

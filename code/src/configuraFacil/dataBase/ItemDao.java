@@ -123,8 +123,62 @@ public class ItemDao implements Map<Integer, Item> {
 
     @Override
     public Item put(Integer integer, Item item) {
-        //TO DO
-        return null;
+        int newid = 0;
+        Item i = null;
+        List<Integer> inc;
+        List<Integer> dep = null;
+
+        try{
+            conn = Connect.connect();
+            String sql = "INSERT INTO Item (nome,preco,stock,tipo)\n" + "VALUES (?,?,?,?)\n";
+            PreparedStatement stm = conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+
+            stm.setString(1,item.getNome());
+            stm.setFloat(2,item.getPreco());
+            stm.setFloat(3,item.getStock());
+            stm.setString(3,item.getTipo());
+            stm.executeUpdate();
+
+            ResultSet rs = stm.getGeneratedKeys();
+
+            if(rs.next()){
+                newid = rs.getInt(1);
+                item.setId(newid);
+            }
+
+            if(!(item.getIncomp().isEmpty())){
+                inc = item.getIncomp();
+
+                for(Integer incomp: inc){
+                    sql = "INSERT INTO Incompatibilidade VALUES (?,?)";
+
+                    stm = conn.prepareStatement(sql);
+                    stm.setInt(incomp,newid);
+                    stm.executeUpdate();
+                }
+            }
+
+            if(!(item.getDepend().isEmpty())){
+                dep = item.getDepend();
+
+                for(Integer depend: dep){
+                    sql = "INSERT INTO Dependencia VALUES (?,?)";
+
+                    stm = conn.prepareStatement(sql);
+                    stm.setInt(newid,depend);
+                    stm.executeUpdate();
+                }
+            }
+
+            i = item;
+        }catch (Exception e) {
+            e.printStackTrace();
+
+        }finally {
+            Connect.close(conn);
+        }
+
+        return i;
     }
 
     @Override
@@ -169,7 +223,7 @@ public class ItemDao implements Map<Integer, Item> {
 
     @Override
     public Set<Integer> keySet() {
-        return null;
+        throw new NullPointerException("Not implemented!");
     }
 
     @Override
@@ -224,6 +278,6 @@ public class ItemDao implements Map<Integer, Item> {
 
     @Override
     public Set<Entry<Integer, Item>> entrySet() {
-        return null;
+        throw new NullPointerException("Not implemented!");
     }
 }

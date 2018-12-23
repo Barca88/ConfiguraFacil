@@ -177,7 +177,7 @@ public class UtilizadorDao implements Map<String, Utilizador> {
 
     @Override
     public Set<Entry<String, Utilizador>> entrySet() {
-        return null;
+        throw new NullPointerException("Not implemented!");
     }
 
     public int size(){
