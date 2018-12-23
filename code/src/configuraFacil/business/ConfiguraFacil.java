@@ -9,9 +9,11 @@ import configuraFacil.business.models.users.Utilizador;
 import configuraFacil.dataBase.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import sun.awt.ConstrainableGraphics;
 import sun.nio.cs.UTF_32LE;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -187,10 +189,23 @@ public class ConfiguraFacil {
     public List<Item> dependencias (Item item, Map<Integer,Item> conf){
         List<Item> depend = new ArrayList<>();
         for(int id : item.getDepend()){
-            if (conf.containsKey(id))
+            if (!conf.containsKey(id))
                 depend.add(itemDao.get(id));
         }
         return depend;
+    }
+
+    public Configuracao  addItem (Item i, Configuracao c){
+        c.getItens().put(i.getId(),i);
+        return c;
+    }
+
+    public float price (List<Item> itens){
+        float preco = 0;
+        for(Item i : itens){
+            preco += i.getPreco();
+        }
+        return preco;
     }
 
     public Utilizador getLogged() {
