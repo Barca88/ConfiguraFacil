@@ -57,7 +57,7 @@ public class ConfiguracaoController {
         cbModelo.setItems(cf.getModelos());
         cbModelo.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbModelo));
         cbCor.setItems(cf.getCores());
-        cbCor.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> corChanged());
+        cbCor.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbCor));
         cbVolante.setItems(cf.getVolantes());
         cbVolante.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbVolante));
         cbBancos.setItems(cf.getBancos());
@@ -105,7 +105,8 @@ public class ConfiguracaoController {
         List<Item> depend = cf.dependencias(item,c.getItens());
         List<Item> incomp = cf.incompatibilidades(item,c.getItens());
         if(depend.isEmpty() && incomp.isEmpty()){
-            c = cf.addItem(item,c);
+            cf.removeSametype(c,item);
+            cf.addItem(item,c);
         }
         else{
             //TO DO (Muito Importante)
@@ -115,17 +116,21 @@ public class ConfiguracaoController {
             if(reply == true){
 
                 for (Item i : depend){
-                   c = cf.addItem(i,c);
+                    cf.removeSametype(c,i);
+                    cf.addItem(i,c);
+
                 }
                 for (Item i2 : idepend){
-                    c = cf.addItem(i2,c);
+                    cf.removeSametype(c,i2);
+                    cf.addItem(i2,c);
                 }
                 for (Item i3 : incomp){
-                    c = cf.removeItem(i3,c);
+                    cf.removeItem(i3,c);
                 }
                 for (Item i4 : dincomp){
-                    c = cf.removeItem(i4,c);
+                    cf.removeItem(i4,c);
                 }
+                cf.addItem(item,c);
             }
         }
         if(!incomp.isEmpty() && !depend.isEmpty());//TO DO(Esta condição poderá não ser necessária)

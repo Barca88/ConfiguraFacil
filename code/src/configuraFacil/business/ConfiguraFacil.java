@@ -225,16 +225,22 @@ public class ConfiguraFacil {
         return depend;
     }
 
-
-
-    public Configuracao  addItem (Item i, Configuracao c){
-        c.getItens().put(i.getId(),i);
-        return c;
+    public void removeSametype(Configuracao c, Item i){
+        for (Item i2 : c.getItens().values()){
+            if (i.getTipo().equals(i2.getTipo())){
+                c.removeItem(i2);
+            }
+        }
     }
 
-    public Configuracao removeItem(Item i, Configuracao c){
-        c.getItens().remove(i.getId());
-        return c;
+
+
+    public void  addItem (Item i, Configuracao c){
+        c.addItem(i);
+    }
+
+    public void removeItem(Item i, Configuracao c){
+        c.removeItem(i);
     }
 
     public float price (List<Item> itens){

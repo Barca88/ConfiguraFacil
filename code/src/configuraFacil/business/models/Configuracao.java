@@ -114,4 +114,13 @@ public class Configuracao {
         }
         this.itens = r;
     }
+
+
+    public void addItem(Item item){
+        this.itens.put(item.getId(),item);
+    }
+
+    public void removeItem(Item item){
+        this.itens.remove(item.getId());
+    }
 }
