@@ -101,82 +101,108 @@ public class ConfiguracaoController {
     }
 
 
-    public void itemChanged(ChoiceBox<String> tipo, String old){
+    public void itemChanged(ChoiceBox<String> tipo, String old) {
         Configuracao c = cf.getInUseConfig();
-        Item item = cf.getItems().stream().filter(i -> i.getNome().equals(tipo.getValue())).collect(Collectors.toList()).get(0);
+        Item item = cf.getItems().stream().filter(i -> i.getNome().equals(tipo.getValue())).findAny().orElse(null);
 
-        if (old != null){
+        if (old != null) {
             Item oldItem = cf.getItems().stream().filter(i -> i.getNome().equals(old)).collect(Collectors.toList()).get(0);
-            List <Item> remove = cf.oldDependent(c,oldItem);
-            if(!remove.isEmpty()){
+            List<Item> remove = cf.oldDependent(c, oldItem);
+            if (!remove.isEmpty()) {
                 boolean resp = AlertBox.display("O Item tem incompatibilidades", "Deseja adicionar o seguinte item?");
-                if(resp == true){
-                    for (Item rem : remove){
-                        cf.removeItem(rem,c);
-                        removeChoices(rem);
+                if (resp == true) {
+                    for (Item rem : remove) {
+                        cf.removeItem(rem, c);
+                        Platform.runLater(() -> removeChoices(rem));
                     }
                 }
             }
 
         }
 
-        List<Item> depend = cf.dependencias(item,c.getItens());
-        List<Item> incomp = cf.incompatibilidades(item,c.getItens());
-        if(depend.isEmpty() && incomp.isEmpty()){
-            cf.removeSametype(c,item);
-            cf.addItem(item,c);
-        }
+        List<Item> depend = cf.dependencias(item, c.getItens());
+        List<Item> incomp = cf.incompatibilidades(item, c.getItens());
+        try {
+            if (depend.isEmpty() && incomp.isEmpty()) {
+                cf.removeSametype(c, item);
+                cf.addItem(item, c);
+            } else {
+                //TO DO (Muito Importante)
+                List<Item> dincomp = cf.dIncompativeis(c.getItens(), depend);
+                List<Item> idepend = cf.iDependentes(c.getItens(), incomp);
+                boolean reply = AlertBox.display("O Item tem dependências", "Deseja adicionar os seguintes itens com o custo adicional de " + cf.price(depend) + "?");
+                if (reply == true) {
 
-        else{
-            //TO DO (Muito Importante)
-            List<Item> dincomp = cf.dIncompativeis(c.getItens(),depend);
-            List<Item> idepend = cf.iDependentes(c.getItens(),incomp);
-            boolean reply = AlertBox.display("O Item tem dependências", "Deseja adicionar os seguintes itens com o custo adicional de " + cf.price(depend) + "?");
-            if(reply == true){
+                    for (Item i : depend) {
+                        cf.removeSametype(c, i);
+                        cf.addItem(i, c);
+                        addChoices(i);
 
-                for (Item i : depend){
-                    cf.removeSametype(c,i);
-                    cf.addItem(i,c);
+                    }
+
+                    for (Item i2 : idepend) {
+                        cf.removeSametype(c, i2);
+                        cf.addItem(i2, c);
+                        addChoices(i2);
+                    }
+
+                    for (Item i3 : incomp) {
+                        cf.removeItem(i3, c);
+                        //removeChoices(i3);
+                    }
+                    for (Item i4 : dincomp) {
+                        cf.removeItem(i4, c);
+                        //removeChoices(i4);
+                    }
+
+                    cf.addItem(item, c);
+
 
                 }
-                for (Item i2 : idepend){
-                    cf.removeSametype(c,i2);
-                    cf.addItem(i2,c);
-                }
-                for (Item i3 : incomp){
-                    cf.removeItem(i3,c);
-                    //removeChoices(i3);
-                }
-                for (Item i4 : dincomp){
-                    cf.removeItem(i4,c);
-                    //removeChoices(i4);
-                }
-
-                cf.addItem(item,c);
-
-
             }
+
+            if (!incomp.isEmpty() && !depend.isEmpty()) ;//TO DO(Esta condição poderá não ser necessária)
+
         }
-
-        if(!incomp.isEmpty() && !depend.isEmpty());//TO DO(Esta condição poderá não ser necessária)
-
+        catch (NullPointerException e) {
+            e.getMessage();
+        }
     }
 
-    public void removeChoices(Item item){
-        String tipo = item.getTipo();
+    public void removeChoices(Item item) {
+        if (!(item == null)) {
+            String tipo = item.getTipo();
 
-        switch(tipo) {
+            switch (tipo) {
 
-            case "Modelo" : cbModelo.setValue(null); break;
-            case "Cor" : cbCor.setValue(null); break;
-            case "Jantes" : cbJantes.setValue(null); break;
-            case "Pneus" : cbPneus.setValue(null); break;
-            case "Corpo" : cbCorpo.setValue(null); break;
-            case "Volante" : cbVolante.setValue(null); break;
-            case "Bancos" : cbBancos.setValue(null); break;
-            case "Estofos" : cbEstofos.setValue(null); break;
-            default: break;
+                case "Modelo":
+                    cbModelo.setValue(null);
+                    break;
+                case "Cor":
+                    cbCor.setValue(null);
+                    break;
+                case "Jantes":
+                    cbJantes.setValue(null);
+                    break;
+                case "Pneus":
+                    cbPneus.setValue(null);
+                    break;
+                case "Corpo":
+                    cbCorpo.setValue(null);
+                    break;
+                case "Volante":
+                    cbVolante.setValue(null);
+                    break;
+                case "Bancos":
+                    cbBancos.setValue(null);
+                    break;
+                case "Estofos":
+                    cbEstofos.setValue(null);
+                    break;
+                default:
+                    break;
 
+            }
         }
     }
 
