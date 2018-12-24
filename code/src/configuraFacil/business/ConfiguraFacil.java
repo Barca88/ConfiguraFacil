@@ -149,20 +149,27 @@ public class ConfiguraFacil {
 
     public List<Item> incompatibilidades (Item item, Map<Integer,Item> conf){
         List<Item> incomp = new ArrayList<>();
+        if(!(item == null)){
         for(int id : item.getIncomp()){
             if (conf.containsKey(id))
                 incomp.add(itemDao.get(id));
         }
         return incomp;
+        }
+        else return null;
     }
 
     public List<Item> dependencias (Item item, Map<Integer,Item> conf ){
         List<Item> depend = new ArrayList<>();
-        for(int id : item.getDepend()){
-            if (!conf.containsKey(id))
-                depend.add(itemDao.get(id));
-        }
+
+        if(!(item == null)){
+            for(int id : item.getDepend()){
+                if (!conf.containsKey(id))
+                 depend.add(itemDao.get(id));
+            }
         return depend;
+        }
+        else return null;
     }
 
 
