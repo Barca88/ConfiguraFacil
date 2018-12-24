@@ -89,7 +89,7 @@ public class PacoteDao implements Map<Integer, Pacote> {
 
         try {
             conn = Connect.connect();
-            String sql = "SELECT * FROM Pacote WHERE  = ?";
+            String sql = "SELECT * FROM Pacote WHERE idPacote = ?";
             PreparedStatement stm = conn.prepareStatement(sql);
             stm.setInt(1, (int) o);
             ResultSet rs = stm.executeQuery();

@@ -121,7 +121,6 @@ public class ConfiguracaoController {
                     }
                 }
             }
-
         }
 
         List<Item> depend = cf.dependencias(item, c.getItens());
@@ -134,7 +133,7 @@ public class ConfiguracaoController {
                 if (!depend.isEmpty()){
                     List <String> nomesde = depend.stream().map(i -> i.getNome()).collect(Collectors.toList());
                     String showd = String.join("\n",nomesde);
-                    boolean reply = AlertBox.display("O Item tem dependencias", "Deseja adicionar os seguintes itens:\n" + showd +"\nCom custo o adicional: " + cf.price(depend) + "?");
+                    boolean reply = AlertBox.display("O Item tem dependencias", "Deseja adicionar os seguintes itens:\n" + showd +"\nCom custo o adicional: " + cf.price(depend,0) + "?");
                     if (reply == true) {
 
                         for (Item i : depend) {
@@ -155,12 +154,19 @@ public class ConfiguracaoController {
                     }
             }
 
-            if (!incomp.isEmpty() && !depend.isEmpty()) ;//TO DO(Esta condição poderá não ser necessária)
-
         }
         catch (NullPointerException e) {
             e.getMessage();
         }
+
+        int pacote = cf.checkPacote(c);
+        float desconto = 0;
+        if(pacote != 0){
+            desconto = cf.getDesconto(pacote);
+            addPacoteChoices(pacote);
+        }
+        float preco = cf.price(c.getItens().values().stream().collect(Collectors.toList()),desconto);
+
     }
 
     public void removeChoices(Item item) {
@@ -236,4 +242,9 @@ public class ConfiguracaoController {
 
         }
     }
+    public void addPacoteChoices(int id){
+        cbPacote.setValue(cf.getPacote(id).getNome());
+
+    }
+
 }
