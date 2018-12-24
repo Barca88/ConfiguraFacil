@@ -96,7 +96,7 @@ public class ConfiguracaoController {
     }
 
     public void handleBtnFinalizarAction(ActionEvent actionEvent) throws IOException {
-        URL url = getClass().getResource("../views/formcliente.fxml");
+        URL url = getClass().getResource("../views/clienteform.fxml");
         Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         SceneManager sm = new SceneManager(url, window);
         sm.newScene(5, cf);
