@@ -54,7 +54,7 @@ public class SceneManager{
                 sac.init(cf);
                 break;
             case 8 :
-                StockFabricanteController sfc = loader.getController();
+                StockFabricaController sfc = loader.getController();
                 sfc.init(cf);
                 break;
             case 9 :
