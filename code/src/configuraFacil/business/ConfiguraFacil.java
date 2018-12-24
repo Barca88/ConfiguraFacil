@@ -63,7 +63,7 @@ public class ConfiguraFacil {
                                 return 2;
                             break;
                     }
-                    this.setLogged(us.clone());
+                    this.setLogged(us);
                     return 1;
                 } else return 0;
             } else return 2;
