@@ -176,21 +176,6 @@ public class ConfiguraFacil {
         else return null;
     }
 
-
-    //Incompatibiliades das dependências(Não sei se estará correto)
-    public List<Item> dIncompativeis(Map<Integer,Item> conf, List <Item> depend){
-        List <Item> incomp = new ArrayList<>();
-        for(Item i : depend){
-            for(Item j : conf.values()){
-                if(i.getIncomp().contains(j.getId())){
-                    incomp.add(j);
-                }
-
-            }
-        }
-        return incomp;
-    }
-
     public List<Item> oldDependent(Configuracao c, Item old){
         List <Item> dependentes = new ArrayList<>();
         for(Item i : c.getItens().values()){
@@ -201,21 +186,6 @@ public class ConfiguraFacil {
         return dependentes;
     }
 
-
-    //Dependências das Incompatibiliades(Não sei se estará correto)
-    public List<Item> iDependentes(Map<Integer,Item> conf, List <Item> incomp){
-        List <Item> depend = new ArrayList<>();
-        for(Item i : conf.values()){
-            for(Item j : incomp){
-                if(i.getDepend().contains(j.getId())){
-                    depend.add(j);
-                }
-
-            }
-        }
-        return depend;
-    }
-
     public void removeSametype(Configuracao c, Item i){
         for (Item i2 : c.getItens().values()){
             if (i.getTipo().equals(i2.getTipo())){
@@ -223,6 +193,35 @@ public class ConfiguraFacil {
             }
         }
     }
+
+    public int checkPacote(Configuracao c){
+        List<Pacote> pacotes = pacoteDao.values().stream().collect(toList());
+        int pId = 0;
+        List <Integer> pitens = new ArrayList<>();
+        for(Pacote p : pacotes){
+            for(Item i : c.getItens().values()){
+                if (p.getItens().containsKey(i.getId())){
+                    pitens.add(i.getId());
+                }
+
+            }
+            if(pitens.size() == p.getItens().size()){
+                pId = p.getId();
+                break;
+            }
+            else pitens.removeAll(p.getItens().values().stream().map(i -> i.getId()).collect(toList()));
+        }
+        return pId ;
+    }
+
+    public  Pacote getPacote(int id){
+        return pacoteDao.get(id);
+    }
+
+    public float getDesconto(int id){
+        return pacoteDao.get(id).getDesconto();
+    }
+
 
 
 
@@ -234,13 +233,18 @@ public class ConfiguraFacil {
         c.removeItem(i);
     }
 
-    public float price (List<Item> itens){
+    public float price (List<Item> itens, float desconto){
         float preco = 0;
         for(Item i : itens){
             preco += i.getPreco();
         }
+        if (desconto != 0){
+            preco = preco - ((preco  * desconto)/100);
+        }
         return preco;
     }
+
+
 
     public Utilizador getLogged() {
         return logged;
