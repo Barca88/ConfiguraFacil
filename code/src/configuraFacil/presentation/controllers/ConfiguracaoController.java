@@ -2,21 +2,17 @@ package configuraFacil.presentation.controllers;
 
 import configuraFacil.business.ConfiguraFacil;
 import configuraFacil.business.models.Configuracao;
-import configuraFacil.business.models.Pacote;
 import configuraFacil.business.models.items.Item;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.input.InputMethodEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.stream.Collectors;
-
 
 public class ConfiguracaoController {
 
@@ -48,7 +44,19 @@ public class ConfiguracaoController {
     private ChoiceBox<String> cbPacote;
 
     @FXML
-    private ChoiceBox<String> cbOpcional;
+    private ChoiceBox<String>  cbOpcional_1;
+
+    @FXML
+    private ChoiceBox<String>  cbOpcional_2;
+
+    @FXML
+    private ChoiceBox<String>  cbOpcional_3;
+
+    @FXML
+    private ChoiceBox<String>  cbOpcional_4;
+
+    @FXML
+    private ChoiceBox<String>  cbOpcional_5;
 
 
     ConfiguraFacil cf;
@@ -83,8 +91,21 @@ public class ConfiguracaoController {
         cbPacote.setItems(cf.getPacotes());
         cbPacote.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> pacoteChanged());
 
-        cbOpcional.setItems(cf.getOpcionais());
-        cbOpcional.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbOpcional,old));
+        cbOpcional_1.setItems(cf.getOpcionais());
+        cbOpcional_1.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbOpcional_1,old));
+
+        cbOpcional_2.setItems(cf.getOpcionais());
+        cbOpcional_2.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbOpcional_2,old));
+
+        cbOpcional_3.setItems(cf.getOpcionais());
+        cbOpcional_3.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbOpcional_3,old));
+
+        cbOpcional_4.setItems(cf.getOpcionais());
+        cbOpcional_4.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbOpcional_4,old));
+
+        cbOpcional_5.setItems(cf.getOpcionais());
+        cbOpcional_5.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbOpcional_5,old));
+
         cf.setInUseConfig(new Configuracao());
     }
 
@@ -101,7 +122,6 @@ public class ConfiguracaoController {
         SceneManager sm = new SceneManager(url, window);
         sm.newScene(5, cf);
     }
-
 
     public void itemChanged(ChoiceBox<String> tipo, String old) {
         Configuracao c = cf.getInUseConfig();
@@ -208,15 +228,32 @@ public class ConfiguracaoController {
 
         switch(tipo) {
 
-            case "Modelo" : cbModelo.setValue(item.getNome()); break;
-            case "Cor" : cbCor.setValue(item.getNome()); break;
-            case "Jantes" : cbJantes.setValue(item.getNome()); break;
-            case "Pneus" : cbPneus.setValue(item.getNome()); break;
-            case "Corpo" : cbCorpo.setValue(item.getNome()); break;
-            case "Volante" : cbVolante.setValue(item.getNome()); break;
-            case "Bancos" : cbBancos.setValue(item.getNome()); break;
-            case "Estofos" : cbEstofos.setValue(item.getNome()); break;
-            default: break;
+            case "Modelo":
+                cbModelo.setValue(item.getNome());
+                break;
+            case "Cor":
+                cbCor.setValue(item.getNome());
+                break;
+            case "Jantes":
+                cbJantes.setValue(item.getNome());
+                break;
+            case "Pneus":
+                cbPneus.setValue(item.getNome());
+                break;
+            case "Corpo":
+                cbCorpo.setValue(item.getNome());
+                break;
+            case "Volante":
+                cbVolante.setValue(item.getNome());
+                break;
+            case "Bancos":
+                cbBancos.setValue(item.getNome());
+                break;
+            case "Estofos":
+                cbEstofos.setValue(item.getNome());
+                break;
+            default:
+                break;
 
         }
     }
