@@ -113,7 +113,7 @@ public class ConfiguracaoController {
                 if (resp == true) {
                     for (Item rem : remove) {
                         cf.removeItem(rem, c);
-                        Platform.runLater(() -> removeChoices(rem));
+                        removeChoices(rem);
                     }
                 }
             }
@@ -148,11 +148,11 @@ public class ConfiguracaoController {
 
                     for (Item i3 : incomp) {
                         cf.removeItem(i3, c);
-                        //removeChoices(i3);
+                        removeChoices(i3);
                     }
                     for (Item i4 : dincomp) {
                         cf.removeItem(i4, c);
-                        //removeChoices(i4);
+                        removeChoices(i4);
                     }
 
                     cf.addItem(item, c);
@@ -170,7 +170,6 @@ public class ConfiguracaoController {
     }
 
     public void removeChoices(Item item) {
-        if (!(item == null)) {
             String tipo = item.getTipo();
 
             switch (tipo) {
@@ -201,8 +200,6 @@ public class ConfiguracaoController {
                     break;
                 default:
                     break;
-
-            }
         }
     }
 
