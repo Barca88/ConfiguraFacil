@@ -42,7 +42,7 @@ public class SceneManager{
                 cac.init(cf);
                 break;
             case 5 :
-                FormClienteController fcc = loader.getController();
+                ClienteFormController fcc = loader.getController();
                 fcc.init(cf);
                 break;
             case 6 :

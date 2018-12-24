@@ -244,7 +244,9 @@ public class ConfiguraFacil {
         return preco;
     }
 
-
+    public void adicionarNovaConfiguracao(){
+        configDao.put(inUseConfig.getId(), inUseConfig);
+    }
 
     public Utilizador getLogged() {
         return logged;

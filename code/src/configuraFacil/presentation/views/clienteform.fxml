@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="configuraFacil.presentation.controllers.FormClienteController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="configuraFacil.presentation.controllers.ClienteFormController">
    <children>
       <AnchorPane fx:id="topBar" prefHeight="73.0" prefWidth="602.0" style="-fx-background-color: #376888;">
          <children>
@@ -37,7 +36,6 @@
       </AnchorPane>
       <AnchorPane fx:id="apFabrLogin" layoutY="96.0" prefHeight="304.0" prefWidth="602.0" style="-fx-background-color: #376888;">
          <children>
-            <ChoiceBox fx:id="cbModelo" layoutX="191.0" layoutY="46.0" prefHeight="26.0" prefWidth="339.0" style="-fx-background-color: #195988;" />
             <Label layoutX="30.0" layoutY="46.0" text="Nome" textFill="WHITE">
                <font>
                   <Font size="20.0" />
@@ -53,8 +51,9 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <ChoiceBox fx:id="cbModelo1" layoutX="191.0" layoutY="93.0" prefHeight="26.0" prefWidth="339.0" style="-fx-background-color: #195988;" />
-            <ChoiceBox fx:id="cbModelo2" layoutX="191.0" layoutY="139.0" prefHeight="26.0" prefWidth="339.0" style="-fx-background-color: #195988;" />
+            <TextField fx:id="tfNome" layoutX="191.0" layoutY="46.0" prefHeight="26.0" prefWidth="339.0" />
+            <TextField fx:id="tfEmail" layoutX="191.0" layoutY="93.0" prefHeight="26.0" prefWidth="339.0" />
+            <TextField fx:id="tfTel" layoutX="191.0" layoutY="142.0" prefHeight="26.0" prefWidth="339.0" />
          </children>
       </AnchorPane>
    </children>
