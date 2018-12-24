@@ -110,6 +110,14 @@ public class ItemDao implements Map<Integer, Item> {
                 while (rs2.next()){
                     depend.add(rs2.getInt("idItem"));
                 }
+                sql = "SELECT * FROM Incompatibilidade\n" +
+                        "INNER JOIN Item ON idItem = Item_idItem1 WHERE Item_idItem2 = ?";
+                PreparedStatement stm3 = conn.prepareStatement(sql);
+                stm3.setInt(1,(int) o);
+                ResultSet rs3 = stm3.executeQuery();
+                while(rs3.next()){
+                    incomp.add(rs3.getInt("idItem"));
+                }
                 i = new Item(rs.getInt("idItem"),rs.getString("nome"),rs.getFloat("preco"),rs.getInt("stock"),rs.getString("tipo"),incomp,depend);
             }
 
@@ -259,6 +267,14 @@ public class ItemDao implements Map<Integer, Item> {
 
                 while (rs2.next()){
                     depend.add(rs2.getInt("idItem"));
+                }
+                sql = "SELECT * FROM Incompatibilidade\n" +
+                        "INNER JOIN Item ON idItem = Item_idItem1 WHERE Item_idItem2 = ?";
+                PreparedStatement stm3 = conn.prepareStatement(sql);
+                stm3.setInt(1, id);
+                ResultSet rs3 = stm3.executeQuery();
+                while(rs3.next()){
+                    incomp.add(rs3.getInt("idItem"));
                 }
 
                 Item i = new Item(id,rs.getString("nome"),rs.getFloat("preco"),rs.getInt("stock"),rs.getString("tipo"),incomp,depend);

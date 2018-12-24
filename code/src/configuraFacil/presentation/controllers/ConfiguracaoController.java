@@ -2,6 +2,7 @@ package configuraFacil.presentation.controllers;
 
 import configuraFacil.business.ConfiguraFacil;
 import configuraFacil.business.models.Configuracao;
+import configuraFacil.business.models.Pacote;
 import configuraFacil.business.models.items.Item;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -80,6 +81,7 @@ public class ConfiguracaoController {
         cbCorpo.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbCorpo,old));
 
         cbPacote.setItems(cf.getPacotes());
+        cbPacote.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> pacoteChanged());
 
         cbOpcional.setItems(cf.getOpcionais());
         cbOpcional.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbOpcional,old));
@@ -109,7 +111,9 @@ public class ConfiguracaoController {
             Item oldItem = cf.getItems().stream().filter(i -> i.getNome().equals(old)).collect(Collectors.toList()).get(0);
             List<Item> remove = cf.oldDependent(c, oldItem);
             if (!remove.isEmpty()) {
-                boolean resp = AlertBox.display("O Item tem incompatibilidades", "Deseja adicionar o seguinte item?");
+                List <String> nomes = remove.stream().map(i -> i.getNome()).collect(Collectors.toList());
+                String show = String.join("\n",nomes);
+                boolean resp = AlertBox.display("O Item tem incompatibilidades", "Deseja adicionar item?\n" + "Itens incompatíveis:\n" + show );
                 if (resp == true) {
                     for (Item rem : remove) {
                         cf.removeItem(rem, c);
@@ -127,38 +131,28 @@ public class ConfiguracaoController {
                 cf.removeSametype(c, item);
                 cf.addItem(item, c);
             } else {
-                //TO DO (Muito Importante)
-                List<Item> dincomp = cf.dIncompativeis(c.getItens(), depend);
-                List<Item> idepend = cf.iDependentes(c.getItens(), incomp);
-                boolean reply = AlertBox.display("O Item tem dependências", "Deseja adicionar os seguintes itens com o custo adicional de " + cf.price(depend) + "?");
-                if (reply == true) {
+                if (!depend.isEmpty()){
+                    List <String> nomesde = depend.stream().map(i -> i.getNome()).collect(Collectors.toList());
+                    String showd = String.join("\n",nomesde);
+                    boolean reply = AlertBox.display("O Item tem dependencias", "Deseja adicionar os seguintes itens:\n" + showd +"\nCom custo o adicional: " + cf.price(depend) + "?");
+                    if (reply == true) {
 
-                    for (Item i : depend) {
-                        cf.removeSametype(c, i);
-                        cf.addItem(i, c);
-                        addChoices(i);
-
+                        for (Item i : depend) {
+                            cf.removeSametype(c, i);
+                            cf.addItem(i, c);
+                            addChoices(i);
+                        }
                     }
 
-                    for (Item i2 : idepend) {
-                        cf.removeSametype(c, i2);
-                        cf.addItem(i2, c);
-                        addChoices(i2);
+                        for (Item i2 : incomp) {
+                            cf.removeItem(i2, c);
+                            removeChoices(i2);
+                        }
+
+                        cf.addItem(item, c);
+
+
                     }
-
-                    for (Item i3 : incomp) {
-                        cf.removeItem(i3, c);
-                        removeChoices(i3);
-                    }
-                    for (Item i4 : dincomp) {
-                        cf.removeItem(i4, c);
-                        removeChoices(i4);
-                    }
-
-                    cf.addItem(item, c);
-
-
-                }
             }
 
             if (!incomp.isEmpty() && !depend.isEmpty()) ;//TO DO(Esta condição poderá não ser necessária)
@@ -217,6 +211,28 @@ public class ConfiguracaoController {
             case "Bancos" : cbBancos.setValue(item.getNome()); break;
             case "Estofos" : cbEstofos.setValue(item.getNome()); break;
             default: break;
+
+        }
+    }
+
+
+    public void pacoteChanged(){
+        List<Item> itens = cf.getItemPacote(cbPacote.getValue());
+        for(Item item : itens){
+            String tipo = item.getTipo();
+            switch(tipo) {
+
+                case "Modelo" : cbModelo.setValue(item.getNome()); break;
+                case "Cor" : cbCor.setValue(item.getNome()); break;
+                case "Jantes" : cbJantes.setValue(item.getNome()); break;
+                case "Pneus" : cbPneus.setValue(item.getNome()); break;
+                case "Corpo" : cbCorpo.setValue(item.getNome()); break;
+                case "Volante" : cbVolante.setValue(item.getNome()); break;
+                case "Bancos" : cbBancos.setValue(item.getNome()); break;
+                case "Estofos" : cbEstofos.setValue(item.getNome()); break;
+                default: break;
+
+            }
 
         }
     }

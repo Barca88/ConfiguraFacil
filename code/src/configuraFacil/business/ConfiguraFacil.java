@@ -147,6 +147,10 @@ public class ConfiguraFacil {
         return FXCollections.observableArrayList(lm);
     }
 
+    public List <Item> getItemPacote(String nome){
+        return pacoteDao.values().stream().filter(p -> p.getNome().equals(nome)).collect(Collectors.toList()).get(0).getItens().values().stream().collect(Collectors.toList());
+    }
+
     public List<Item> incompatibilidades (Item item, Map<Integer,Item> conf){
         List<Item> incomp = new ArrayList<>();
         if(!(item == null)){
