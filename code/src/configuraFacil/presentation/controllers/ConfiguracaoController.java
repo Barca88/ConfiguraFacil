@@ -139,25 +139,7 @@ public class ConfiguracaoController {
         Configuracao c = cf.getInUseConfig();
         Item item = cf.getItems().stream().filter(i -> i.getNome().equals(tipo.getValue())).findAny().orElse(null);
 
-        if (old != null) {
-            Item oldItem = cf.getItems().stream().filter(i -> i.getNome().equals(old)).collect(Collectors.toList()).get(0);
-            List<Item> remove = cf.oldDependent(c, oldItem);
-            if (!remove.isEmpty()) {
-                List <String> nomes = remove.stream().map(i -> i.getNome()).collect(Collectors.toList());
-                String show = String.join("\n",nomes);
-                boolean resp = AlertBox.display("O Item tem incompatibilidades", "Deseja adicionar item?\n" + "Itens incompatíveis:\n" + show );
-                if (resp == true) {
-                    for (Item rem : remove) {
-                        cf.removeItem(rem, c);
-                        removeChoices(rem);
-                    }
-                }else{
-                    addChoices(oldItem);
-                }
 
-
-            }
-        }
 
         List<Item> depend = cf.dependencias(item, c.getItens());
         List<Item> incomp = cf.incompatibilidades(item, c.getItens());
@@ -176,7 +158,6 @@ public class ConfiguracaoController {
                             cf.addItem(i, c);
                             addChoices(i);
                         }
-                    }
 
                         for (Item i2 : incomp) {
                             cf.removeItem(i2, c);
@@ -185,6 +166,28 @@ public class ConfiguracaoController {
 
                         cf.addItem(item, c);
                     }
+            }
+
+            if (old != null) {
+                Item oldItem = cf.getItems().stream().filter(i -> i.getNome().equals(old)).collect(Collectors.toList()).get(0);
+                List<Item> remove = cf.oldDependent(c, oldItem);
+                if (!remove.isEmpty()) {
+                    List <String> nomes = remove.stream().map(i -> i.getNome()).collect(Collectors.toList());
+                    String show = String.join("\n",nomes);
+                    boolean resp = AlertBox.display("O Item tem incompatibilidades", "Deseja adicionar item?\n" + "Itens incompatíveis:\n" + show );
+                    if (resp == true) {
+                        for (Item rem : remove) {
+                            cf.removeItem(rem, c);
+                            removeChoices(rem);
+                        }
+                    }else{
+                        addChoices(oldItem);
+                        cf.addItem(oldItem, c);
+                    }
+
+
+                }
+            }
         }
 
         catch (NullPointerException e) {
