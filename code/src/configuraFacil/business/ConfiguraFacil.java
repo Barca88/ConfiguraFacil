@@ -125,12 +125,10 @@ public class ConfiguraFacil {
         return FXCollections.observableArrayList(lm);
     }
 
-
     public ObservableList<String> getBancos(){
         List<String> lm = itemDao.values().stream().filter(i -> i.getTipo().equals("Bancos")).map(Item::getNome).collect(Collectors.toList());
         return FXCollections.observableArrayList(lm);
     }
-
 
     public ObservableList<String> getEstofos(){
         List<String> lm = itemDao.values().stream().filter(i -> i.getTipo().equals("Estofos")).map(Item::getNome).collect(Collectors.toList());
@@ -221,9 +219,6 @@ public class ConfiguraFacil {
     public float getDesconto(int id){
         return pacoteDao.get(id).getDesconto();
     }
-
-
-
 
     public void  addItem (Item i, Configuracao c){
         c.addItem(i);

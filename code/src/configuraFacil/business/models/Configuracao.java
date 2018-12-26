@@ -3,8 +3,11 @@ package configuraFacil.business.models;
 import configuraFacil.business.models.items.Item;
 import configuraFacil.business.models.users.Utilizador;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Configuracao {
 
@@ -41,8 +44,6 @@ public class Configuracao {
         this.itens = itens;
     }
 
-
-
     public int getId() {
         return id;
     }
@@ -52,15 +53,21 @@ public class Configuracao {
     }
 
     public String getModelo() {
-        return modelo;
+        List<Item> mod = getItens().values().stream().filter(i -> i.getTipo().equals("Modelo")).collect(Collectors.toList());
+
+        if(mod.isEmpty()) return null;
+        else return mod.stream().map(Item::getNome).toString();
     }
 
     public void setModelo(String modelo) {
         this.modelo = modelo;
     }
 
-    public String getCor() {
-        return cor;
+    public String getCor(){
+        List<Item> mod = getItens().values().stream().filter(i -> i.getTipo().equals("Cor")).collect(Collectors.toList());
+
+        if(mod.isEmpty()) return null;
+        else return mod.stream().map(Item::getNome).toString();
     }
 
     public void setCor(String cor) {

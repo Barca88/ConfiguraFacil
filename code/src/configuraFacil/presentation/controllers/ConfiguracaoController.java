@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -15,6 +16,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ConfiguracaoController {
+
+    @FXML
+    private Label lbAviso;
 
     @FXML
     private ChoiceBox<String> cbModelo;
@@ -119,10 +123,16 @@ public class ConfiguracaoController {
     }
 
     public void handleBtnFinalizarAction(ActionEvent actionEvent) throws IOException {
-        URL url = getClass().getResource("../views/clienteform.fxml");
-        Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        SceneManager sm = new SceneManager(url, window);
-        sm.newScene(5, cf);
+        Configuracao c = cf.getInUseConfig();
+
+        if((c.getModelo() != null) && (c.getCor() != null)) {
+            URL url = getClass().getResource("../views/clienteform.fxml");
+            Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            SceneManager sm = new SceneManager(url, window);
+            sm.newScene(5, cf);
+        }else if(c.getModelo() == null && c.getCor() == null) AlertBox.alert("Configuração Incompleta!", "Por favor, escolha o Modelo e a Cor do Carro");
+            else if(c.getCor() == null) AlertBox.alert("Configuração Incompleta!", "Por favor, escolha a Cor do Carro");
+                else AlertBox.alert("Configuração Incompleta!", "Por favor, escolha o Modelo do Carro");
     }
 
     public void itemChanged(ChoiceBox<String> tipo, String old) {
@@ -284,5 +294,4 @@ public class ConfiguracaoController {
         cbPacote.setValue(cf.getPacote(id).getNome());
 
     }
-
 }
