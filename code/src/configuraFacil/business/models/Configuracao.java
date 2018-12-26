@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toList;
+
 public class Configuracao {
 
     private int id;
-    private String modelo;
-    private String cor;
     private String estado;
     private float orcamento;
     private Cliente cliente;
@@ -23,8 +23,6 @@ public class Configuracao {
 
     public Configuracao(){
         this.id = -1;
-        this.modelo = null;
-        this.cor = null;
         this.estado = "N";
         this.orcamento = 0;
         this.cliente = null;
@@ -33,10 +31,8 @@ public class Configuracao {
 
     }
 
-    public Configuracao(int id, String modelo, String cor, String estado, float orc, Cliente cliente,Utilizador vendedor, Map<Integer, Item> itens) {
+    public Configuracao(int id, String estado, float orc, Cliente cliente,Utilizador vendedor, Map<Integer, Item> itens) {
         this.id = id;
-        this.modelo = modelo;
-        this.cor = cor;
         this.estado = estado;
         this.orcamento = orc;
         this.cliente = cliente;
@@ -52,27 +48,18 @@ public class Configuracao {
         this.id = id;
     }
 
-    public String getModelo() {
-        List<Item> mod = getItens().values().stream().filter(i -> i.getTipo().equals("Modelo")).collect(Collectors.toList());
-
-        if(mod.isEmpty()) return null;
-        else return mod.stream().map(Item::getNome).toString();
-    }
-
-    public void setModelo(String modelo) {
-        this.modelo = modelo;
+    public String getModelo(){
+        try {
+            return this.getItens().values().stream().filter(i -> i.getTipo().equals("Modelo")).map(Item::getNome).findFirst().get();
+        }catch (Exception e){return null;} 
     }
 
     public String getCor(){
-        List<Item> mod = getItens().values().stream().filter(i -> i.getTipo().equals("Cor")).collect(Collectors.toList());
-
-        if(mod.isEmpty()) return null;
-        else return mod.stream().map(Item::getNome).toString();
+        try{
+            return this.getItens().values().stream().filter(i -> i.getTipo().equals("Cor")).map(Item::getNome).findFirst().get();
+        }catch (Exception e){return null;}
     }
 
-    public void setCor(String cor) {
-        this.cor = cor;
-    }
 
     public String getEstado() {
         return estado;

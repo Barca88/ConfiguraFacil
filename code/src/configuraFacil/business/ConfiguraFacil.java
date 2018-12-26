@@ -25,7 +25,6 @@ public class ConfiguraFacil {
     private UtilizadorDao utilizadorDao;
     private ConfiguracaoDao configDao;
     private ItemDao itemDao;
-    private ClienteDao clienteDao;
     private PacoteDao pacoteDao;
     private Utilizador logged;
     private Configuracao inUseConfig;
