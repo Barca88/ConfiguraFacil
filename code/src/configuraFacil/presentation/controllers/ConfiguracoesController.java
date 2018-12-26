@@ -26,10 +26,6 @@ public class ConfiguracoesController {
     @FXML
     private TableColumn<Configuracao,Integer> clnIdConfig;
     @FXML
-    private TableColumn<Configuracao,Integer> clnModeloConfig;
-    @FXML
-    private TableColumn<Configuracao,Integer> clnCorConfig;
-    @FXML
     private TableColumn<Configuracao,String> clnEstadoConfig;
     @FXML
     private TableColumn<Configuracao,Integer> clnOrcamentoConfig;
@@ -46,8 +42,6 @@ public class ConfiguracoesController {
 
     private void initTable(){
         clnIdConfig.setCellValueFactory(new PropertyValueFactory<>("id"));
-        clnModeloConfig.setCellValueFactory(new PropertyValueFactory<>("modelo"));
-        clnCorConfig.setCellValueFactory(new PropertyValueFactory<>("cor"));
         clnEstadoConfig.setCellValueFactory(new PropertyValueFactory<>("estado"));
         clnOrcamentoConfig.setCellValueFactory(new PropertyValueFactory<>("orcamento"));
         tblConfigAdmin.setItems(cf.getConfiguracoes());
@@ -76,7 +70,7 @@ public class ConfiguracoesController {
     public void handleBtnAdicionarConfigAction(ActionEvent actionEvent) {
         if(tfIdConfig.getText().equals("") || tfEstadoConfig.getText().equals("")) {
             System.out.println("TODO SHOW Aviso");
-        }else{Configuracao c = new Configuracao(Integer.parseInt(tfIdConfig.getText()), "Civic", "Preto", tfEstadoConfig.getText(), 0, null, null, null);
+        }else{Configuracao c = new Configuracao(Integer.parseInt(tfIdConfig.getText()), tfEstadoConfig.getText(), 0, null, null, null);
            // cf.adicionarConfiguracao(c);
             cf.getConfiguracoes();
             initTable();

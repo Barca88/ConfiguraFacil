@@ -38,6 +38,7 @@ public class ConsultarConfiguracaoController {
 
     public void init(ConfiguraFacil cfo) {
         cf = cfo;
+
         lblConfig.setText("Configuração " + Integer.toString(cf.getInUseConfig().getId()));
         lblModelo.setText(cf.getInUseConfig().getModelo());
         String cor = cf.getInUseConfig().getCor();

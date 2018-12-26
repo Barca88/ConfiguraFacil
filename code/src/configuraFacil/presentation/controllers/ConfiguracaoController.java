@@ -183,9 +183,9 @@ public class ConfiguracaoController {
                         }
 
                         cf.addItem(item, c);
-                    } else {handleChoices(item,oldItem,1);}
-        }}
-        catch (NullPointerException e) {
+                    } else {handleChoices(item,oldItem,1); }
+                    }
+        } catch (NullPointerException e) {
             e.getMessage();
         }
 

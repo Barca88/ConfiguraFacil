@@ -133,7 +133,7 @@ public class ConfiguracaoDao implements Map<Integer,Configuracao> {
                     cli = new Cliente(rs3.getInt("idCliente"),rs3.getString("nome"),rs3.getString("email"),rs3.getString("telemovel"));
                 }
 
-                c = new Configuracao(rs.getInt("idConfiguracao=?"),rs.getString("modelo"),rs.getString("cor"),rs.getString("validade"),rs.getFloat("orcamento"),cli,u,itens);
+                c = new Configuracao(rs.getInt("idConfiguracao=?"),rs.getString("validade"),rs.getFloat("orcamento"),cli,u,itens);
 
             }
         }catch (Exception e) {
@@ -306,7 +306,7 @@ public class ConfiguracaoDao implements Map<Integer,Configuracao> {
                     cli = new Cliente(rs3.getInt("idCliente"),rs3.getString("nome"),rs3.getString("email"),rs3.getString("telemovel"));
                 }
 
-                c = new Configuracao(cId,modelo,cor,rs.getString("validade"),rs.getFloat("orcamento"),cli,u,itens);
+                c = new Configuracao(cId,rs.getString("validade"),rs.getFloat("orcamento"),cli,u,itens);
                 configs.add(c);
             }
 
