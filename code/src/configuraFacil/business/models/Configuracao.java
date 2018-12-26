@@ -53,10 +53,8 @@ public class Configuracao {
     }
 
     public String getModelo() {
-        List<Item> mod = getItens().values().stream().filter(i -> i.getTipo().equals("Modelo")).collect(Collectors.toList());
-
-        if(mod.isEmpty()) return null;
-        else return mod.stream().map(Item::getNome).toString();
+       try{return this.getItens().values().stream().filter(i -> i.getTipo().equals("Modelo")).map(Item::getNome).findFirst().get();}
+       catch (Exception e){return null;}
     }
 
     public void setModelo(String modelo) {
@@ -64,10 +62,8 @@ public class Configuracao {
     }
 
     public String getCor(){
-        List<Item> mod = getItens().values().stream().filter(i -> i.getTipo().equals("Cor")).collect(Collectors.toList());
-
-        if(mod.isEmpty()) return null;
-        else return mod.stream().map(Item::getNome).toString();
+        try{return this.getItens().values().stream().filter(i -> i.getTipo().equals("Cor")).map(Item::getNome).findFirst().get();}
+        catch (Exception e){return null;}
     }
 
     public void setCor(String cor) {

@@ -138,9 +138,10 @@ public class ConfiguracaoController {
     public void itemChanged(ChoiceBox<String> tipo, String old) {
         Configuracao c = cf.getInUseConfig();
         Item item = cf.getItems().stream().filter(i -> i.getNome().equals(tipo.getValue())).findAny().orElse(null);
+        Item oldItem = cf.getItems().stream().filter(i -> i.getNome().equals(old)).findAny().orElse(null);
 
         if (old != null) {
-            Item oldItem = cf.getItems().stream().filter(i -> i.getNome().equals(old)).collect(Collectors.toList()).get(0);
+
             List<Item> remove = cf.oldDependent(c, oldItem);
             if (!remove.isEmpty()) {
                 List <String> nomes = remove.stream().map(i -> i.getNome()).collect(Collectors.toList());
@@ -151,6 +152,9 @@ public class ConfiguracaoController {
                         cf.removeItem(rem, c);
                         removeChoices(rem);
                     }
+                } else {
+                    cf.addItem(oldItem,c);
+                    handleChoices(item,oldItem,1);
                 }
             }
         }
@@ -161,7 +165,7 @@ public class ConfiguracaoController {
             if (depend.isEmpty() && incomp.isEmpty()) {
                 cf.removeSametype(c, item);
                 cf.addItem(item, c);
-            } else {
+            } else if(!depend.isEmpty()){
                     List <String> nomesde = depend.stream().map(i -> i.getNome()).collect(Collectors.toList());
                     String showd = String.join("\n",nomesde);
                     boolean reply = AlertBox.display("O Item tem dependencias", "Deseja adicionar os seguintes itens:\n" + showd +"\nCom custo o adicional: " + cf.price(depend,0) + "?");
@@ -170,9 +174,8 @@ public class ConfiguracaoController {
                         for (Item i : depend) {
                             cf.removeSametype(c, i);
                             cf.addItem(i, c);
-                            addChoices(i);
+                            handleChoices(i,oldItem,0);
                         }
-                    }
 
                         for (Item i2 : incomp) {
                             cf.removeItem(i2, c);
@@ -180,12 +183,8 @@ public class ConfiguracaoController {
                         }
 
                         cf.addItem(item, c);
-
-
-                    }
-
-
-        }
+                    } else {handleChoices(item,oldItem,1);}
+        }}
         catch (NullPointerException e) {
             e.getMessage();
         }
@@ -234,41 +233,45 @@ public class ConfiguracaoController {
         }
     }
 
-    public void addChoices(Item item){
-        String tipo = item.getTipo();
+    public void handleChoices(Item item,Item old, int type_of_handling){
+        String new_tipo = item.getTipo();
+        String new_nome = item.getNome();
 
-        switch(tipo) {
+        String old_nome = null;
+        if(old != null) old_nome = old.getNome();
+        if(type_of_handling == 1) new_nome = old_nome;
 
-            case "Modelo":
-                cbModelo.setValue(item.getNome());
-                break;
-            case "Cor":
-                cbCor.setValue(item.getNome());
-                break;
-            case "Jantes":
-                cbJantes.setValue(item.getNome());
-                break;
-            case "Pneus":
-                cbPneus.setValue(item.getNome());
-                break;
-            case "Corpo":
-                cbCorpo.setValue(item.getNome());
-                break;
-            case "Volante":
-                cbVolante.setValue(item.getNome());
-                break;
-            case "Bancos":
-                cbBancos.setValue(item.getNome());
-                break;
-            case "Estofos":
-                cbEstofos.setValue(item.getNome());
-                break;
-            default:
-                break;
+            switch (new_tipo) {
 
+                case "Modelo":
+                    cbModelo.setValue(new_nome);
+                    break;
+                case "Cor":
+                    cbCor.setValue(new_nome);
+                    break;
+                case "Jantes":
+                    cbJantes.setValue(new_nome);
+                    break;
+                case "Pneus":
+                    cbPneus.setValue(new_nome);
+                    break;
+                case "Corpo":
+                    cbCorpo.setValue(new_nome);
+                    break;
+                case "Volante":
+                    cbVolante.setValue(new_nome);
+                    break;
+                case "Bancos":
+                    cbBancos.setValue(new_nome);
+                    break;
+                case "Estofos":
+                    cbEstofos.setValue(new_nome);
+                    break;
+                default:
+                    break;
+
+            }
         }
-    }
-
 
     public void pacoteChanged(){
         List<Item> itens = cf.getItemPacote(cbPacote.getValue());
