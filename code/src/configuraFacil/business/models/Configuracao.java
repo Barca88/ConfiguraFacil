@@ -22,7 +22,7 @@ public class Configuracao {
         this.id = -1;
         this.modelo = null;
         this.cor = null;
-        this.estado = null;
+        this.estado = "N";
         this.orcamento = 0;
         this.cliente = null;
         this.vendedor = null;

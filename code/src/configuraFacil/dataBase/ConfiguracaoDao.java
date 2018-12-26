@@ -168,7 +168,11 @@ public class ConfiguracaoDao implements Map<Integer,Configuracao> {
             }else{ //NÃO EXISTE CLIENTE -> INSERE NA BD
                 sql = "INSERT INTO Cliente (nome,email,telemovel)\n" +
                         "VALUES (?,?,?)\n";
+
                 stm = conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+                stm.setString(1,cliente.getNome());
+                stm.setString(2,cliente.getEmail());
+                stm.setString(3,cliente.getTelemovel());
                 stm.executeUpdate();
 
                 ResultSet rs1 = stm.getGeneratedKeys();
@@ -208,6 +212,7 @@ public class ConfiguracaoDao implements Map<Integer,Configuracao> {
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1,id_Config);
                 stm.setInt(2,i);
+                stm.executeUpdate();
             }
 
             config = configuracao;
@@ -219,6 +224,7 @@ public class ConfiguracaoDao implements Map<Integer,Configuracao> {
         }
 
         return config;
+
     }
 
     @Override

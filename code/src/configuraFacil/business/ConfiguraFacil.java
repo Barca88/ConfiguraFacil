@@ -246,6 +246,8 @@ public class ConfiguraFacil {
 
     public void adicionarNovaConfiguracao(){
         configDao.put(inUseConfig.getId(), inUseConfig);
+
+
     }
 
     public Utilizador getLogged() {

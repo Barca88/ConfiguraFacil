@@ -34,7 +34,7 @@ public class ClienteFormController {
         sm.newScene(3, cf);
     }
 
-    public void handleBtnFinalizarAction(ActionEvent actionEvent) {
+    public void handleBtnFinalizarAction(ActionEvent actionEvent) throws IOException {
 
         //novo cliente
         Cliente c = new Cliente();
@@ -49,5 +49,10 @@ public class ClienteFormController {
 
         //adicionar as configuracoes
         cf.adicionarNovaConfiguracao();
+
+        URL url = getClass().getResource("../views/vendedor.fxml");
+        Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        SceneManager sm = new SceneManager(url, window);
+        sm.newScene(3, cf);
     }
 }

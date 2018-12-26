@@ -61,6 +61,8 @@ public class ConfiguracaoController {
 
     ConfiguraFacil cf;
 
+    
+
     public void init(ConfiguraFacil cfo) {
         cf = cfo;
 
@@ -150,7 +152,6 @@ public class ConfiguracaoController {
                 cf.removeSametype(c, item);
                 cf.addItem(item, c);
             } else {
-                if (!depend.isEmpty()){
                     List <String> nomesde = depend.stream().map(i -> i.getNome()).collect(Collectors.toList());
                     String showd = String.join("\n",nomesde);
                     boolean reply = AlertBox.display("O Item tem dependencias", "Deseja adicionar os seguintes itens:\n" + showd +"\nCom custo o adicional: " + cf.price(depend,0) + "?");
@@ -172,7 +173,7 @@ public class ConfiguracaoController {
 
 
                     }
-            }
+
 
         }
         catch (NullPointerException e) {
