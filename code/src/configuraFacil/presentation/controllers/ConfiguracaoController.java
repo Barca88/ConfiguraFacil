@@ -151,7 +151,11 @@ public class ConfiguracaoController {
                         cf.removeItem(rem, c);
                         removeChoices(rem);
                     }
+                }else{
+                    addChoices(oldItem);
                 }
+
+
             }
         }
 
@@ -180,12 +184,9 @@ public class ConfiguracaoController {
                         }
 
                         cf.addItem(item, c);
-
-
                     }
-
-
         }
+
         catch (NullPointerException e) {
             e.getMessage();
         }

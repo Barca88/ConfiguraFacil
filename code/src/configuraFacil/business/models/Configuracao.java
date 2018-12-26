@@ -3,13 +3,8 @@ package configuraFacil.business.models;
 import configuraFacil.business.models.items.Item;
 import configuraFacil.business.models.users.Utilizador;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.toList;
 
 public class Configuracao {
 
@@ -51,7 +46,7 @@ public class Configuracao {
     public String getModelo(){
         try {
             return this.getItens().values().stream().filter(i -> i.getTipo().equals("Modelo")).map(Item::getNome).findFirst().get();
-        }catch (Exception e){return null;} 
+        }catch (Exception e){return null;}
     }
 
     public String getCor(){
