@@ -147,7 +147,7 @@ public class ConfiguracaoDao implements Map<Integer,Configuracao> {
     @Override
     public Configuracao put(Integer integer, Configuracao configuracao){
         Configuracao config = null;
-        Set<Integer> i_set = configuracao.getItens().keySet();
+        List<Item> items = configuracao.getItens().values().stream().collect(Collectors.toList());
         Cliente cliente = configuracao.getCliente();
         int id_Cli = 0 ,id_Config = 0;
         int id_V = configuracao.getVendedor().getId();
@@ -205,13 +205,20 @@ public class ConfiguracaoDao implements Map<Integer,Configuracao> {
             }
 
             // PROCEDEMOS A INSERIR OS ITEMS NA TABELA CONFIGURAÇÃO_ITEM
-            for(Integer i: i_set){
+            for(Item i : items){
+                int stock = i.getStock() - 1;
                 sql = "INSERT INTO Configuracao_Item\n" +
                         "VALUES (?,?)";
 
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1,id_Config);
-                stm.setInt(2,i);
+                stm.setInt(2,i.getId());
+                stm.executeUpdate();
+
+                sql = "UPDATE Item SET stock=? WHERE idItem=?";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1,(i.getStock() - 1));
+                stm.setInt(2,i.getId());
                 stm.executeUpdate();
             }
 

@@ -1,5 +1,6 @@
 package configuraFacil.dataBase;
 
+import com.mysql.cj.x.protobuf.MysqlxSession;
 import com.sun.javafx.scene.control.skin.IntegerFieldSkin;
 import configuraFacil.business.models.items.Item;
 
@@ -134,10 +135,9 @@ public class ItemDao implements Map<Integer, Item> {
         int newid = 0;
         Item i = null;
         List<Integer> inc;
-        List<Integer> dep = null;
+        List<Integer> dep;
 
         try{
-            conn = Connect.connect();
             String sql = "INSERT INTO Item (nome,preco,stock,tipo)\n" + "VALUES (?,?,?,?)\n";
             PreparedStatement stm = conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
 
@@ -296,4 +296,9 @@ public class ItemDao implements Map<Integer, Item> {
     public Set<Entry<Integer, Item>> entrySet() {
         throw new NullPointerException("Not implemented!");
     }
+
+
 }
+
+
+
