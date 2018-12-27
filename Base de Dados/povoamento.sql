@@ -60,70 +60,72 @@ insert into Item (nome, preco, stock, tipo) values ('Para-choque Frontal e Trase
 
 -- INTERIOR -- (21~30)
 
+-- VOLANTE -- (24~27)
+insert into Item (nome, preco, stock, tipo) values ('Volante Básico', 21, 11, 'Volante');
+insert into Item (nome, preco, stock, tipo) values ('Volante Desportivo', 22, 11, 'Volante');
+insert into Item (nome, preco, stock, tipo) values ('Volante Confort', 23, 11, 'Volante');
+insert into Item (nome, preco, stock, tipo) values ('Volante Nintendo Wii', 24, 11, 'Volante');
+
 -- BANCOS -- (21~23)
-insert into Item (nome, preco, stock, tipo) values ('Bancos Básicos', 21, 11, 'Bancos');
-insert into Item (nome, preco, stock, tipo) values ('Bancos Premium', 22, 11, 'Bancos');
-insert into Item (nome, preco, stock, tipo) values ('Bancos Desportivo', 23, 11, 'Bancos'); 
+insert into Item (nome, preco, stock, tipo) values ('Bancos Básicos', 25, 11, 'Bancos');
+insert into Item (nome, preco, stock, tipo) values ('Bancos Premium', 26, 11, 'Bancos');
+insert into Item (nome, preco, stock, tipo) values ('Bancos Desportivos', 27, 11, 'Bancos'); 
 
 -- VOLANTE -- (24~27)
-insert into Item (nome, preco, stock, tipo) values ('Volante Básico', 24, 11, 'Volante');
-insert into Item (nome, preco, stock, tipo) values ('Volante Desportivo', 25, 11, 'Volante');
-insert into Item (nome, preco, stock, tipo) values ('Volante Confort', 26, 11, 'Volante');
-insert into Item (nome, preco, stock, tipo) values ('Volante Nintendo Wii', 27, 11, 'Volante');
+insert into Item (nome, preco, stock, tipo) values ('Estofos de Pele', 28, 11, 'Estofos');
+insert into Item (nome, preco, stock, tipo) values ('Estofos de Tecido Premium', 29, 11, 'Estofos');
+insert into Item (nome, preco, stock, tipo) values ('Estofos de Pele Premium', 30, 11, 'Estofos');
 
 -- OPCIONAIS -- (21~34)
 
-insert into Item (nome, preco, stock, tipo) values ('Bluetooth', 28, 11, 'Opcional');
-insert into Item (nome, preco, stock, tipo) values ('Pedais Desportivos', 29, 11, 'Opcional');
-insert into Item (nome, preco, stock, tipo) values ('Sistema de Som Surround', 30, 11, 'Opcional');
-insert into Item (nome, preco, stock, tipo) values ('LEDs Interiores ', 31, 11, 'Opcional');
-insert into Item (nome, preco, stock, tipo) values ('Touch Screen', 32, 11, 'Opcional');
-insert into Item (nome, preco, stock, tipo) values ('Encosto de Cotovelo', 33, 11, 'Opcional');
-insert into Item (nome, preco, stock, tipo) values ('Vidros Escurecidos', 34, 11, 'Opcional');
-insert into Item (nome, preco, stock, tipo) values ('Aquecimento de Banco incorporado ', 35, 11, 'Opcional');
+insert into Item (nome, preco, stock, tipo) values ('Bluetooth', 31, 11, 'Opcional');
+insert into Item (nome, preco, stock, tipo) values ('Pedais Desportivos', 32, 11, 'Opcional');
+insert into Item (nome, preco, stock, tipo) values ('Sistema de Som Surround', 33, 11, 'Opcional');
+insert into Item (nome, preco, stock, tipo) values ('LEDs Interiores ', 34, 11, 'Opcional');
+insert into Item (nome, preco, stock, tipo) values ('Touch Screen', 35, 11, 'Opcional');
+insert into Item (nome, preco, stock, tipo) values ('Encosto de Cotovelo', 36, 11, 'Opcional');
+insert into Item (nome, preco, stock, tipo) values ('Vidros Escurecidos', 37, 11, 'Opcional');
+insert into Item (nome, preco, stock, tipo) values ('Aquecimento de Banco incorporado', 38, 11, 'Opcional');
+insert into Item (nome, preco, stock, tipo) values ('Turbo', 39, 11, 'Opcional');
+insert into Item (nome, preco, stock, tipo) values ('Pack de cartas YuGiOh', 40, 11, 'Opcional');
 
 -- INCOMPATIBILIDADES --
 
-insert into Incompatibilidade (Item_idItem1, Item_idItem2) values (15, 13);
-insert into Incompatibilidade (Item_idItem1, Item_idItem2) values (15, 14);
-insert into Incompatibilidade (Item_idItem1, Item_idItem2) values (16, 12);
-insert into Incompatibilidade (Item_idItem1, Item_idItem2) values (17, 12);
-
+insert into Incompatibilidade (Item_idItem1, Item_idItem2) values (12, 16);
+insert into Incompatibilidade (Item_idItem1, Item_idItem2) values (12, 17);
+insert into Incompatibilidade (Item_idItem1, Item_idItem2) values (13, 15);
+insert into Incompatibilidade (Item_idItem1, Item_idItem2) values (14, 15);
 -- DEPENDÊNCIAS --
 
+insert into Dependencia (Item_idItem1, Item_idItem2) values (10, 24);
+insert into Dependencia (Item_idItem1, Item_idItem2) values (10, 25);
+insert into Dependencia (Item_idItem1, Item_idItem2) values (10, 28);
 insert into Dependencia (Item_idItem1, Item_idItem2) values (11, 14);
 insert into Dependencia (Item_idItem1, Item_idItem2) values (11, 20);
-insert into Dependencia (Item_idItem1, Item_idItem2) values (11, 34);
-insert into Dependencia (Item_idItem1, Item_idItem2) values (32, 28);
-insert into Dependencia (Item_idItem1, Item_idItem2) values (30, 28);
-insert into Dependencia (Item_idItem1, Item_idItem2) values (25, 29);
-insert into Dependencia (Item_idItem1, Item_idItem2) values (35, 22);
+insert into Dependencia (Item_idItem1, Item_idItem2) values (11, 22);
+insert into Dependencia (Item_idItem1, Item_idItem2) values (11, 27);
+
 
 -- PACOTE --
 
 insert into Pacote (desconto, nome) values (25, 'Desportivo');
 insert into Pacote (desconto, nome) values (25, 'Confort');
-insert into Pacote (desconto, nome) values (10, 'Tech');
+insert into Pacote (desconto, nome) values (10, 'Premium');
 
 -- Item DE PACOTE --
 
 insert into Pacote_Item (Pacote_idPacote, Item_idItem) values (1, 14);
 insert into Pacote_Item (Pacote_idPacote, Item_idItem) values (1, 17);
 insert into Pacote_Item (Pacote_idPacote, Item_idItem) values (1, 20);
-insert into Pacote_Item (Pacote_idPacote, Item_idItem) values (1, 25);
-insert into Pacote_Item (Pacote_idPacote, Item_idItem) values (1, 29);
-insert into Pacote_Item (Pacote_idPacote, Item_idItem) values (1, 33);
+insert into Pacote_Item (Pacote_idPacote, Item_idItem) values (1, 27);
 
 insert into Pacote_Item (Pacote_idPacote, Item_idItem) values (2, 23);
 insert into Pacote_Item (Pacote_idPacote, Item_idItem) values (2, 26);
-insert into Pacote_Item (Pacote_idPacote, Item_idItem) values (2, 33);
 
+insert into Pacote_Item (Pacote_idPacote, Item_idItem) values (3, 19);
 insert into Pacote_Item (Pacote_idPacote, Item_idItem) values (3, 23);
-insert into Pacote_Item (Pacote_idPacote, Item_idItem) values (3, 27);
-insert into Pacote_Item (Pacote_idPacote, Item_idItem) values (3, 28);
+insert into Pacote_Item (Pacote_idPacote, Item_idItem) values (3, 26);
 insert into Pacote_Item (Pacote_idPacote, Item_idItem) values (3, 30);
-insert into Pacote_Item (Pacote_idPacote, Item_idItem) values (3, 31);
-insert into Pacote_Item (Pacote_idPacote, Item_idItem) values (3, 32);
 
 
 -- CONFIGURAÇÃO -- 
