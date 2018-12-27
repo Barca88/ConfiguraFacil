@@ -1,6 +1,5 @@
 package configuraFacil.presentation.controllers;
 
-import configuraFacil.presentation.controllers.SceneManager;
 import configuraFacil.business.ConfiguraFacil;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
