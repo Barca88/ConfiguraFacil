@@ -170,12 +170,15 @@ public class ConfiguraFacil {
 
     public List<Item> oldDependent(Configuracao c, Item old){
         List <Item> dependentes = new ArrayList<>();
+        if(!(old== null)){
         for(Item i : c.getItens().values()){
             if(i.getDepend().contains(old.getId())){
                 dependentes.add(i);
             }
         }
         return dependentes;
+        }
+        else return null;
     }
 
     public void removeSametype(Configuracao c, Item i){
