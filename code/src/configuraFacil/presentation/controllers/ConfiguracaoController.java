@@ -132,10 +132,6 @@ public class ConfiguracaoController {
     public void handleBtnFinalizarAction(ActionEvent actionEvent) throws IOException {
         Configuracao c = cf.getInUseConfig();
 
-        for(Item i: opcionais.values()){
-            cf.addItem(i,c);
-        }
-
         if((c.getModelo() != null) && (c.getCor() != null)) {
             URL url = getClass().getResource("../views/clienteform.fxml");
             Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -164,7 +160,6 @@ public class ConfiguracaoController {
                     if (depend.isEmpty() && incomp.isEmpty()) {
                         cf.removeSametype(c, item);
                         cf.addItem(item, c);
-
                     }
 
                     if (depend.size() > 0) {
@@ -182,22 +177,11 @@ public class ConfiguracaoController {
 
                     handleOpcionais(cb_BOX, item, oldItem);
                 }
-
-                int pacote = cf.checkPacote(c);
-                float desconto = 0;
-                if(pacote >= 0){
-                    desconto = cf.getDesconto(pacote);
-                    addPacoteChoices(pacote);
-                }
-                float preco = cf.price(new ArrayList<>(c.getItens().values()),desconto);
-                lblPreco.setText(Float.toString(preco));
             }catch(NullPointerException e){
                 e.getMessage();
             }
 
-        }
-
-        else{
+        }else{
             try {
 
                 if (!item.getTipo().equals("Opcional")) {
@@ -223,19 +207,20 @@ public class ConfiguracaoController {
 
                     handleOpcionais(cb_BOX, item, oldItem);
                 }
-
-                int pacote = cf.checkPacote(c);
-                float desconto = 0;
-                if(pacote >= 0){
-                    desconto = cf.getDesconto(pacote);
-                    addPacoteChoices(pacote);
-                }
-                float preco = cf.price(c.getItens().values().stream().collect(Collectors.toList()),desconto);
-
             }catch(NullPointerException e){
                     e.getMessage();
             }
         }
+
+        int pacote = cf.checkPacote(c);
+        float desconto = 0;
+        if(pacote >= 0){
+            desconto = cf.getDesconto(pacote);
+            addPacoteChoices(pacote);
+        }
+        float preco = cf.price(c.getItens().values().stream().collect(Collectors.toList()),desconto);
+
+        lblPreco.setText(Float.toString(preco));
     }
 
     public void handleDependencies(List<Item> depend,List<Item> incomp,Item item,Item oldItem,Configuracao c){
@@ -327,8 +312,8 @@ public class ConfiguracaoController {
                     cbOpcional_5.getItems().add(old_nome);
                 }
 
-                if(!opcionais.containsValue(item)) opcionais.put(0,item);
-                if(opcionais.containsValue(old)) opcionais.remove(old);
+                if(!opcionais.containsValue(item)) {opcionais.put(0,item); cf.getInUseConfig().addItem(item);}
+                if(opcionais.containsValue(old)) {opcionais.remove(old); cf.getInUseConfig().removeItem(item);}
 
                 break;
             case "cbOpcional_2":
@@ -344,8 +329,8 @@ public class ConfiguracaoController {
                     cbOpcional_5.getItems().add(old_nome);
                 }
 
-                if(!opcionais.containsValue(item)) opcionais.put(1,item);
-                if(opcionais.containsValue(old)) opcionais.remove(old);
+                if(!opcionais.containsValue(item)) {opcionais.put(1,item); cf.getInUseConfig().addItem(item);}
+                if(opcionais.containsValue(old)) {opcionais.remove(old); cf.getInUseConfig().removeItem(item);}
 
                 break;
             case "cbOpcional_3":
@@ -361,8 +346,8 @@ public class ConfiguracaoController {
                     cbOpcional_5.getItems().add(old_nome);
                 }
 
-                if(!opcionais.containsValue(item)) opcionais.put(2,item);
-                if(opcionais.containsValue(old)) opcionais.remove(old);
+                if(!opcionais.containsValue(item)) {opcionais.put(2,item); cf.getInUseConfig().addItem(item);}
+                if(opcionais.containsValue(old)) {opcionais.remove(old); cf.getInUseConfig().removeItem(item);}
 
                 break;
             case "cbOpcional_4":
@@ -378,8 +363,8 @@ public class ConfiguracaoController {
                     cbOpcional_5.getItems().add(old_nome);
                 }
 
-                if(!opcionais.containsValue(item)) opcionais.put(3,item);
-                if(opcionais.containsValue(old)) opcionais.remove(old);
+                if(!opcionais.containsValue(item)) {opcionais.put(3,item); cf.getInUseConfig().addItem(item);}
+                if(opcionais.containsValue(old)) {opcionais.remove(old); cf.getInUseConfig().removeItem(item);}
 
                 break;
             case "cbOpcional_5":
@@ -395,8 +380,8 @@ public class ConfiguracaoController {
                     cbOpcional_4.getItems().add(old_nome);
                 }
 
-                if(!opcionais.containsValue(item)) opcionais.put(4,item);
-                if(opcionais.containsValue(old)) opcionais.remove(old);
+                if(!opcionais.containsValue(item)) {opcionais.put(4,item); cf.getInUseConfig().addItem(item);}
+                if(opcionais.containsValue(old)) {opcionais.remove(old); cf.getInUseConfig().removeItem(item);}
 
                 break;
             default:

@@ -226,14 +226,16 @@ public class ConfiguraFacil {
     }
 
     public float price (List<Item> itens, float desconto){
-        float preco = 0;
-        for(Item i : itens){
-            preco += i.getPreco();
-        }
-        if (desconto != 0){
-            preco = preco - ((preco  * desconto)/100);
-        }
-        return preco;
+        try {
+            float preco = 0;
+            for (Item i : itens) {
+                preco += i.getPreco();
+            }
+            if (desconto != 0) {
+                preco = preco - ((preco * desconto) / 100);
+            }
+            return preco;
+        }catch (Exception e){return 0;}
     }
 
     public void adicionarNovaConfiguracao(){

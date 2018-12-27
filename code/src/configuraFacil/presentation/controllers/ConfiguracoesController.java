@@ -70,6 +70,9 @@ public class ConfiguracoesController {
             SceneManager sm = new SceneManager(url, window);
             sm.newScene(9, cf);
         }
+    }
+
+    public void handleValidation(ActionEvent actionEvent) throws IOException{
 
     }
 }
