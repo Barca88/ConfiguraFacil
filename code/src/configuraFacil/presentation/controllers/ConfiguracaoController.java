@@ -2,6 +2,7 @@ package configuraFacil.presentation.controllers;
 
 import configuraFacil.business.ConfiguraFacil;
 import configuraFacil.business.models.Configuracao;
+import configuraFacil.business.models.Pacote;
 import configuraFacil.business.models.items.Item;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,7 +13,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ConfiguracaoController {
@@ -65,7 +66,7 @@ public class ConfiguracaoController {
 
     ConfiguraFacil cf;
 
-    
+    Map<Integer,Item> opcionais = new HashMap<>();
 
     public void init(ConfiguraFacil cfo) {
         cf = cfo;
@@ -125,6 +126,18 @@ public class ConfiguracaoController {
     public void handleBtnFinalizarAction(ActionEvent actionEvent) throws IOException {
         Configuracao c = cf.getInUseConfig();
 
+        for(Item i: opcionais.values()){
+            cf.addItem(i,c);
+        }
+
+        int pacote = cf.checkPacote(c);
+        float desconto = 0;
+        if(pacote >= 0){
+            desconto = cf.getDesconto(pacote);
+            addPacoteChoices(pacote);
+        }
+        float preco = cf.price(c.getItens().values().stream().collect(Collectors.toList()),desconto);
+
         if((c.getModelo() != null) && (c.getCor() != null)) {
             URL url = getClass().getResource("../views/clienteform.fxml");
             Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -137,100 +150,70 @@ public class ConfiguracaoController {
 
     public void itemChanged(ChoiceBox<String> tipo, String old) {
         Configuracao c = cf.getInUseConfig();
+
         Item item = cf.getItems().stream().filter(i -> i.getNome().equals(tipo.getValue())).findAny().orElse(null);
         Item oldItem = cf.getItems().stream().filter(i -> i.getNome().equals(old)).findAny().orElse(null);
 
-        if (old != null) {
+            if (old != null) {
 
-            List<Item> remove = cf.oldDependent(c, oldItem);
-            if (!remove.isEmpty()) {
-                List <String> nomes = remove.stream().map(i -> i.getNome()).collect(Collectors.toList());
-                String show = String.join("\n",nomes);
-                boolean resp = AlertBox.display("O Item tem incompatibilidades", "Deseja adicionar item?\n" + "Itens incompatíveis:\n" + show );
-                if (resp == true) {
-                    for (Item rem : remove) {
-                        cf.removeItem(rem, c);
-                        removeChoices(rem);
+                List<Item> remove = cf.oldDependent(c, oldItem);
+                if (!remove.isEmpty()) {
+                    List<String> nomes = remove.stream().map(i -> i.getNome()).collect(Collectors.toList());
+                    String show = String.join("\n", nomes);
+                    boolean resp = AlertBox.display("O Item tem incompatibilidades", "Deseja adicionar item?\n" + "Itens incompatíveis:\n" + show);
+                    if (resp == true) {
+                        for (Item rem : remove) {
+                            cf.removeItem(rem, c);
+                            removeChoices(rem);
+                        }
+                    } else {
+                        cf.addItem(oldItem, c);
+                        handleChoices(item, oldItem, 1);
                     }
-                } else {
-                    cf.addItem(oldItem,c);
-                    handleChoices(item,oldItem,1);
                 }
             }
-        }
 
-        List<Item> depend = cf.dependencias(item, c.getItens());
-        List<Item> incomp = cf.incompatibilidades(item, c.getItens());
-        try {
-            if (depend.isEmpty() && incomp.isEmpty()) {
-                cf.removeSametype(c, item);
-                cf.addItem(item, c);
-            } else if(!depend.isEmpty()){
-                    List <String> nomesde = depend.stream().map(i -> i.getNome()).collect(Collectors.toList());
-                    String showd = String.join("\n",nomesde);
-                    boolean reply = AlertBox.display("O Item tem dependencias", "Deseja adicionar os seguintes itens:\n" + showd +"\nCom custo o adicional: " + cf.price(depend,0) + "?");
-                    if (reply == true) {
+            List<Item> depend = cf.dependencias(item, c.getItens());
+            List<Item> incomp = cf.incompatibilidades(item, c.getItens());
 
-                        for (Item i : depend) {
-                            cf.removeSametype(c, i);
-                            cf.addItem(i, c);
-                            handleChoices(i,oldItem,0);
-                        }
-
-                        for (Item i2 : incomp) {
-                            cf.removeItem(i2, c);
-                            removeChoices(i2);
-                        }
-
+            try {
+                if (!item.getTipo().equals("Opcional")) {
+                    if (depend.isEmpty() && incomp.isEmpty()) {
+                        cf.removeSametype(c, item);
                         cf.addItem(item, c);
-                    } else {handleChoices(item,oldItem,1); }
+                    } else if (!depend.isEmpty()) {
+                        List<String> nomesde = depend.stream().map(i -> i.getNome()).collect(Collectors.toList());
+                        String showd = String.join("\n", nomesde);
+                        boolean reply = AlertBox.display("O Item tem dependencias", "Deseja adicionar os seguintes itens:\n" + showd + "\nCom custo o adicional: " + cf.price(depend, 0) + "?");
+                        if (reply == true) {
+
+                            for (Item i : depend) {
+                                cf.removeSametype(c, i);
+                                cf.addItem(i, c);
+                                handleChoices(i, oldItem, 0);
+                            }
+
+                            for (Item i2 : incomp) {
+                                cf.removeItem(i2, c);
+                                removeChoices(i2);
+                            }
+
+                            cf.addItem(item, c);
+                        } else {
+                            handleChoices(item, oldItem, 1);
+                        }
                     }
-        } catch (NullPointerException e) {
-            e.getMessage();
-        }
+                } else if (item.getTipo().equals("Opcional")) {
+                    String l1[] = tipo.toString().split("id=");
+                    String l2[] = l1[1].split(",");
+                    String cb_BOX = l2[0];
 
-        int pacote = cf.checkPacote(c);
-        float desconto = 0;
-        if(pacote != 0){
-            desconto = cf.getDesconto(pacote);
-            addPacoteChoices(pacote);
-        }
-        float preco = cf.price(c.getItens().values().stream().collect(Collectors.toList()),desconto);
-
-    }
-
-    public void removeChoices(Item item) {
-            String tipo = item.getTipo();
-
-            switch (tipo) {
-
-                case "Modelo":
-                    cbModelo.setValue(null);
-                    break;
-                case "Cor":
-                    cbCor.setValue(null);
-                    break;
-                case "Jantes":
-                    cbJantes.setValue(null);
-                    break;
-                case "Pneus":
-                    cbPneus.setValue(null);
-                    break;
-                case "Corpo":
-                    cbCorpo.setValue(null);
-                    break;
-                case "Volante":
-                    cbVolante.setValue(null);
-                    break;
-                case "Bancos":
-                    cbBancos.setValue(null);
-                    break;
-                case "Estofos":
-                    cbEstofos.setValue(null);
-                    break;
-                default:
-                    break;
-        }
+                    handleOpcionais(cb_BOX, item, oldItem);
+                }
+            }
+                catch(NullPointerException e){
+                    e.getMessage();
+                }
     }
 
     public void handleChoices(Item item,Item old, int type_of_handling){
@@ -271,7 +254,139 @@ public class ConfiguracaoController {
                     break;
 
             }
+    }
+
+    public void removeChoices(Item item) {
+        String tipo = item.getTipo();
+
+        switch (tipo) {
+
+            case "Modelo":
+                cbModelo.setValue(null);
+                break;
+            case "Cor":
+                cbCor.setValue(null);
+                break;
+            case "Jantes":
+                cbJantes.setValue(null);
+                break;
+            case "Pneus":
+                cbPneus.setValue(null);
+                break;
+            case "Corpo":
+                cbCorpo.setValue(null);
+                break;
+            case "Volante":
+                cbVolante.setValue(null);
+                break;
+            case "Bancos":
+                cbBancos.setValue(null);
+                break;
+            case "Estofos":
+                cbEstofos.setValue(null);
+                break;
+            default:
+                break;
         }
+    }
+
+    public void handleOpcionais(String box, Item item, Item old){
+        String new_nome = item.getNome();
+
+        String old_nome = null;
+        if(old != null) old_nome = old.getNome();
+
+            switch (box) {
+
+                case "cbOpcional_1":
+                    cbOpcional_1.setValue(new_nome);
+                    cbOpcional_2.getItems().remove(new_nome);
+                    cbOpcional_3.getItems().remove(new_nome);
+                    cbOpcional_4.getItems().remove(new_nome);
+                    cbOpcional_5.getItems().remove(new_nome);
+                    if(old != null) {
+                        cbOpcional_2.getItems().add(old_nome);
+                        cbOpcional_3.getItems().add(old_nome);
+                        cbOpcional_4.getItems().add(old_nome);
+                        cbOpcional_5.getItems().add(old_nome);
+                    }
+
+                    if(!opcionais.containsValue(item)) opcionais.put(0,item);
+                    if(opcionais.containsValue(old)) opcionais.remove(old);
+
+                    break;
+                case "cbOpcional_2":
+                    cbOpcional_2.setValue(new_nome);
+                    cbOpcional_1.getItems().remove(new_nome);
+                    cbOpcional_3.getItems().remove(new_nome);
+                    cbOpcional_4.getItems().remove(new_nome);
+                    cbOpcional_5.getItems().remove(new_nome);
+                    if(old != null) {
+                        cbOpcional_1.getItems().add(old_nome);
+                        cbOpcional_3.getItems().add(old_nome);
+                        cbOpcional_4.getItems().add(old_nome);
+                        cbOpcional_5.getItems().add(old_nome);
+                    }
+
+                    if(!opcionais.containsValue(item)) opcionais.put(1,item);
+                    if(opcionais.containsValue(old)) opcionais.remove(old);
+
+                    break;
+                case "cbOpcional_3":
+                    cbOpcional_3.setValue(new_nome);
+                    cbOpcional_1.getItems().remove(new_nome);
+                    cbOpcional_2.getItems().remove(new_nome);
+                    cbOpcional_4.getItems().remove(new_nome);
+                    cbOpcional_5.getItems().remove(new_nome);
+                    if(old != null) {
+                        cbOpcional_1.getItems().add(old_nome);
+                        cbOpcional_2.getItems().add(old_nome);
+                        cbOpcional_4.getItems().add(old_nome);
+                        cbOpcional_5.getItems().add(old_nome);
+                    }
+
+                    if(!opcionais.containsValue(item)) opcionais.put(2,item);
+                    if(opcionais.containsValue(old)) opcionais.remove(old);
+
+                    break;
+                case "cbOpcional_4":
+                    cbOpcional_4.setValue(new_nome);
+                    cbOpcional_1.getItems().remove(new_nome);
+                    cbOpcional_2.getItems().remove(new_nome);
+                    cbOpcional_3.getItems().remove(new_nome);
+                    cbOpcional_5.getItems().remove(new_nome);
+                    if(old != null) {
+                        cbOpcional_1.getItems().add(old_nome);
+                        cbOpcional_2.getItems().add(old_nome);
+                        cbOpcional_3.getItems().add(old_nome);
+                        cbOpcional_5.getItems().add(old_nome);
+                    }
+
+                    if(!opcionais.containsValue(item)) opcionais.put(3,item);
+                    if(opcionais.containsValue(old)) opcionais.remove(old);
+
+                    break;
+                case "cbOpcional_5":
+                    cbOpcional_5.setValue(new_nome);
+                    cbOpcional_1.getItems().remove(new_nome);
+                    cbOpcional_2.getItems().remove(new_nome);
+                    cbOpcional_3.getItems().remove(new_nome);
+                    cbOpcional_4.getItems().remove(new_nome);
+                    if(old != null) {
+                        cbOpcional_1.getItems().add(old_nome);
+                        cbOpcional_2.getItems().add(old_nome);
+                        cbOpcional_3.getItems().add(old_nome);
+                        cbOpcional_4.getItems().add(old_nome);
+                    }
+
+                    if(!opcionais.containsValue(item)) opcionais.put(4,item);
+                    if(opcionais.containsValue(old)) opcionais.remove(old);
+
+                    break;
+                default:
+                    break;
+        }
+    }
 
     public void pacoteChanged(){
         List<Item> itens = cf.getItemPacote(cbPacote.getValue());
@@ -293,6 +408,7 @@ public class ConfiguracaoController {
 
         }
     }
+
     public void addPacoteChoices(int id){
         cbPacote.setValue(cf.getPacote(id).getNome());
 

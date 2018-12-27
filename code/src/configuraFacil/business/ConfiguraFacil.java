@@ -193,7 +193,7 @@ public class ConfiguraFacil {
 
     public int checkPacote(Configuracao c){
         List<Pacote> pacotes = pacoteDao.values().stream().collect(toList());
-        int pId = 0;
+        int pId = -1;
         List <Integer> pitens = new ArrayList<>();
         for(Pacote p : pacotes){
             for(Item i : c.getItens().values()){
