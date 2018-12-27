@@ -194,9 +194,9 @@ public class ItemDao implements Map<Integer, Item> {
         Item i = this.get(o);
         try{
             conn = Connect.connect();
-            String sql = "DELETE FROM Utilizador WHERE email=?";
+            String sql = "DELETE FROM Item WHERE idItem =?";
             PreparedStatement stm = conn.prepareStatement(sql);
-            stm.setString(1,(String)o);
+            stm.setInt(1,(int) o);
             stm.executeUpdate();
         }catch (Exception e){
             throw new NullPointerException(e.getMessage());
