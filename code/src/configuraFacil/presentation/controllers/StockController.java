@@ -4,7 +4,6 @@ import configuraFacil.business.ConfiguraFacil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -26,18 +25,10 @@ public class StockController {
     private TableColumn<Item,Integer> clnQuantidade;
     @FXML
     private TableColumn<Item,Integer> clnPreco;
-    @FXML
-    private Button btnAdicionar;
-    @FXML
-    private Button btnRemover;
 
 
     public void init(ConfiguraFacil cfo) {
         cf = cfo;
-        if(cf.getLogged().getClass().getSimpleName().equals("Fabricante")){
-            btnAdicionar.setVisible(false);
-            btnRemover.setVisible(false);
-        }
         initTable();
     }
 
@@ -51,25 +42,17 @@ public class StockController {
 
 
     public void handleBtnBack(ActionEvent actionEvent) throws IOException {
-
-        URL url =  getClass().getResource("../views/administrador.fxml");
-        Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        SceneManager sm = new SceneManager(url, window);
-        sm.newScene(1, cf);
-
-    }
-
-    public void handleBtnAdicionarItemAction(ActionEvent actionEvent) {
-        if(tblStock.getSelectionModel().getSelectedItem() == null){
-
-        } else {
-            Item i = tblStock.getSelectionModel().getSelectedItem();
+        URL url;
+        if(cf.getLogged().getClass().getSimpleName().equals("Administrador")) {
+            url = getClass().getResource("../views/administrador.fxml");
+            Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            SceneManager sm = new SceneManager(url, window);
+            sm.newScene(1, cf);
+        } else if(cf.getLogged().getClass().getSimpleName().equals("Fabricante")) {
+            url = getClass().getResource("../views/fabricante.fxml");
+            Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            SceneManager sm = new SceneManager(url, window);
+            sm.newScene(2, cf);
         }
-    }
-
-    public void handleBtnRemoverItemAction(ActionEvent actionEvent) {
-        Item i = tblStock.getSelectionModel().getSelectedItem();
-        cf.removeItem(i);
-        initTable();
     }
 }

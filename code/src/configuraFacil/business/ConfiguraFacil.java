@@ -222,10 +222,6 @@ public class ConfiguraFacil {
         c.removeItem(i);
     }
 
-    public void removeItem(Item i){
-        itemDao.remove(i);
-    }
-
     public float price (List<Item> itens, float desconto){
         float preco = 0;
         for(Item i : itens){

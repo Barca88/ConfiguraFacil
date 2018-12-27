@@ -28,16 +28,6 @@
                   <Image url="@../../../images/warehouse.png" />
                </image>
             </ImageView>
-            <Button fx:id="btnAdicionar" layoutX="81.0" layoutY="22.0" mnemonicParsing="false" onAction="#handleBtnAdicionarItemAction" prefHeight="35.0" prefWidth="116.0" style="-fx-background-color: #195988; -fx-background-radius: 5em;" text="Adicionar" textFill="WHITE">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Button>
-            <Button fx:id="btnRemover" layoutX="213.0" layoutY="22.0" mnemonicParsing="false" onAction="#handleBtnRemoverItemAction" prefHeight="35.0" prefWidth="116.0" style="-fx-background-color: #195988; -fx-background-radius: 5em;" text="Remover" textFill="WHITE">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Button>
          </children>
       </AnchorPane>
       <TableView fx:id="tblStock" layoutY="85.0" prefHeight="322.0" prefWidth="607.0" style="-fx-background-color: #376888;">
