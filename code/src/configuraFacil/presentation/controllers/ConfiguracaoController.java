@@ -155,21 +155,7 @@ public class ConfiguracaoController {
         Item oldItem = cf.getItems().stream().filter(i -> i.getNome().equals(old)).findAny().orElse(null);
 
         if(old != null) {
-            List<Item> remove = cf.oldDependent(c, oldItem);
-            if (!remove.isEmpty()) {
-                List<String> nomes = remove.stream().map(i -> i.getNome()).collect(Collectors.toList());
-                String show = String.join("\n", nomes);
-                boolean resp = AlertBox.display("O Item tem incompatibilidades", "Deseja adicionar item?\n" + "Itens incompatíveis:\n" + show);
-                if (resp == true) {
-                    for (Item rem : remove) {
-                        cf.removeItem(rem, c);
-                        removeChoices(rem);
-                    }
-                } else {
-                    cf.addItem(oldItem, c);
-                    handleChoices(item, oldItem, 1);
-                }
-            }
+
         }
 
             List<Item> depend = cf.dependencias(item, c.getItens());
@@ -177,11 +163,13 @@ public class ConfiguracaoController {
 
             try {
                 if (!item.getTipo().equals("Opcional")) {
+
                     if (depend.isEmpty() && incomp.isEmpty()) {
                         cf.removeSametype(c, item);
                         cf.addItem(item, c);
+                    }
 
-                    }if (incomp.isEmpty() && !(depend.isEmpty())) {
+                    if (depend.size() > 0) {
                         List<String> nomesde = depend.stream().map(i -> i.getNome()).collect(Collectors.toList());
                         String showd = String.join("\n", nomesde);
                         boolean reply = AlertBox.display("O Item tem dependencias", "Deseja adicionar os seguintes itens:\n" + showd + "\nCom custo o adicional: " + cf.price(depend, 0) + "?");
@@ -199,24 +187,46 @@ public class ConfiguracaoController {
                             }
 
                             cf.addItem(item, c);
+
                         } else {
                             handleChoices(item, oldItem, 1);
                         }
-
                     }
-                } else if (item.getTipo().equals("Opcional")) {
-                    String l1[] = tipo.toString().split("id=");
-                    String l2[] = l1[1].split(",");
-                    String cb_BOX = l2[0];
 
-                    handleOpcionais(cb_BOX, item, oldItem);
+                    if (incomp.size() > 0) {
+                        if (old != null) {
+                            List<Item> remove = cf.oldDependent(c, oldItem);
+                            if (remove.size() > 0) {
+                                List<String> nomes = remove.stream().map(i -> i.getNome()).collect(Collectors.toList());
+                                String show = String.join("\n", nomes);
+                                boolean resp = AlertBox.display("O Item tem incompatibilidades", "Deseja adicionar item?\n" + "Itens incompatíveis:\n" + show);
+                                if (resp == true) {
+                                    for (Item rem : remove) {
+                                        cf.removeItem(rem, c);
+                                        removeChoices(rem);
+                                    }
+
+                                } else {
+                                    cf.addItem(oldItem, c);
+                                    handleChoices(item, oldItem, 1); }
+                            }
+                        }else{
+                            
+                        }
+
+                    }else if (item.getTipo().equals("Opcional")) {
+                        String l1[] = tipo.toString().split("id=");
+                        String l2[] = l1[1].split(",");
+                        String cb_BOX = l2[0];
+
+                        handleOpcionais(cb_BOX, item, oldItem);
+                    }
+
+
                 }
-
-
-            }
-                catch(NullPointerException e){
+            }catch(NullPointerException e){
                     e.getMessage();
-                }
+            }
     }
 
     public void handleChoices(Item item,Item old, int type_of_handling){

@@ -299,9 +299,6 @@ public class ConfiguracaoDao implements Map<Integer,Configuracao> {
                 stm3.setInt(1,cId);
                 ResultSet rs3 = stm3.executeQuery();
 
-                String cor = itens.values().stream().filter(i -> i.getTipo().equals("Cor")).map(i-> i.getNome()).collect(Collectors.joining());
-                String modelo = itens.values().stream().filter(i -> i.getTipo().equals("Modelo")).map(i-> i.getNome()).collect(Collectors.joining());
-
                 if(rs3.next()){
                     cli = new Cliente(rs3.getInt("idCliente"),rs3.getString("nome"),rs3.getString("email"),rs3.getString("telemovel"));
                 }

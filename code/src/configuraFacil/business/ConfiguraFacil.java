@@ -2,18 +2,13 @@ package configuraFacil.business;
 import configuraFacil.business.models.Configuracao;
 import configuraFacil.business.models.Pacote;
 import configuraFacil.business.models.items.Item;
-import configuraFacil.business.models.users.Administrador;
-import configuraFacil.business.models.users.Fabricante;
 import configuraFacil.business.models.users.Utilizador;
 
 import configuraFacil.dataBase.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import sun.awt.ConstrainableGraphics;
-import sun.nio.cs.UTF_32LE;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
