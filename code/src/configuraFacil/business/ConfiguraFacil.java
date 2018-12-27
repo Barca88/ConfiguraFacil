@@ -140,7 +140,7 @@ public class ConfiguraFacil {
     }
 
     public ObservableList<String> getPacotes(){
-        List<String> lm = pacoteDao.values().stream().map(Pacote::getNome).collect(Collectors.toList());
+        List<String> lm =  pacoteDao.values().stream().map(Pacote::getNome).collect(Collectors.toList());
         return FXCollections.observableArrayList(lm);
     }
 
@@ -240,8 +240,6 @@ public class ConfiguraFacil {
 
     public void adicionarNovaConfiguracao(){
         configDao.put(inUseConfig.getId(), inUseConfig);
-
-
     }
 
     public Utilizador getLogged() {
@@ -258,6 +256,10 @@ public class ConfiguraFacil {
 
     public void setInUseConfig(Configuracao configConsulta) {
         this.inUseConfig = configConsulta;
+    }
+
+    public void clear_config(Configuracao c){
+        c.clearItens();
     }
 }
 

@@ -89,7 +89,7 @@ public class Configuracao {
     }
 
     public Map<Integer,Item> getItens() {
-        HashMap<Integer,Item> r = new HashMap<Integer,Item>();
+        HashMap<Integer,Item> r = new HashMap<>();
         for(Item i: this.itens.values()){
             r.put(i.getId(),i.clone());
         }
@@ -97,7 +97,7 @@ public class Configuracao {
     }
 
     public void setItens(Map<Integer, Item> newItens) {
-        HashMap<Integer,Item> r = new HashMap<Integer,Item>();
+        HashMap<Integer,Item> r = new HashMap<>();
         for(Item i: newItens.values()) {
             r.put(i.getId(), i.clone());
         }
@@ -111,5 +111,21 @@ public class Configuracao {
 
     public void removeItem(Item item){
         this.itens.remove(item.getId());
+    }
+
+    public void clearItens(){
+        int modelo = this.getItens().values().stream().filter(i-> i.getTipo().equals("Modelo")).map(Item::getId).findAny().orElse(-1);
+        int cor = this.getItens().values().stream().filter(i-> i.getTipo().equals("Cor")).map(Item::getId).findAny().orElse(-1);
+        Item m = this.getItens().values().stream().filter(i-> i.getTipo().equals("Modelo")).findAny().orElse(null);
+        Item c = this.getItens().values().stream().filter(i-> i.getTipo().equals("Cor")).findAny().orElse(null);
+
+        this.itens.clear();
+
+        if(modelo >= 0)
+            itens.put(0,m);
+        if(cor >= 0)
+            itens.put(1,c);
+
+
     }
 }

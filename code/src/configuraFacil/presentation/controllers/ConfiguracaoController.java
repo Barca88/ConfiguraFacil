@@ -154,24 +154,23 @@ public class ConfiguracaoController {
         Item item = cf.getItems().stream().filter(i -> i.getNome().equals(tipo.getValue())).findAny().orElse(null);
         Item oldItem = cf.getItems().stream().filter(i -> i.getNome().equals(old)).findAny().orElse(null);
 
-            if (old != null) {
-
-                List<Item> remove = cf.oldDependent(c, oldItem);
-                if (!remove.isEmpty()) {
-                    List<String> nomes = remove.stream().map(i -> i.getNome()).collect(Collectors.toList());
-                    String show = String.join("\n", nomes);
-                    boolean resp = AlertBox.display("O Item tem incompatibilidades", "Deseja adicionar item?\n" + "Itens incompatíveis:\n" + show);
-                    if (resp == true) {
-                        for (Item rem : remove) {
-                            cf.removeItem(rem, c);
-                            removeChoices(rem);
-                        }
-                    } else {
-                        cf.addItem(oldItem, c);
-                        handleChoices(item, oldItem, 1);
+        if(old != null) {
+            List<Item> remove = cf.oldDependent(c, oldItem);
+            if (!remove.isEmpty()) {
+                List<String> nomes = remove.stream().map(i -> i.getNome()).collect(Collectors.toList());
+                String show = String.join("\n", nomes);
+                boolean resp = AlertBox.display("O Item tem incompatibilidades", "Deseja adicionar item?\n" + "Itens incompatíveis:\n" + show);
+                if (resp == true) {
+                    for (Item rem : remove) {
+                        cf.removeItem(rem, c);
+                        removeChoices(rem);
                     }
+                } else {
+                    cf.addItem(oldItem, c);
+                    handleChoices(item, oldItem, 1);
                 }
             }
+        }
 
             List<Item> depend = cf.dependencias(item, c.getItens());
             List<Item> incomp = cf.incompatibilidades(item, c.getItens());
@@ -181,7 +180,8 @@ public class ConfiguracaoController {
                     if (depend.isEmpty() && incomp.isEmpty()) {
                         cf.removeSametype(c, item);
                         cf.addItem(item, c);
-                    } else if (!depend.isEmpty()) {
+
+                    }if (incomp.isEmpty() && !(depend.isEmpty())) {
                         List<String> nomesde = depend.stream().map(i -> i.getNome()).collect(Collectors.toList());
                         String showd = String.join("\n", nomesde);
                         boolean reply = AlertBox.display("O Item tem dependencias", "Deseja adicionar os seguintes itens:\n" + showd + "\nCom custo o adicional: " + cf.price(depend, 0) + "?");
@@ -202,6 +202,7 @@ public class ConfiguracaoController {
                         } else {
                             handleChoices(item, oldItem, 1);
                         }
+
                     }
                 } else if (item.getTipo().equals("Opcional")) {
                     String l1[] = tipo.toString().split("id=");
@@ -210,6 +211,8 @@ public class ConfiguracaoController {
 
                     handleOpcionais(cb_BOX, item, oldItem);
                 }
+
+
             }
                 catch(NullPointerException e){
                     e.getMessage();
@@ -389,13 +392,22 @@ public class ConfiguracaoController {
     }
 
     public void pacoteChanged(){
+        Configuracao c = cf.getInUseConfig();
+        cf.clear_config(c);
         List<Item> itens = cf.getItemPacote(cbPacote.getValue());
-        for(Item item : itens){
-            String tipo = item.getTipo();
-            switch(tipo) {
 
-                case "Modelo" : cbModelo.setValue(item.getNome()); break;
-                case "Cor" : cbCor.setValue(item.getNome()); break;
+        cbJantes.setValue(null);
+        cbPneus.setValue(null);
+        cbCorpo.setValue(null);
+        cbVolante.setValue(null);
+        cbBancos.setValue(null);
+        cbEstofos.setValue(null);
+
+
+        for(Item item : itens){
+            String i_tipo = item.getTipo();
+            switch(i_tipo) {
+
                 case "Jantes" : cbJantes.setValue(item.getNome()); break;
                 case "Pneus" : cbPneus.setValue(item.getNome()); break;
                 case "Corpo" : cbCorpo.setValue(item.getNome()); break;
@@ -403,14 +415,12 @@ public class ConfiguracaoController {
                 case "Bancos" : cbBancos.setValue(item.getNome()); break;
                 case "Estofos" : cbEstofos.setValue(item.getNome()); break;
                 default: break;
-
             }
-
         }
     }
 
     public void addPacoteChoices(int id){
-        cbPacote.setValue(cf.getPacote(id).getNome());
-
+        Pacote p = cf.getPacote(id);
+        cbPacote.setValue(p.getNome());
     }
 }
