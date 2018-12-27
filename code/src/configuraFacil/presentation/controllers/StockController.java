@@ -1,25 +1,22 @@
 package configuraFacil.presentation.controllers;
-
 import configuraFacil.business.models.items.Item;
-import configuraFacil.presentation.controllers.SceneManager;
 import configuraFacil.business.ConfiguraFacil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
 
-public class StockAdminController {
+public class StockController {
     ConfiguraFacil cf;
 
     @FXML
-    private TableView<Item> tblStockAdmin;
+    private TableView<Item> tblStock;
     @FXML
     private TableColumn<Item,Integer> clnIdItem;
     @FXML
@@ -27,9 +24,7 @@ public class StockAdminController {
     @FXML
     private TableColumn<Item,Integer> clnQuantidade;
     @FXML
-    private TextField tfIdConfig;
-    @FXML
-    private TextField tfEstadoConfig;
+    private TableColumn<Item,Integer> clnPreco;
 
 
     public void init(ConfiguraFacil cfo) {
@@ -41,16 +36,23 @@ public class StockAdminController {
         clnIdItem.setCellValueFactory(new PropertyValueFactory<>("id"));
         clnNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         clnQuantidade.setCellValueFactory(new PropertyValueFactory<>("stock"));
-        tblStockAdmin.setItems(cf.getItems());
+        clnPreco.setCellValueFactory(new PropertyValueFactory<>("preco"));
+        tblStock.setItems(cf.getItems());
     }
 
 
     public void handleBtnBack(ActionEvent actionEvent) throws IOException {
-
-        URL url =  getClass().getResource("../views/administrador.fxml");
-        Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        SceneManager sm = new SceneManager(url, window);
-        sm.newScene(1, cf);
-
+        URL url;
+        if(cf.getLogged().getClass().getSimpleName().equals("Administrador")) {
+            url = getClass().getResource("../views/administrador.fxml");
+            Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            SceneManager sm = new SceneManager(url, window);
+            sm.newScene(1, cf);
+        } else if(cf.getLogged().getClass().getSimpleName().equals("Fabricante")) {
+            url = getClass().getResource("../views/fabricante.fxml");
+            Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            SceneManager sm = new SceneManager(url, window);
+            sm.newScene(2, cf);
+        }
     }
 }

@@ -7,11 +7,8 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 
@@ -28,10 +25,6 @@ public class VendedoresController {
     private TableColumn<Utilizador,Integer> clnEmail;
     @FXML
     private TableColumn<Utilizador,String> clnTelemovel;
-    @FXML
-    private TextField tfIdConfig;
-    @FXML
-    private TextField tfEstadoConfig;
 
     ConfiguraFacil cf;
 
@@ -52,11 +45,5 @@ public class VendedoresController {
         Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         SceneManager sm = new SceneManager(url, window);
         sm.newScene(1, cf);
-    }
-
-    public void handleViewConfigAction(KeyEvent keyEvent) {
-    }
-
-    public void handleBtnAdicionarConfigAction(ActionEvent actionEvent) {
     }
 }

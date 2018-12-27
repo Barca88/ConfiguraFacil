@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="configuraFacil.presentation.controllers.StockAdminController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="configuraFacil.presentation.controllers.StockController">
    <children>
       <AnchorPane fx:id="topBar" prefHeight="73.0" prefWidth="607.0" style="-fx-background-color: #376888;">
          <children>
@@ -30,11 +30,12 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <TableView fx:id="tblStockAdmin" layoutY="85.0" prefHeight="322.0" prefWidth="607.0" style="-fx-background-color: #376888;">
+      <TableView fx:id="tblStock" layoutY="85.0" prefHeight="322.0" prefWidth="607.0" style="-fx-background-color: #376888;">
          <columns>
             <TableColumn fx:id="clnIdItem" prefWidth="112.0" text="ID" />
-            <TableColumn fx:id="clnNome" prefWidth="270.0" text="Nome" />
-            <TableColumn fx:id="clnQuantidade" prefWidth="224.0" text="Quantidade" />
+            <TableColumn fx:id="clnNome" prefWidth="169.0" text="Nome" />
+            <TableColumn fx:id="clnQuantidade" prefWidth="169.0" text="Quantidade" />
+            <TableColumn fx:id="clnPreco" prefWidth="156.0" text="Preço" />
          </columns>
       </TableView>
    </children>
