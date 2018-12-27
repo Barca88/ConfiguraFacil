@@ -34,6 +34,16 @@
                   <Font name="Cantarell Bold" size="18.0" />
                </font>
             </Button>
+            <Label layoutX="331.0" layoutY="30.0" text="€">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblPreco" layoutX="272.0" layoutY="30.0" text="0.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
       <TabPane layoutY="73.0" prefHeight="324.0" prefWidth="602.0" tabClosingPolicy="UNAVAILABLE">

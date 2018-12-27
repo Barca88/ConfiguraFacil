@@ -63,10 +63,16 @@ public class ConfiguracaoController {
     @FXML
     private ChoiceBox<String>  cbOpcional_5;
 
+    @FXML
+    private Label lblPreco;
+
 
     ConfiguraFacil cf;
 
     Map<Integer,Item> opcionais = new HashMap<>();
+
+    public ConfiguracaoController() {
+    }
 
     public void init(ConfiguraFacil cfo) {
         cf = cfo;
@@ -183,8 +189,8 @@ public class ConfiguracaoController {
                     desconto = cf.getDesconto(pacote);
                     addPacoteChoices(pacote);
                 }
-                float preco = cf.price(c.getItens().values().stream().collect(Collectors.toList()),desconto);
-
+                float preco = cf.price(new ArrayList<>(c.getItens().values()),desconto);
+                lblPreco.setText(Float.toString(preco));
             }catch(NullPointerException e){
                 e.getMessage();
             }
