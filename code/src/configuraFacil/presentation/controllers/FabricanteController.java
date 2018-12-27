@@ -35,9 +35,9 @@ public class FabricanteController  {
 
     public void handleBtnStock(ActionEvent actionEvent) throws IOException {
         //new presentation
-        URL url = getClass().getResource("../views/stockFabrica.fxml");
+        URL url = getClass().getResource("../views/stock.fxml");
         Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         SceneManager sm = new SceneManager(url, window);
-        sm.newScene(8, cf);
+        sm.newScene(7, cf);
     }
 }

@@ -25,7 +25,7 @@ public class AdministradorController {
     }
 
     public void handleBtnStock(ActionEvent actionEvent) throws IOException {
-        URL url = getClass().getResource("../views/stockAdmin.fxml");
+        URL url = getClass().getResource("../views/stock.fxml");
         Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         SceneManager sm = new SceneManager(url, window);
         sm.newScene(7, cf);

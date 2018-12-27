@@ -1,25 +1,23 @@
 package configuraFacil.presentation.controllers;
-
 import configuraFacil.business.models.items.Item;
-import configuraFacil.presentation.controllers.SceneManager;
 import configuraFacil.business.ConfiguraFacil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
 
-public class StockAdminController {
+public class StockController {
     ConfiguraFacil cf;
 
     @FXML
-    private TableView<Item> tblStockAdmin;
+    private TableView<Item> tblStock;
     @FXML
     private TableColumn<Item,Integer> clnIdItem;
     @FXML
@@ -27,13 +25,19 @@ public class StockAdminController {
     @FXML
     private TableColumn<Item,Integer> clnQuantidade;
     @FXML
-    private TextField tfIdConfig;
+    private TableColumn<Item,Integer> clnPreco;
     @FXML
-    private TextField tfEstadoConfig;
+    private Button btnAdicionar;
+    @FXML
+    private Button btnRemover;
 
 
     public void init(ConfiguraFacil cfo) {
         cf = cfo;
+        if(cf.getLogged().getClass().getSimpleName().equals("Fabricante")){
+            btnAdicionar.setVisible(false);
+            btnRemover.setVisible(false);
+        }
         initTable();
     }
 
@@ -41,7 +45,8 @@ public class StockAdminController {
         clnIdItem.setCellValueFactory(new PropertyValueFactory<>("id"));
         clnNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         clnQuantidade.setCellValueFactory(new PropertyValueFactory<>("stock"));
-        tblStockAdmin.setItems(cf.getItems());
+        clnPreco.setCellValueFactory(new PropertyValueFactory<>("preco"));
+        tblStock.setItems(cf.getItems());
     }
 
 
@@ -52,5 +57,19 @@ public class StockAdminController {
         SceneManager sm = new SceneManager(url, window);
         sm.newScene(1, cf);
 
+    }
+
+    public void handleBtnAdicionarItemAction(ActionEvent actionEvent) {
+        if(tblStock.getSelectionModel().getSelectedItem() == null){
+
+        } else {
+            Item i = tblStock.getSelectionModel().getSelectedItem();
+        }
+    }
+
+    public void handleBtnRemoverItemAction(ActionEvent actionEvent) {
+        Item i = tblStock.getSelectionModel().getSelectedItem();
+        cf.removeItem(i);
+        initTable();
     }
 }
