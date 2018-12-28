@@ -11,7 +11,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="configuraFacil.presentation.controllers.ConfiguracaoOtimaController">
    <children>
       <AnchorPane fx:id="topBar" prefHeight="73.0" prefWidth="602.0" style="-fx-background-color: #376888;">
@@ -31,7 +30,7 @@
                   <Image url="@../../../images/robot.png" />
                </image>
             </ImageView>
-            <Button fx:id="btnFinalizar" layoutX="135.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleBtnFinalizarAction" prefHeight="35.0" prefWidth="104.0" style="-fx-background-color: #195988; -fx-background-radius: 5em;" text="Finalizar" textFill="WHITE">
+            <Button fx:id="btnFinalizar" layoutX="135.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleBtnFinalizarAction" prefHeight="35.0" prefWidth="104.0" style="-fx-background-color: #195988; -fx-background-radius: 5em;" text="Seguinte" textFill="WHITE">
                <font>
                   <Font name="Cantarell Bold" size="18.0" />
                </font>

@@ -194,7 +194,7 @@ public class ConfiguracaoController {
         List<String> nomesde = depend.stream().map(i -> i.getNome()).collect(Collectors.toList());
         String showd = String.join("\n", nomesde);
 
-        boolean reply = AlertBox.display("O Item tem dependencias", "Deseja adicionar os seguintes itens:\n" + showd + "\nCom custo o adicional: " + cf.price(depend, 0) + "?");
+        boolean reply = AlertBox.display("O Item tem dependencias\n\n", "Deseja adicionar os seguintes itens:\n" + showd + "\nCom custo o adicional de: " + cf.price(depend, 0) + "?");
         if (reply == true) {
 
             for (Item i : depend) {
@@ -220,7 +220,7 @@ public class ConfiguracaoController {
         String showi = String.join("\n", nomesde);
 
 
-        boolean resp = AlertBox.display("O Item tem incompatibilidades", "Se adicionar o item\n" + "Os seguintes items serão removidos:\n\n" + showi);
+        boolean resp = AlertBox.display("O Item tem incompatibilidades\n\n", "Se adicionar o item, os seguintes items serão removidos:\n\n" + showi);
         if (resp == true) {
 
             for(Item inc: incomp){
@@ -243,7 +243,7 @@ public class ConfiguracaoController {
             List<String> nomes = remove.stream().map(i -> i.getNome()).collect(Collectors.toList());
             String showold_d = String.join("\n", nomes);
 
-            boolean resp = AlertBox.display("O Item tem incompatibilidades", "Se adicionar o item\n" + "Os seguintes items serão removidos:\n\n" + showold_d);
+            boolean resp = AlertBox.display("Alguns Items são dependentes do item a ser alterado\n\n", "Se o remover, os seguintes items também serão removidos:\n\n" + showold_d);
             if (resp == true) {
 
                 for (Item rem : remove) {

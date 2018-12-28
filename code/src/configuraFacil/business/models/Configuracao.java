@@ -27,7 +27,6 @@ public class Configuracao {
         this.cliente = null;
         this.vendedor = null;
         this.itens = new HashMap<>();
-
     }
 
     public Configuracao(int id, String estado, float orc, float prc, Cliente cliente,Utilizador vendedor, Map<Integer, Item> itens) {

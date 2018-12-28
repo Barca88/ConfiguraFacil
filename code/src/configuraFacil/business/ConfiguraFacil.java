@@ -259,10 +259,9 @@ public class ConfiguraFacil {
         this.inUseConfig = configConsulta;
     }
 
-    public void clear_config(Configuracao c){
-        c.clearItens();
+    public void setPreco(Configuracao c, Float p){
+        c.setPreco(p);
     }
-
     public  void encomenda(Item i){ itemDao.put(i.getId(),i);}
 
     public void optimus_prime(Configuracao c, float orc){

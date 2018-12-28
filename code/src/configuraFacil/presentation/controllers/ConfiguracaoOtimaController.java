@@ -54,6 +54,7 @@ public class ConfiguracaoOtimaController {
     public void handleBtnFinalizarAction(ActionEvent actionEvent) throws IOException {
         Configuracao c = cf.getInUseConfig();
         float orc = 0;
+
         try{
             orc = Float.parseFloat(txtOrcamento.getText());
 
@@ -65,15 +66,15 @@ public class ConfiguracaoOtimaController {
 
         if((c.getModelo() != null) && (c.getCor() != null) && (orc != 0)) {
             c.setOrcamento(Float.parseFloat(txtOrcamento.getText()));
-            cf.optimus_prime(c,Float.parseFloat(txtOrcamento.getText()));
-            preco = cf.price(c.getItens().values().stream().collect(Collectors.toList()),0);
+            cf.optimus_prime(c, Float.parseFloat(txtOrcamento.getText()));
+            preco = -(cf.price(c.getItens().values().stream().collect(Collectors.toList()), 0));
             c.setPreco(preco);
 
-
-            URL url = getClass().getResource("../views/clienteform.fxml");
+            URL url = getClass().getResource("../views/consultarConfiguracao.fxml");
             Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             SceneManager sm = new SceneManager(url, window);
-            sm.newScene(5, cf);
+            sm.newScene(9, cf);
+
         }else if(c.getModelo() == null && c.getCor() == null && orc != 0) AlertBox.alert("Configuração Incompleta!", "Por favor, escolha o Modelo e a Cor do Carro");
                 else if(c.getCor() == null && orc != 0) AlertBox.alert("Configuração Incompleta!", "Por favor, escolha a Cor do Carro");
                     else if(orc != 0) AlertBox.alert("Configuração Incompleta!", "Por favor, escolha o Modelo do Carro");
