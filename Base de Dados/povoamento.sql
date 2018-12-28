@@ -130,10 +130,10 @@ insert into Pacote_Item (Pacote_idPacote, Item_idItem) values (3, 30);
 
 -- CONFIGURAÇÃO -- 
 
-insert into Configuracao (validade, orcamento, Utilizador_idUtilizador, Cliente_idCliente) values ('V', 3500, 2, 5);
-insert into Configuracao (validade, orcamento, Utilizador_idUtilizador, Cliente_idCliente) values ('N', 0, 1, 7);
-insert into Configuracao (validade, orcamento, Utilizador_idUtilizador, Cliente_idCliente) values ('P', 0, 2, 2);
-insert into Configuracao (validade, orcamento, Utilizador_idUtilizador, Cliente_idCliente) values ('V', 4275, 1, 9);
+insert into Configuracao (validade, orcamento, preco, Utilizador_idUtilizador, Cliente_idCliente) values ('V', 3500, 150,2, 5);
+insert into Configuracao (validade, orcamento, preco, Utilizador_idUtilizador, Cliente_idCliente) values ('N', 0, 200,1, 7);
+insert into Configuracao (validade, orcamento, preco, Utilizador_idUtilizador, Cliente_idCliente) values ('P', 0,300, 2, 2);
+insert into Configuracao (validade, orcamento, preco, Utilizador_idUtilizador, Cliente_idCliente) values ('V', 4275, 400,1, 9);
 
 -- Item DE CONFIGURAÇÃO -- 
 
