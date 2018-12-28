@@ -39,4 +39,12 @@ public class VendedorController {
         SceneManager sm = new SceneManager(url, window);
         sm.newScene(4, cf);
     }
+
+    public void handleBtnOtima(ActionEvent actionEvent) throws IOException {
+        //new presentation
+        URL url = getClass().getResource("../views/configuracaoOtima.fxml");
+        Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        SceneManager sm = new SceneManager(url, window);
+        sm.newScene(8, cf);
+    }
 }

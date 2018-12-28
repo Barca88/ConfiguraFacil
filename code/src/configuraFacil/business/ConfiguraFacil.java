@@ -131,8 +131,13 @@ public class ConfiguraFacil {
         return FXCollections.observableArrayList(lm);
     }
 
-    public ObservableList<String> getPacotes(){
+    public ObservableList<String> getPacotes_N(){
         List<String> lm =  pacoteDao.values().stream().map(Pacote::getNome).collect(Collectors.toList());
+        return FXCollections.observableArrayList(lm);
+    }
+
+    public ObservableList<Pacote> getPacotes(){
+        List<Pacote> lm =  new ArrayList<>(pacoteDao.values());
         return FXCollections.observableArrayList(lm);
     }
 

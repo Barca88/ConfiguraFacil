@@ -19,9 +19,6 @@ import java.util.stream.Collectors;
 public class ConfiguracaoController {
 
     @FXML
-    private Label lbAviso;
-
-    @FXML
     private ChoiceBox<String> cbModelo;
 
     @FXML
@@ -70,9 +67,6 @@ public class ConfiguracaoController {
     ConfiguraFacil cf;
     float preco = 0;
 
-    public ConfiguracaoController() {
-    }
-
     public void init(ConfiguraFacil cfo) {
         cf = cfo;
 
@@ -100,7 +94,7 @@ public class ConfiguracaoController {
         cbCorpo.setItems(cf.getCorpos());
         cbCorpo.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbCorpo,old,newValue));
 
-        cbPacote.setItems(cf.getPacotes());
+        cbPacote.setItems(cf.getPacotes_N());
         cbPacote.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> pacoteChanged());
 
         cbOpcional_1.setItems(cf.getOpcionais());
@@ -145,17 +139,19 @@ public class ConfiguracaoController {
     public void itemChanged(ChoiceBox<String> tipo, String old, String newValue) {
         Configuracao c = cf.getInUseConfig();
 
+        Pacote pacote = cf.getPacotes().stream().filter(i -> i.equals(newValue)).findAny().orElse(null);
         Item item = cf.getItems().stream().filter(i -> i.getNome().equals(newValue)).findAny().orElse(null);
         Item oldItem = cf.getItems().stream().filter(i -> i.getNome().equals(old)).findAny().orElse(null);
 
         List<Item> depend = cf.dependencias(item, c.getItens());
         List<Item> incomp = cf.incompatibilidades(item, c.getItens());
 
-        if(old != null){
-            handleOldDependencies(depend,incomp,item,oldItem,c);
-
             try {
                 if (!item.getTipo().equals("Opcional")) {
+
+                    if(old != null) {
+                        handleOldDependencies(depend, incomp, item, oldItem, c);
+                    }
 
                     if (depend.isEmpty() && incomp.isEmpty()) {
                         cf.removeSametype(c, item);
@@ -176,47 +172,18 @@ public class ConfiguracaoController {
                     String cb_BOX = l2[0];
 
                     handleOpcionais(cb_BOX, item, oldItem,c);
-                }
+
+                } else{addPacoteChoices(pacote.getId());}
+
             }catch(NullPointerException e){
                 e.getMessage();
-            }
-
-        }else{
-            try {
-
-                if (!item.getTipo().equals("Opcional")) {
-
-                    if (depend.isEmpty() && incomp.isEmpty()) {
-                            cf.removeSametype(c, item);
-                            cf.addItem(item, c);
-
-                    }
-
-                    if (depend.size() > 0) {
-                       handleDependencies(depend,incomp,item,oldItem,c);
-                    }
-
-                    if (incomp.size() > 0){
-                            handleIncompatibilities(depend,incomp,item,oldItem,c);
-                    }
-
-                }else if (item.getTipo().equals("Opcional")) {
-                        String l1[] = tipo.toString().split("id=");
-                        String l2[] = l1[1].split(",");
-                        String cb_BOX = l2[0];
-
-                    handleOpcionais(cb_BOX, item, oldItem,c);
-                }
-            }catch(NullPointerException e){
-                    e.getMessage();
-            }
         }
 
-        int pacote = cf.checkPacote(c);
+        int pac= cf.checkPacote(c);
         float desconto = 0;
-        if(pacote >= 0){
-            desconto = cf.getDesconto(pacote);
-            addPacoteChoices(pacote);
+        if(pac >= 0){
+            desconto = cf.getDesconto(pac);
+
         }
 
         preco = cf.price(c.getItens().values().stream().collect(Collectors.toList()),desconto);
@@ -471,7 +438,7 @@ public class ConfiguracaoController {
 
     public void pacoteChanged(){
         Configuracao c = cf.getInUseConfig();
-        cf.clear_config(c);
+        
         List<Item> itens = cf.getItemPacote(cbPacote.getValue());
 
         for(Item item : itens){

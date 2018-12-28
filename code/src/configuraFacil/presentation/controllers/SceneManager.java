@@ -54,6 +54,8 @@ public class SceneManager{
                 sac.init(cf);
                 break;
             case 8 :
+                ConfiguracaoOtimaController co = loader.getController();
+                co.init(cf);
                 break;
             case 9 :
                 ConsultarConfiguracaoController ccc = loader.getController();
