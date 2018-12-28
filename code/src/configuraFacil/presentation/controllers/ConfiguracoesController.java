@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -29,6 +30,8 @@ public class ConfiguracoesController {
     private TableColumn<Configuracao,Integer> clnOrcamentoConfig;
     @FXML
     private TableColumn<Configuracao,Integer> clnPrecoConfig;
+    @FXML
+    private TextField txtID;
 
     public void init(ConfiguraFacil cfo) {
         cf = cfo;
@@ -75,7 +78,7 @@ public class ConfiguracoesController {
         }
     }
 
-    public void handleValidation(ActionEvent actionEvent) throws IOException{
+    public void handleBtnValidar(ActionEvent actionEvent) throws IOException{
 
     }
 }
