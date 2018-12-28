@@ -179,11 +179,10 @@ public class ConfiguracaoController {
                 e.getMessage();
         }
 
-        int pac= cf.checkPacote(c);
+        int pac = cf.checkPacote(c);
         float desconto = 0;
         if(pac >= 0){
             desconto = cf.getDesconto(pac);
-
         }
 
         preco = cf.price(c.getItens().values().stream().collect(Collectors.toList()),desconto);
@@ -319,7 +318,6 @@ public class ConfiguracaoController {
                     cf.removeItem(old,c); ops.remove(old);
                 }
 
-
                 if(!ops.contains(item)){ cf.addItem(item,c); ops.add(item);}
 
                 break;
@@ -438,7 +436,7 @@ public class ConfiguracaoController {
 
     public void pacoteChanged(){
         Configuracao c = cf.getInUseConfig();
-        
+
         List<Item> itens = cf.getItemPacote(cbPacote.getValue());
 
         for(Item item : itens){

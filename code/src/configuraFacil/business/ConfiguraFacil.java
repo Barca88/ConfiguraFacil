@@ -7,10 +7,9 @@ import configuraFacil.business.models.users.Utilizador;
 import configuraFacil.dataBase.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import sun.security.krb5.Config;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
@@ -264,6 +263,135 @@ public class ConfiguraFacil {
         c.clearItens();
     }
 
-    public  void encomenda(Item i){ itemDao.put(i.getId(),i); }
+    public  void encomenda(Item i){ itemDao.put(i.getId(),i);}
+
+    public void optimus_prime(Configuracao c, float orc){
+        int itens = 11;
+        float media;
+        float choice = 0;
+        float diff_c = 0;
+
+        List<String> tipos = new ArrayList<>();
+        tipos.add("Modelo");
+        tipos.add("Cor");
+
+        Item modelo = c.getItens().values().stream().filter(i -> i.getTipo().equals("Modelo")).findAny().orElse(null);
+
+        try {
+            if (!modelo.getDepend().isEmpty()) {
+                List<Item> depend = dependencias(modelo, c.getItens());
+                for (Item d : depend) {
+                    addItem(d, c);
+                    tipos.add(d.getTipo());
+                    itens = itens - 1;
+                }
+            }
+
+            media = orc / itens;
+
+            if (!tipos.contains("Corpo")) {
+                List<Item> p_corpo = itemDao.values().stream().filter(i -> i.getTipo().equals("Corpo")).collect(toList());
+
+                for (Item p : p_corpo) {
+                    if (media < p.getPreco() && orc > p.getPreco()) {
+                        removeSametype(c, p);
+                        addItem(p, c);
+                        choice = p.getPreco();
+                        diff_c = choice - (p.getPreco());
+                    }
+                }
+
+                itens = itens - 1;
+                orc = orc - choice + diff_c;
+                media = orc / itens;
+            }
+
+            if (!tipos.contains("Jantes")) {
+                List<Item> p_jantes = itemDao.values().stream().filter(i -> i.getTipo().equals("Jantes")).collect(toList());
+
+                for (Item p : p_jantes) {
+                    if (media < p.getPreco() && orc > p.getPreco()) {
+                        removeSametype(c, p);
+                        addItem(p, c);
+                        choice = p.getPreco();
+                        diff_c = choice - (p.getPreco());
+                    }
+                }
+
+                itens = itens - 1;
+                orc = orc - choice + diff_c;
+                media = orc / itens;
+            }
+
+            if (!tipos.contains("Pneus")) {
+                List<Item> p_pneus = itemDao.values().stream().filter(i -> i.getTipo().equals("Pneus")).collect(toList());
+
+                for (Item p : p_pneus) {
+                    if (media < p.getPreco() && orc > p.getPreco()) {
+                        removeSametype(c, p);
+                        addItem(p, c);
+                        choice = p.getPreco();
+                        diff_c = choice - (p.getPreco());
+                    }
+                }
+
+                itens = itens - 1;
+                orc = orc - choice + diff_c;
+                media = orc / itens;
+            }
+
+            if (!tipos.contains("Volante")) {
+                List<Item> p_volante = itemDao.values().stream().filter(i -> i.getTipo().equals("Volante")).collect(toList());
+
+                for (Item p : p_volante) {
+                    if (media < p.getPreco() && orc > p.getPreco()) {
+                        removeSametype(c, p);
+                        addItem(p, c);
+                        choice = p.getPreco();
+                        diff_c = choice - (p.getPreco());
+                    }
+                }
+
+                itens = itens - 1;
+                orc = orc - choice + diff_c;
+                media = orc / itens;
+            }
+
+            if (!tipos.contains("Bancos")) {
+                List<Item> p_bancos = itemDao.values().stream().filter(i -> i.getTipo().equals("Bancos")).collect(toList());
+                for (Item p : p_bancos) {
+                    if (media < p.getPreco() && orc > p.getPreco()) {
+                        removeSametype(c, p);
+                        addItem(p, c);
+                        choice = p.getPreco();
+                        diff_c = choice - (p.getPreco());
+                    }
+                }
+
+                itens = itens - 1;
+                orc = orc - choice + diff_c;
+                media = orc / itens;
+            }
+
+            if (!tipos.contains("Estofos")) {
+                List<Item> p_estofos = itemDao.values().stream().filter(i -> i.getTipo().equals("Estofos")).collect(toList());
+
+                for (Item p : p_estofos) {
+                    if (media < p.getPreco() && orc > p.getPreco()) {
+                        removeSametype(c, p);
+                        addItem(p, c);
+                        choice = p.getPreco();
+                        diff_c = choice - (p.getPreco());
+                    }
+                }
+
+                itens = itens - 1;
+                orc = orc - choice + diff_c;
+                media = orc / itens;
+            }
+        }catch (NullPointerException e){
+            e.getMessage();
+        }
+    }
 }
 
