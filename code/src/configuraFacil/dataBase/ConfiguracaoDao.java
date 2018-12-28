@@ -1,12 +1,10 @@
 package configuraFacil.dataBase;
 
+
 import configuraFacil.business.models.Cliente;
 import configuraFacil.business.models.Configuracao;
 import configuraFacil.business.models.items.Item;
 import configuraFacil.business.models.users.Utilizador;
-import configuraFacil.business.models.users.Vendedor;
-
-import java.awt.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,6 +12,7 @@ import java.sql.Statement;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
+
 
 public class ConfiguracaoDao implements Map<Integer,Configuracao> {
 
@@ -154,73 +153,89 @@ public class ConfiguracaoDao implements Map<Integer,Configuracao> {
 
         try {
             conn = Connect.connect();
-            String sql = "SELECT * FROM Cliente WHERE email=?";
+            String sql = "SELECT * FROM Configuracao WHERE idConfiguracao=?";
             PreparedStatement stm = conn.prepareStatement(sql);
 
-            stm.setString(1,cliente.getEmail());
+            stm.setInt(1,configuracao.getId());
 
             ResultSet rs = stm.executeQuery();
 
-            if(rs.next()){ // EXISTE CLIENTE -> METEMOS O ID CERTO
-                id_Cli = rs.getInt(1);
-                cliente.setId(id_Cli);
-
-            }else{ //NÃO EXISTE CLIENTE -> INSERE NA BD
-                sql = "INSERT INTO Cliente (nome,email,telemovel)\n" +
-                        "VALUES (?,?,?)\n";
-
-                stm = conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
-                stm.setString(1,cliente.getNome());
-                stm.setString(2,cliente.getEmail());
-                stm.setString(3,cliente.getTelemovel());
+            if(rs.next()) { // EXISTE Config -> UPDATE VALIDADE
+                sql = "UPDATE Configuracao SET Validade=? WHERE idConfiguracao=?";
+                stm = conn.prepareStatement(sql);
+                stm.setString(1,(configuracao.getEstado()));
+                stm.setInt(2,(configuracao.getId()));
                 stm.executeUpdate();
 
-                ResultSet rs1 = stm.getGeneratedKeys();
+            }else {
+                conn = Connect.connect();
+                sql = "SELECT * FROM Cliente WHERE email=?";
+                stm = conn.prepareStatement(sql);
 
+                stm.setString(1, cliente.getEmail());
 
-                if(rs1.next()){ // METEMOS O ID CERTO
-                    id_Cli = rs1.getInt(1);
+                ResultSet rs2 = stm.executeQuery();
+
+                if (rs2.next()) { // EXISTE CLIENTE -> METEMOS O ID CERTO
                     cliente.setId(id_Cli);
+
+                } else { //NÃO EXISTE CLIENTE -> INSERE NA BD
+                    sql = "INSERT INTO Cliente (nome,email,telemovel)\n" +
+                            "VALUES (?,?,?)\n";
+
+                    stm = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                    stm.setString(1, cliente.getNome());
+                    stm.setString(2, cliente.getEmail());
+                    stm.setString(3, cliente.getTelemovel());
+                    stm.executeUpdate();
+
+                    ResultSet rs3 = stm.getGeneratedKeys();
+
+
+                    if (rs3.next()) { // METEMOS O ID CERTO
+                        id_Cli = rs3.getInt(1);
+                        cliente.setId(id_Cli);
+                    }
+
+
                 }
 
+                // PROCEDEMOS A INSERIR A CONFIGURAÇÃO
+                sql = "INSERT INTO Configuracao (validade,orcamento,preco,Utilizador_idUtilizador,Cliente_idCliente)\n" +
+                        "VALUES (?,?,?,?,?)\n";
 
-            }
-
-            // PROCEDEMOS A INSERIR A CONFIGURAÇÃO
-            sql = "INSERT INTO Configuracao (validade,orcamento,preco,Utilizador_idUtilizador,Cliente_idCliente)\n" +
-                    "VALUES (?,?,?,?,?)\n";
-
-            stm = conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
-            stm.setString(1,configuracao.getEstado());
-            stm.setFloat(2,configuracao.getOrcamento());
-            stm.setFloat(3,configuracao.getPreco());
-            stm.setInt(4,id_V);
-            stm.setInt(5,id_Cli);
-            stm.executeUpdate();
-
-            ResultSet rs2 = stm.getGeneratedKeys();
-
-            if(rs2.next()){ // METER ID CERTO
-                id_Config = rs2.getInt(1);
-                configuracao.setId(id_Config);
-            }
-
-            // PROCEDEMOS A INSERIR OS ITEMS NA TABELA CONFIGURAÇÃO_ITEM
-            for(Item i : items){
-                int stock = i.getStock() - 1;
-                sql = "INSERT INTO Configuracao_Item\n" +
-                        "VALUES (?,?)";
-
-                stm = conn.prepareStatement(sql);
-                stm.setInt(1,id_Config);
-                stm.setInt(2,i.getId());
+                stm = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                stm.setString(1, configuracao.getEstado());
+                stm.setFloat(2, configuracao.getOrcamento());
+                stm.setFloat(3, configuracao.getPreco());
+                stm.setInt(4, id_V);
+                stm.setInt(5, id_Cli);
                 stm.executeUpdate();
 
-                sql = "UPDATE Item SET stock=? WHERE idItem=?";
-                stm = conn.prepareStatement(sql);
-                stm.setInt(1,(i.getStock() - 1));
-                stm.setInt(2,i.getId());
-                stm.executeUpdate();
+                ResultSet rs4 = stm.getGeneratedKeys();
+
+                if (rs4.next()) { // METER ID CERTO
+                    id_Config = rs4.getInt(1);
+                    configuracao.setId(id_Config);
+                }
+
+                // PROCEDEMOS A INSERIR OS ITEMS NA TABELA CONFIGURAÇÃO_ITEM
+                for (Item i : items) {
+                    int stock = i.getStock() - 1;
+                    sql = "INSERT INTO Configuracao_Item\n" +
+                            "VALUES (?,?)";
+
+                    stm = conn.prepareStatement(sql);
+                    stm.setInt(1, id_Config);
+                    stm.setInt(2, i.getId());
+                    stm.executeUpdate();
+
+                    sql = "UPDATE Item SET stock=? WHERE idItem=?";
+                    stm = conn.prepareStatement(sql);
+                    stm.setInt(1, (i.getStock() - 1));
+                    stm.setInt(2, i.getId());
+                    stm.executeUpdate();
+                }
             }
 
             config = configuracao;

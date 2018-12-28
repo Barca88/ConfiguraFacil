@@ -3,22 +3,17 @@ package configuraFacil.presentation.controllers;
 
 import configuraFacil.business.models.Configuracao;
 import configuraFacil.business.models.items.Item;
-import configuraFacil.presentation.controllers.SceneManager;
 import configuraFacil.business.ConfiguraFacil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.HBox;
 import javafx.scene.shape.Circle;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-
-import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 
 public class ConsultarConfiguracaoController {
 

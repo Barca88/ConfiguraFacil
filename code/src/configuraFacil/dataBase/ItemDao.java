@@ -1,9 +1,7 @@
 package configuraFacil.dataBase;
 
-import com.mysql.cj.x.protobuf.MysqlxSession;
-import com.sun.javafx.scene.control.skin.IntegerFieldSkin;
-import configuraFacil.business.models.items.Item;
 
+import configuraFacil.business.models.items.Item;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

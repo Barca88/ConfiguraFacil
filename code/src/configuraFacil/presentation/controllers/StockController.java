@@ -1,18 +1,17 @@
 package configuraFacil.presentation.controllers;
+
+
 import configuraFacil.business.models.items.Item;
 import configuraFacil.business.ConfiguraFacil;
-import configuraFacil.dataBase.ItemDao;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-
-import javax.swing.*;
-import javax.xml.soap.Text;
 import java.io.IOException;
 import java.net.URL;
+
 
 public class StockController {
     ConfiguraFacil cf;
@@ -77,6 +76,7 @@ public class StockController {
     }
 
     public void handleBtnEncomendar(ActionEvent actionEvent) throws IOException{
+       try{
         int item_id = Integer.parseInt(txtID.getText());
         int quantidade = Integer.parseInt(txtQuantidade.getText());
         Item it = cf.getItems().stream().filter(i -> (i.getId() == item_id)).findAny().orElse(null);
@@ -95,5 +95,8 @@ public class StockController {
 
             tblStock.setItems(cf.getItems());
         }
+    }catch(NumberFormatException e){
+       e.getMessage();
+       }
     }
 }

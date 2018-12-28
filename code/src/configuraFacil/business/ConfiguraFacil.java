@@ -1,14 +1,13 @@
 package configuraFacil.business;
+
+
 import configuraFacil.business.models.Configuracao;
 import configuraFacil.business.models.Pacote;
 import configuraFacil.business.models.items.Item;
 import configuraFacil.business.models.users.Utilizador;
-
 import configuraFacil.dataBase.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import sun.security.krb5.Config;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -262,7 +261,10 @@ public class ConfiguraFacil {
     public void setPreco(Configuracao c, Float p){
         c.setPreco(p);
     }
+
     public  void encomenda(Item i){ itemDao.put(i.getId(),i);}
+
+    public  void valida(Configuracao i){ configDao.put(i.getId(),i);}
 
     public void optimus_prime(Configuracao c, float orc){
         float choice = 0;

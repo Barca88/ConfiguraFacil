@@ -1,5 +1,6 @@
 package configuraFacil.presentation.controllers;
 
+
 import configuraFacil.business.ConfiguraFacil;
 import configuraFacil.business.models.users.Utilizador;
 import javafx.event.ActionEvent;

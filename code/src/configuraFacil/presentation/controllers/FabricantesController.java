@@ -1,5 +1,6 @@
 package configuraFacil.presentation.controllers;
 
+
 import configuraFacil.business.ConfiguraFacil;
 import configuraFacil.business.models.users.Utilizador;
 import javafx.event.ActionEvent;
@@ -11,6 +12,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
+
 
 public class FabricantesController {
 

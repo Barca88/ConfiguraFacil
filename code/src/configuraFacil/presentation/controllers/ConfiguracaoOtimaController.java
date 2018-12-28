@@ -1,5 +1,6 @@
 package configuraFacil.presentation.controllers;
 
+
 import configuraFacil.business.ConfiguraFacil;
 import configuraFacil.business.models.Configuracao;
 import configuraFacil.business.models.items.Item;
@@ -10,7 +11,6 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.stream.Collectors;

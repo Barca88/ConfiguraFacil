@@ -1,14 +1,13 @@
 package configuraFacil.presentation.controllers;
 
 
-import configuraFacil.presentation.controllers.SceneManager;
 import configuraFacil.business.ConfiguraFacil;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
+
 
 public class VendedorController {
 

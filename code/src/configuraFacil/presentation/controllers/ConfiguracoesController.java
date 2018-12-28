@@ -3,6 +3,8 @@ package configuraFacil.presentation.controllers;
 
 import configuraFacil.business.ConfiguraFacil;
 import configuraFacil.business.models.Configuracao;
+import configuraFacil.business.models.items.Item;
+import configuraFacil.business.models.users.Utilizador;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -13,8 +15,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+
+import javax.rmi.CORBA.Util;
 import java.io.IOException;
 import java.net.URL;
+
 
 public class ConfiguracoesController {
 
@@ -79,6 +84,76 @@ public class ConfiguracoesController {
     }
 
     public void handleBtnValidar(ActionEvent actionEvent) throws IOException{
+        Utilizador u = cf.getLogged();
 
+        if(u.getClass().getSimpleName().equals("Vendedor")) handleBtnValidarVendedor(actionEvent);
+        if(u.getClass().getSimpleName().equals("Fabricante")) handleBtnValidarFabricante(actionEvent);
+        if(u.getClass().getSimpleName().equals("Administrador")) handleBtnValidarAdmin(actionEvent);
+    }
+
+    public void handleBtnValidarVendedor(ActionEvent actionEvent) throws IOException{
+        try{
+        int config_id = Integer.parseInt(txtID.getText());
+
+        Configuracao c = cf.getConfiguracoes().stream().filter(i -> (i.getId() == config_id)).findAny().orElse(null);
+
+        if(c==null){
+            AlertBox.alert("Configuração inválida", "Por favor, introduza um ID de configuração válido");
+        }else{
+            if(c.getEstado().equals("N")){
+            c.setEstado("V");
+            cf.valida(c);
+
+            tblConfigAdmin.setItems(cf.getConfiguracoes());
+
+            }else{
+                AlertBox.alert("Acção Inválida", "Configuração já se encontra validada");
+            }
+        }
+        }catch (NumberFormatException e){e.getMessage();}
+    }
+
+    public void handleBtnValidarFabricante(ActionEvent actionEvent) throws IOException{
+        try {
+            int config_id = Integer.parseInt(txtID.getText());
+
+            Configuracao c = cf.getConfiguracoes().stream().filter(i -> (i.getId() == config_id)).findAny().orElse(null);
+
+            if (c == null) {
+                AlertBox.alert("Configuração inválida", "Por favor, introduza um ID de configuração válido");
+            } else {
+                if (c.getEstado().equals("V")) {
+                    c.setEstado("P");
+                    cf.valida(c);
+
+                    tblConfigAdmin.setItems(cf.getConfiguracoes());
+
+                } else {
+                    AlertBox.alert("Acção Inválida", "Configuração já se encontra produzida ou precisa de ser validada");
+                }
+            }
+        }catch(NumberFormatException e){e.getMessage();}
+    }
+
+    public void handleBtnValidarAdmin(ActionEvent actionEvent) throws IOException {
+        try {
+            int config_id = Integer.parseInt(txtID.getText());
+
+            Configuracao c = cf.getConfiguracoes().stream().filter(i -> (i.getId() == config_id)).findAny().orElse(null);
+
+            if (c == null) {
+                AlertBox.alert("Configuração inválida", "Por favor, introduza um ID de configuração válido");
+            } else if (c.getEstado().equals("N")) {
+                    c.setEstado("V");
+                    cf.valida(c);
+                    tblConfigAdmin.setItems(cf.getConfiguracoes());
+
+            } else if (c.getEstado().equals("V")) {
+                c.setEstado("P");
+                cf.valida(c);
+                tblConfigAdmin.setItems(cf.getConfiguracoes());
+            }else AlertBox.alert("Acção Inválida", "Configuração já se encontra validada");
+
+        }catch(Exception e){e.getMessage();}
     }
 }
