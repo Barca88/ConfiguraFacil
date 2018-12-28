@@ -138,43 +138,61 @@ public class ItemDao implements Map<Integer, Item> {
         List<Integer> dep;
 
         try{
-            String sql = "INSERT INTO Item (nome,preco,stock,tipo)\n" + "VALUES (?,?,?,?)\n";
-            PreparedStatement stm = conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+            conn = Connect.connect();
+            String sql = "SELECT * FROM Item WHERE idItem=?";
+            PreparedStatement stm = conn.prepareStatement(sql);
 
-            stm.setString(1,item.getNome());
-            stm.setFloat(2,item.getPreco());
-            stm.setFloat(3,item.getStock());
-            stm.setString(3,item.getTipo());
-            stm.executeUpdate();
+            stm.setInt(1,item.getId());
 
-            ResultSet rs = stm.getGeneratedKeys();
+            ResultSet rs = stm.executeQuery();
 
-            if(rs.next()){
-                newid = rs.getInt(1);
-                item.setId(newid);
-            }
+            if(rs.next()){ // EXISTE ITEM -> UPDATE
+                sql = "UPDATE Item SET stock=? WHERE idItem=?";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1,(item.getStock()));
+                stm.setInt(2,(item.getId()));
+                stm.executeUpdate();
 
-            if(!(item.getIncomp().isEmpty())){
-                inc = item.getIncomp();
+            }else {
 
-                for(Integer incomp: inc){
-                    sql = "INSERT INTO Incompatibilidade VALUES (?,?)";
+                sql = "INSERT INTO Item (nome,preco,stock,tipo)\n" + "VALUES (?,?,?,?)\n";
+                stm = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-                    stm = conn.prepareStatement(sql);
-                    stm.setInt(incomp,newid);
-                    stm.executeUpdate();
+                stm.setString(1, item.getNome());
+                stm.setFloat(2, item.getPreco());
+                stm.setFloat(3, item.getStock());
+                stm.setString(3, item.getTipo());
+                stm.executeUpdate();
+
+                ResultSet rs2 = stm.getGeneratedKeys();
+
+                if (rs2.next()) {
+                    newid = rs2.getInt(1);
+                    item.setId(newid);
                 }
-            }
 
-            if(!(item.getDepend().isEmpty())){
-                dep = item.getDepend();
+                if (!(item.getIncomp().isEmpty())) {
+                    inc = item.getIncomp();
 
-                for(Integer depend: dep){
-                    sql = "INSERT INTO Dependencia VALUES (?,?)";
+                    for (Integer incomp : inc) {
+                        sql = "INSERT INTO Incompatibilidade VALUES (?,?)";
 
-                    stm = conn.prepareStatement(sql);
-                    stm.setInt(newid,depend);
-                    stm.executeUpdate();
+                        stm = conn.prepareStatement(sql);
+                        stm.setInt(incomp, newid);
+                        stm.executeUpdate();
+                    }
+                }
+
+                if (!(item.getDepend().isEmpty())) {
+                    dep = item.getDepend();
+
+                    for (Integer depend : dep) {
+                        sql = "INSERT INTO Dependencia VALUES (?,?)";
+
+                        stm = conn.prepareStatement(sql);
+                        stm.setInt(newid, depend);
+                        stm.executeUpdate();
+                    }
                 }
             }
 

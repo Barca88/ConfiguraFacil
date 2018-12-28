@@ -1,14 +1,16 @@
 package configuraFacil.presentation.controllers;
 import configuraFacil.business.models.items.Item;
 import configuraFacil.business.ConfiguraFacil;
+import configuraFacil.dataBase.ItemDao;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
+import javax.swing.*;
+import javax.xml.soap.Text;
 import java.io.IOException;
 import java.net.URL;
 
@@ -25,11 +27,29 @@ public class StockController {
     private TableColumn<Item,Integer> clnQuantidade;
     @FXML
     private TableColumn<Item,Integer> clnPreco;
-
+    @FXML
+    private Label labID;
+    @FXML
+    private TextField txtID;
+    @FXML
+    private Label labQuantidade;
+    @FXML
+    private TextField txtQuantidade;
+    @FXML
+    private Button btnEncomendar;
 
     public void init(ConfiguraFacil cfo) {
         cf = cfo;
         initTable();
+
+        if(cf.getLogged().getClass().getSimpleName().equals("Administrador")){
+            labID.setVisible(true);
+            labQuantidade.setVisible(true);
+            txtID.setVisible(true);
+            txtQuantidade.setVisible(true);
+            labID.setVisible(true);
+            btnEncomendar.setVisible(true);
+        }
     }
 
     private void initTable(){
@@ -53,6 +73,27 @@ public class StockController {
             Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             SceneManager sm = new SceneManager(url, window);
             sm.newScene(2, cf);
+        }
+    }
+
+    public void handleBtnEncomendar(ActionEvent actionEvent) throws IOException{
+        int item_id = Integer.parseInt(txtID.getText());
+        int quantidade = Integer.parseInt(txtQuantidade.getText());
+        Item it = cf.getItems().stream().filter(i -> (i.getId() == item_id)).findAny().orElse(null);
+
+        if(quantidade <= 0 ) {
+            AlertBox.alert("Quantidade inválida", "Por favor, introduza uma quantidade coerente para encomenda");
+        }
+
+        if(item_id < 0 || (it==null)){
+            AlertBox.alert("Item inválido", "Por favor, introduza um item coerente para encomenda");
+        }
+
+        if(quantidade > 0 && (it!=null)){
+            it.setStock(it.getStock() + quantidade);
+            cf.encomenda(it);
+
+            tblStock.setItems(cf.getItems());
         }
     }
 }

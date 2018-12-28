@@ -258,5 +258,7 @@ public class ConfiguraFacil {
     public void clear_config(Configuracao c){
         c.clearItens();
     }
+
+    public  void encomenda(Item i){ itemDao.put(i.getId(),i); }
 }
 

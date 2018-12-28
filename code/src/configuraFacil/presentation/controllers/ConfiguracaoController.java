@@ -70,8 +70,6 @@ public class ConfiguracaoController {
     ConfiguraFacil cf;
     float preco = 0;
 
-    List<String> opcionais = new ArrayList<>();
-
     public ConfiguracaoController() {
     }
 

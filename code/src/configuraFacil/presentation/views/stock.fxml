@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -18,7 +19,7 @@
                   <Font name="Cantarell Bold" size="18.0" />
                </font>
             </Button>
-            <Label layoutX="434.0" layoutY="24.0" text="Stock" textFill="WHITE">
+            <Label layoutX="444.0" layoutY="26.0" text="Stock" textFill="WHITE">
                <font>
                   <Font size="20.0" />
                </font>
@@ -28,6 +29,19 @@
                   <Image url="@../../../images/warehouse.png" />
                </image>
             </ImageView>
+            <Label fx:id="labQuantidade" layoutX="208.0" layoutY="11.0" text="Quantidade" textFill="WHITE" visible="false">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtQuantidade" layoutX="231.0" layoutY="36.0" prefHeight="18.0" prefWidth="35.0" visible="false" />
+            <Label fx:id="labID" layoutX="127.0" layoutY="11.0" text="ID" textFill="WHITE" visible="false">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtID" layoutX="117.0" layoutY="36.0" prefHeight="18.0" prefWidth="35.0" visible="false" />
+            <Button fx:id="btnEncomendar" layoutX="322.0" layoutY="25.0" mnemonicParsing="false" onAction="#handleBtnEncomendar" text="Encomendar" visible="false" />
          </children>
       </AnchorPane>
       <TableView fx:id="tblStock" layoutY="85.0" prefHeight="322.0" prefWidth="607.0" style="-fx-background-color: #376888;">
