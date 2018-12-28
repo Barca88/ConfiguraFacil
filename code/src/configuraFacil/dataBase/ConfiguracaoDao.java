@@ -133,7 +133,7 @@ public class ConfiguracaoDao implements Map<Integer,Configuracao> {
                     cli = new Cliente(rs3.getInt("idCliente"),rs3.getString("nome"),rs3.getString("email"),rs3.getString("telemovel"));
                 }
 
-                c = new Configuracao(rs.getInt("idConfiguracao=?"),rs.getString("validade"),rs.getFloat("orcamento"),cli,u,itens);
+                c = new Configuracao(rs.getInt("idConfiguracao=?"),rs.getString("validade"),rs.getFloat("orcamento"),rs.getFloat("preco"),cli,u,itens);
 
             }
         }catch (Exception e) {
@@ -187,14 +187,15 @@ public class ConfiguracaoDao implements Map<Integer,Configuracao> {
             }
 
             // PROCEDEMOS A INSERIR A CONFIGURAÇÃO
-            sql = "INSERT INTO Configuracao (validade,orcamento,Utilizador_idUtilizador,Cliente_idCliente)\n" +
-                    "VALUES (?,?,?,?)\n";
+            sql = "INSERT INTO Configuracao (validade,orcamento,preco,Utilizador_idUtilizador,Cliente_idCliente)\n" +
+                    "VALUES (?,?,?,?,?)\n";
 
             stm = conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
             stm.setString(1,configuracao.getEstado());
             stm.setFloat(2,configuracao.getOrcamento());
-            stm.setInt(3,id_V);
-            stm.setInt(4,id_Cli);
+            stm.setFloat(3,configuracao.getPreco());
+            stm.setInt(4,id_V);
+            stm.setInt(5,id_Cli);
             stm.executeUpdate();
 
             ResultSet rs2 = stm.getGeneratedKeys();
@@ -303,7 +304,7 @@ public class ConfiguracaoDao implements Map<Integer,Configuracao> {
                     cli = new Cliente(rs3.getInt("idCliente"),rs3.getString("nome"),rs3.getString("email"),rs3.getString("telemovel"));
                 }
 
-                c = new Configuracao(cId,rs.getString("validade"),rs.getFloat("orcamento"),cli,u,itens);
+                c = new Configuracao(cId,rs.getString("validade"),rs.getFloat("orcamento"),rs.getFloat("preco"),cli,u,itens);
                 configs.add(c);
             }
 

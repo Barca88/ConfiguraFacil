@@ -68,8 +68,9 @@ public class ConfiguracaoController {
 
 
     ConfiguraFacil cf;
+    float preco = 0;
 
-    Map<Integer,Item> opcionais = new HashMap<>();
+    List<String> opcionais = new ArrayList<>();
 
     public ConfiguracaoController() {
     }
@@ -131,6 +132,7 @@ public class ConfiguracaoController {
 
     public void handleBtnFinalizarAction(ActionEvent actionEvent) throws IOException {
         Configuracao c = cf.getInUseConfig();
+        c.setPreco(preco);
 
         if((c.getModelo() != null) && (c.getCor() != null)) {
             URL url = getClass().getResource("../views/clienteform.fxml");
@@ -175,7 +177,7 @@ public class ConfiguracaoController {
                     String l2[] = l1[1].split(",");
                     String cb_BOX = l2[0];
 
-                    handleOpcionais(cb_BOX, item, oldItem);
+                    handleOpcionais(cb_BOX, item, oldItem,c);
                 }
             }catch(NullPointerException e){
                 e.getMessage();
@@ -205,7 +207,7 @@ public class ConfiguracaoController {
                         String l2[] = l1[1].split(",");
                         String cb_BOX = l2[0];
 
-                    handleOpcionais(cb_BOX, item, oldItem);
+                    handleOpcionais(cb_BOX, item, oldItem,c);
                 }
             }catch(NullPointerException e){
                     e.getMessage();
@@ -218,7 +220,8 @@ public class ConfiguracaoController {
             desconto = cf.getDesconto(pacote);
             addPacoteChoices(pacote);
         }
-        float preco = cf.price(c.getItens().values().stream().collect(Collectors.toList()),desconto);
+
+        preco = cf.price(c.getItens().values().stream().collect(Collectors.toList()),desconto);
 
         lblPreco.setText(Float.toString(preco));
     }
@@ -226,6 +229,7 @@ public class ConfiguracaoController {
     public void handleDependencies(List<Item> depend,List<Item> incomp,Item item,Item oldItem,Configuracao c){
         List<String> nomesde = depend.stream().map(i -> i.getNome()).collect(Collectors.toList());
         String showd = String.join("\n", nomesde);
+
         boolean reply = AlertBox.display("O Item tem dependencias", "Deseja adicionar os seguintes itens:\n" + showd + "\nCom custo o adicional: " + cf.price(depend, 0) + "?");
         if (reply == true) {
 
@@ -275,7 +279,7 @@ public class ConfiguracaoController {
             List<String> nomes = remove.stream().map(i -> i.getNome()).collect(Collectors.toList());
             String showold_d = String.join("\n", nomes);
 
-            boolean resp = AlertBox.display("O Item tem incompatibilidades", "Se adicionar o item\n" + "Os seguintes items serão removidos:\n\n" + showold_d + "\n" + showold_d);
+            boolean resp = AlertBox.display("O Item tem incompatibilidades", "Se adicionar o item\n" + "Os seguintes items serão removidos:\n\n" + showold_d);
             if (resp == true) {
 
                 for (Item rem : remove) {
@@ -291,8 +295,9 @@ public class ConfiguracaoController {
         }
     }
 
-    public void handleOpcionais(String box, Item item, Item old){
+    public void handleOpcionais(String box, Item item, Item old,Configuracao c){
         String new_nome = item.getNome();
+        List<Item> ops = c.getItens().values().stream().filter(i -> i.getTipo().equals("Opcional")).collect(Collectors.toList());
 
         String old_nome = null;
         if(old != null) old_nome = old.getNome();
@@ -305,15 +310,16 @@ public class ConfiguracaoController {
                 cbOpcional_3.getItems().remove(new_nome);
                 cbOpcional_4.getItems().remove(new_nome);
                 cbOpcional_5.getItems().remove(new_nome);
+
                 if(old != null) {
                     cbOpcional_2.getItems().add(old_nome);
                     cbOpcional_3.getItems().add(old_nome);
                     cbOpcional_4.getItems().add(old_nome);
                     cbOpcional_5.getItems().add(old_nome);
+                    cf.removeItem(old,c); ops.remove(old);
                 }
 
-                if(!opcionais.containsValue(item)) {opcionais.put(0,item); cf.getInUseConfig().addItem(item);}
-                if(opcionais.containsValue(old)) {opcionais.remove(old); cf.getInUseConfig().removeItem(item);}
+                if(!ops.contains(item)){ cf.addItem(item,c); ops.add(item); }
 
                 break;
             case "cbOpcional_2":
@@ -327,10 +333,11 @@ public class ConfiguracaoController {
                     cbOpcional_3.getItems().add(old_nome);
                     cbOpcional_4.getItems().add(old_nome);
                     cbOpcional_5.getItems().add(old_nome);
+                    cf.removeItem(old,c);
+                    ops.remove(old);
                 }
 
-                if(!opcionais.containsValue(item)) {opcionais.put(1,item); cf.getInUseConfig().addItem(item);}
-                if(opcionais.containsValue(old)) {opcionais.remove(old); cf.getInUseConfig().removeItem(item);}
+                if(!ops.contains(item)){ cf.addItem(item,c); ops.add(item);}
 
                 break;
             case "cbOpcional_3":
@@ -344,10 +351,11 @@ public class ConfiguracaoController {
                     cbOpcional_2.getItems().add(old_nome);
                     cbOpcional_4.getItems().add(old_nome);
                     cbOpcional_5.getItems().add(old_nome);
+                    cf.removeItem(old,c); ops.remove(old);
                 }
 
-                if(!opcionais.containsValue(item)) {opcionais.put(2,item); cf.getInUseConfig().addItem(item);}
-                if(opcionais.containsValue(old)) {opcionais.remove(old); cf.getInUseConfig().removeItem(item);}
+
+                if(!ops.contains(item)){ cf.addItem(item,c); ops.add(item);}
 
                 break;
             case "cbOpcional_4":
@@ -361,10 +369,10 @@ public class ConfiguracaoController {
                     cbOpcional_2.getItems().add(old_nome);
                     cbOpcional_3.getItems().add(old_nome);
                     cbOpcional_5.getItems().add(old_nome);
+                    cf.removeItem(old,c); ops.remove(old);
                 }
 
-                if(!opcionais.containsValue(item)) {opcionais.put(3,item); cf.getInUseConfig().addItem(item);}
-                if(opcionais.containsValue(old)) {opcionais.remove(old); cf.getInUseConfig().removeItem(item);}
+                if(!ops.contains(item)){ cf.addItem(item,c); ops.add(item);}
 
                 break;
             case "cbOpcional_5":
@@ -378,10 +386,10 @@ public class ConfiguracaoController {
                     cbOpcional_2.getItems().add(old_nome);
                     cbOpcional_3.getItems().add(old_nome);
                     cbOpcional_4.getItems().add(old_nome);
+                    cf.removeItem(old,c); ops.remove(old);
                 }
 
-                if(!opcionais.containsValue(item)) {opcionais.put(4,item); cf.getInUseConfig().addItem(item);}
-                if(opcionais.containsValue(old)) {opcionais.remove(old); cf.getInUseConfig().removeItem(item);}
+                if(!ops.contains(item)){ cf.addItem(item,c); ops.add(item);}
 
                 break;
             default:

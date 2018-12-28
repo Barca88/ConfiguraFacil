@@ -73,10 +73,7 @@ public class ConfiguraFacil {
         List<Configuracao> lc = new ArrayList<>(configDao.values());
         return FXCollections.observableArrayList(lc);
     }
-    public ObservableList<Item> getStockitems(){
-        List<Item> li = new ArrayList<>(itemDao.values());
-        return FXCollections.observableArrayList(li);
-    }
+
     public ObservableList<Utilizador> getVendedores(){
         List<Utilizador> lv = new ArrayList<>(utilizadorDao.values().stream().filter(i -> i.getClass().getSimpleName().equals("Vendedor")).collect(toList()));
         return FXCollections.observableArrayList(lv);

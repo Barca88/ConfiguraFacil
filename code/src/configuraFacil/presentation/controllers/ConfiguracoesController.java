@@ -27,6 +27,8 @@ public class ConfiguracoesController {
     private TableColumn<Configuracao,String> clnEstadoConfig;
     @FXML
     private TableColumn<Configuracao,Integer> clnOrcamentoConfig;
+    @FXML
+    private TableColumn<Configuracao,Integer> clnPrecoConfig;
 
     public void init(ConfiguraFacil cfo) {
         cf = cfo;
@@ -37,6 +39,7 @@ public class ConfiguracoesController {
         clnIdConfig.setCellValueFactory(new PropertyValueFactory<>("id"));
         clnEstadoConfig.setCellValueFactory(new PropertyValueFactory<>("estado"));
         clnOrcamentoConfig.setCellValueFactory(new PropertyValueFactory<>("orcamento"));
+        clnPrecoConfig.setCellValueFactory(new PropertyValueFactory<>("preco"));
         tblConfigAdmin.setItems(cf.getConfiguracoes());
     }
 

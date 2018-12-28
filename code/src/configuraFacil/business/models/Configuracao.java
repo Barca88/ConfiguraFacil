@@ -4,13 +4,16 @@ import configuraFacil.business.models.items.Item;
 import configuraFacil.business.models.users.Utilizador;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Configuracao {
 
     private int id;
     private String estado;
     private float orcamento;
+    private float preco;
     private Cliente cliente;
     private Utilizador vendedor;
     private Map<Integer, Item> itens;
@@ -20,16 +23,18 @@ public class Configuracao {
         this.id = -1;
         this.estado = "N";
         this.orcamento = 0;
+        this.preco = 0;
         this.cliente = null;
         this.vendedor = null;
         this.itens = new HashMap<>();
 
     }
 
-    public Configuracao(int id, String estado, float orc, Cliente cliente,Utilizador vendedor, Map<Integer, Item> itens) {
+    public Configuracao(int id, String estado, float orc, float prc, Cliente cliente,Utilizador vendedor, Map<Integer, Item> itens) {
         this.id = id;
         this.estado = estado;
         this.orcamento = orc;
+        this.preco = prc;
         this.cliente = cliente;
         this.vendedor = vendedor;
         this.itens = itens;
@@ -67,6 +72,10 @@ public class Configuracao {
     public float getOrcamento() {
         return orcamento;
     }
+
+    public float getPreco() { return preco; }
+
+    public void  setPreco(float prc) { this.preco = prc; }
 
     public void setOrcamento(float orc) {
         this.orcamento = orc;
@@ -110,7 +119,7 @@ public class Configuracao {
     }
 
     public void removeItem(Item item){
-        this.itens.remove(item.getId());
+        itens.remove(item.getId());
     }
 
     public void clearItens(){
