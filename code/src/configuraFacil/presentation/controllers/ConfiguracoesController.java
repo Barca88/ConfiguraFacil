@@ -3,7 +3,6 @@ package configuraFacil.presentation.controllers;
 
 import configuraFacil.business.ConfiguraFacil;
 import configuraFacil.business.models.Configuracao;
-import configuraFacil.business.models.items.Item;
 import configuraFacil.business.models.users.Utilizador;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,7 +15,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
-import javax.rmi.CORBA.Util;
 import java.io.IOException;
 import java.net.URL;
 
