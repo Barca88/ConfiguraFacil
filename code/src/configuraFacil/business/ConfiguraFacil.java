@@ -272,6 +272,7 @@ public class ConfiguraFacil {
         Configuracao c;
         if(!lc.isEmpty()){
             c = lc.get(0);
+            c.getItens().values().forEach(i -> i.setStock(i.getStock()-1));
             c.setEstado("P");
             configDao.put(c.getId(),c);
 
