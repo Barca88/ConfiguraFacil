@@ -266,18 +266,18 @@ public class ConfiguraFacil {
 
     public  void valida(Configuracao i){ configDao.put(i.getId(),i);}
 
-    public void produz(){
+    public int produz(){
         List<Configuracao> lc = configDao.values().stream().filter(c1 -> c1.getEstado().equals("V")).
             sorted(Comparator.comparing(Configuracao::getData)).filter(this::existeStock).collect(toList());
-        lc.forEach(c -> System.out.println(c.getId() + c.getEstado()));
         Configuracao c;
         if(!lc.isEmpty()){
             c = lc.get(0);
-
             c.setEstado("P");
-
             configDao.put(c.getId(),c);
-        }
+
+            return c.getId();
+        } else
+            return -2;
     }
 
     private boolean existeStock(Configuracao c1){

@@ -122,7 +122,13 @@ public class ConfiguracoesController {
     }
 
     public void handleBtnProduzir(ActionEvent actionEvent) throws IOException{
-       cf.produz();
+       int produzido = cf.produz();
+       String mensagem = "Configuração " + Integer.toString(produzido) + " produzida com sucesso";
+       if(produzido != -2)
+           AlertBox.alert("Configuração produzida", mensagem);
+       else
+           AlertBox.alert("Acção Inválida", "Não existem configurações para produção");
+
        initTable();
     }
 }
