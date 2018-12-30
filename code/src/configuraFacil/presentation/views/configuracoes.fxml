@@ -4,7 +4,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -29,21 +28,25 @@
                   <Image url="@../../../images/car.png" />
                </image>
             </ImageView>
-            <Label fx:id="labID" layoutX="116.0" layoutY="29.0" text="ID" textFill="WHITE">
+            <Button fx:id="btnValidar" layoutX="104.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleBtnValidar" style="-fx-background-color: #195988; -fx-background-radius: 5em;" text="Validar" textAlignment="CENTER" textFill="WHITE">
                <font>
-                  <Font size="14.0" />
+                  <Font name="Cantarell Bold" size="18.0" />
                </font>
-            </Label>
-            <TextField fx:id="txtID" layoutX="150.0" layoutY="25.0" prefHeight="26.0" prefWidth="51.0" />
-            <Button fx:id="btnValidar" layoutX="245.0" layoutY="25.0" mnemonicParsing="false" onAction="#handleBtnValidar" text="Validar" />
+            </Button>
+            <Button fx:id="btnProduzir" layoutX="104.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleBtnProduzir" style="-fx-background-color: #195988; -fx-background-radius: 5em;" text="Produzir" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font name="Cantarell Bold" size="18.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
       <TableView fx:id="tblConfigAdmin" layoutY="85.0" onKeyPressed="#handleViewConfigAction" prefHeight="323.0" prefWidth="607.0" style="-fx-background-color: #376888;">
          <columns>
             <TableColumn fx:id="clnIdConfig" prefWidth="75.0" text="Id" />
             <TableColumn fx:id="clnEstadoConfig" prefWidth="121.0" text="Estado" />
-            <TableColumn fx:id="clnOrcamentoConfig" minWidth="0.0" prefWidth="200.0" text="Orçamento" />
-            <TableColumn fx:id="clnPrecoConfig" minWidth="0.0" prefWidth="210.0" text="Preco" />
+            <TableColumn fx:id="clnOrcamentoConfig" minWidth="0.0" prefWidth="148.0" text="Orçamento" />
+            <TableColumn fx:id="clnDataConfig" prefWidth="127.0" text="Data" />
+            <TableColumn fx:id="clnPrecoConfig" minWidth="0.0" prefWidth="135.0" text="Preco" />
          </columns>
       </TableView>
    </children>

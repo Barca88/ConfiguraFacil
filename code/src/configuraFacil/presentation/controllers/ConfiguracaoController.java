@@ -17,97 +17,70 @@ import java.util.stream.Collectors;
 
 public class ConfiguracaoController {
 
+
+    private ConfiguraFacil cf;
+    private float preco = 0;
     @FXML
     private ChoiceBox<String> cbModelo;
-
     @FXML
     private ChoiceBox<String> cbCor;
-
     @FXML
     private ChoiceBox<String> cbVolante;
-
     @FXML
     private ChoiceBox<String> cbBancos;
-
     @FXML
     private ChoiceBox<String> cbEstofos;
-
     @FXML
     private ChoiceBox<String> cbPneus;
-
     @FXML
     private ChoiceBox<String> cbJantes;
-
     @FXML
     private ChoiceBox<String> cbCorpo;
-
     @FXML
     private ChoiceBox<String> cbPacote;
-
     @FXML
     private ChoiceBox<String>  cbOpcional_1;
-
     @FXML
     private ChoiceBox<String>  cbOpcional_2;
-
     @FXML
     private ChoiceBox<String>  cbOpcional_3;
-
     @FXML
     private ChoiceBox<String>  cbOpcional_4;
-
     @FXML
     private ChoiceBox<String>  cbOpcional_5;
-
     @FXML
     private Label lblPreco;
-
-
-    ConfiguraFacil cf;
-    float preco = 0;
 
     public void init(ConfiguraFacil cfo) {
         cf = cfo;
 
+        //load and add listener to choice boxes
         cbModelo.setItems(cf.getModelos());
         cbModelo.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbModelo,old, newValue));
-
         cbCor.setItems(cf.getCores());
         cbCor.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbCor,old, newValue));
-
         cbVolante.setItems(cf.getVolantes());
         cbVolante.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbVolante,old, newValue));
-
         cbBancos.setItems(cf.getBancos());
         cbBancos.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbBancos,old, newValue));
-
         cbEstofos.setItems(cf.getEstofos());
         cbEstofos.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbEstofos,old, newValue));
-
         cbJantes.setItems(cf.getJantes());
         cbJantes.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbJantes,old, newValue));
-
         cbPneus.setItems(cf.getPneus());
         cbPneus.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbPneus,old, newValue));
-
         cbCorpo.setItems(cf.getCorpos());
         cbCorpo.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbCorpo,old,newValue));
-
         cbPacote.setItems(cf.getPacotes_N());
         cbPacote.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> pacoteChanged());
-
         cbOpcional_1.setItems(cf.getOpcionais());
         cbOpcional_1.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbOpcional_1,old,newValue));
-
         cbOpcional_2.setItems(cf.getOpcionais());
         cbOpcional_2.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbOpcional_2,old,newValue));
-
         cbOpcional_3.setItems(cf.getOpcionais());
         cbOpcional_3.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbOpcional_3,old,newValue));
-
         cbOpcional_4.setItems(cf.getOpcionais());
         cbOpcional_4.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbOpcional_4,old,newValue));
-
         cbOpcional_5.setItems(cf.getOpcionais());
         cbOpcional_5.getSelectionModel().selectedItemProperty().addListener((v, old, newValue) -> itemChanged(cbOpcional_5,old,newValue));
 
@@ -135,7 +108,7 @@ public class ConfiguracaoController {
                 else AlertBox.alert("Configuração Incompleta!", "Por favor, escolha o Modelo do Carro");
     }
 
-    public void itemChanged(ChoiceBox<String> tipo, String old, String newValue) {
+    private void itemChanged(ChoiceBox<String> tipo, String old, String newValue) {
         Configuracao c = cf.getInUseConfig();
 
         Pacote pacote = cf.getPacotes().stream().filter(i -> i.equals(newValue)).findAny().orElse(null);
@@ -189,7 +162,7 @@ public class ConfiguracaoController {
         lblPreco.setText(Float.toString(preco));
     }
 
-    public void handleDependencies(List<Item> depend,List<Item> incomp,Item item,Item oldItem,Configuracao c){
+    private void handleDependencies(List<Item> depend,List<Item> incomp,Item item,Item oldItem,Configuracao c){
         List<String> nomesde = depend.stream().map(i -> i.getNome()).collect(Collectors.toList());
         String showd = String.join("\n", nomesde);
 
@@ -214,8 +187,8 @@ public class ConfiguracaoController {
         }
     }
 
-    public void handleIncompatibilities(List<Item> depend,List<Item> incomp,Item item,Item oldItem,Configuracao c){
-        List<String> nomesde = incomp.stream().map(i -> i.getNome()).collect(Collectors.toList());
+    private void handleIncompatibilities(List<Item> depend,List<Item> incomp,Item item,Item oldItem,Configuracao c){
+        List<String> nomesde = incomp.stream().map(Item::getNome).collect(Collectors.toList());
         String showi = String.join("\n", nomesde);
 
 
@@ -235,7 +208,7 @@ public class ConfiguracaoController {
 
     }
 
-    public void handleOldDependencies(List<Item> depend,List<Item> incomp,Item item,Item newItem,Configuracao c){
+    private void handleOldDependencies(List<Item> depend,List<Item> incomp,Item item,Item newItem,Configuracao c){
         List<Item> remove = cf.oldDependent(c, newItem);
 
         if(!remove.isEmpty()) {
@@ -258,7 +231,7 @@ public class ConfiguracaoController {
         }
     }
 
-    public void handleOpcionais(String box, Item item, Item old,Configuracao c){
+    private void handleOpcionais(String box, Item item, Item old,Configuracao c){
         String new_nome = item.getNome();
         List<Item> ops = c.getItens().values().stream().filter(i -> i.getTipo().equals("Opcional")).collect(Collectors.toList());
 
@@ -359,7 +332,7 @@ public class ConfiguracaoController {
         }
     }
 
-    public void handleChoices(Item item,Item old, int type_of_handling){
+    private void handleChoices(Item item,Item old, int type_of_handling){
         String new_tipo = item.getTipo();
         String new_nome = item.getNome();
 
@@ -399,7 +372,7 @@ public class ConfiguracaoController {
             }
     }
 
-    public void removeChoices(Item item) {
+    private void removeChoices(Item item) {
         String tipo = item.getTipo();
 
         switch (tipo) {
@@ -454,7 +427,7 @@ public class ConfiguracaoController {
         }
     }
 
-    public void addPacoteChoices(int id){
+    private void addPacoteChoices(int id){
         Pacote p = cf.getPacote(id);
         cbPacote.setValue(p.getNome());
     }

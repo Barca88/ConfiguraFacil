@@ -5,10 +5,13 @@ import configuraFacil.business.models.Cliente;
 import configuraFacil.business.models.Configuracao;
 import configuraFacil.business.models.items.Item;
 import configuraFacil.business.models.users.Utilizador;
+import configuraFacil.business.models.users.Vendedor;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -132,7 +135,7 @@ public class ConfiguracaoDao implements Map<Integer,Configuracao> {
                     cli = new Cliente(rs3.getInt("idCliente"),rs3.getString("nome"),rs3.getString("email"),rs3.getString("telemovel"));
                 }
 
-                c = new Configuracao(rs.getInt("idConfiguracao=?"),rs.getString("validade"),rs.getFloat("orcamento"),rs.getFloat("preco"),cli,u,itens);
+                c = new Configuracao(rs.getInt("idConfiguracao=?"),rs.getString("validade"),rs.getFloat("orcamento"),rs.getFloat("preco"),cli,u,LocalDate.parse(rs.getString("data")),itens);
 
             }
         }catch (Exception e) {
@@ -146,10 +149,14 @@ public class ConfiguracaoDao implements Map<Integer,Configuracao> {
     @Override
     public Configuracao put(Integer integer, Configuracao configuracao){
         Configuracao config = null;
-        List<Item> items = configuracao.getItens().values().stream().collect(Collectors.toList());
+
+        List<Item> items = new ArrayList<>(configuracao.getItens().values());
         Cliente cliente = configuracao.getCliente();
-        int id_Cli = 0 ,id_Config = 0;
-        int id_V = configuracao.getVendedor().getId();
+        Utilizador vendedor = configuracao.getVendedor();
+
+        int id_Cli = 0;
+        int id_Config = 0;
+        int id_V = vendedor.getId();
 
         try {
             conn = Connect.connect();
@@ -209,7 +216,8 @@ public class ConfiguracaoDao implements Map<Integer,Configuracao> {
                 stm.setFloat(2, configuracao.getOrcamento());
                 stm.setFloat(3, configuracao.getPreco());
                 stm.setInt(4, id_V);
-                stm.setInt(5, id_Cli);
+                stm.setString(5,configuracao.getData().toString());
+                stm.setInt(6, id_Cli);
                 stm.executeUpdate();
 
                 ResultSet rs4 = stm.getGeneratedKeys();
@@ -319,7 +327,7 @@ public class ConfiguracaoDao implements Map<Integer,Configuracao> {
                     cli = new Cliente(rs3.getInt("idCliente"),rs3.getString("nome"),rs3.getString("email"),rs3.getString("telemovel"));
                 }
 
-                c = new Configuracao(cId,rs.getString("validade"),rs.getFloat("orcamento"),rs.getFloat("preco"),cli,u,itens);
+                c = new Configuracao(cId,rs.getString("validade"),rs.getFloat("orcamento"),rs.getFloat("preco"),cli,u, LocalDate.parse(rs.getString("data")),itens);
                 configs.add(c);
             }
 

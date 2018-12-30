@@ -143,6 +143,14 @@ public class ConfiguraFacil {
         return pacoteDao.values().stream().filter(p -> p.getNome().equals(nome)).collect(Collectors.toList()).get(0).getItens().values().stream().collect(Collectors.toList());
     }
 
+    public  Pacote getPacote(int id){
+        return pacoteDao.get(id);
+    }
+
+    public float getDesconto(int id){
+        return pacoteDao.get(id).getDesconto();
+    }
+
     public List<Item> incompatibilidades (Item item, Map<Integer,Item> conf){
         List<Item> incomp = new ArrayList<>();
         if(!(item == null)){
@@ -209,14 +217,6 @@ public class ConfiguraFacil {
         return pId ;
     }
 
-    public  Pacote getPacote(int id){
-        return pacoteDao.get(id);
-    }
-
-    public float getDesconto(int id){
-        return pacoteDao.get(id).getDesconto();
-    }
-
     public void  addItem (Item i, Configuracao c){
         c.addItem(i);
     }
@@ -265,6 +265,24 @@ public class ConfiguraFacil {
     public  void encomenda(Item i){ itemDao.put(i.getId(),i);}
 
     public  void valida(Configuracao i){ configDao.put(i.getId(),i);}
+
+    public void produz(){
+        List<Configuracao> lc = configDao.values().stream().filter(c1 -> c1.getEstado().equals("V")).
+            sorted(Comparator.comparing(Configuracao::getData)).filter(this::existeStock).collect(toList());
+        lc.forEach(c -> System.out.println(c.getId() + c.getEstado()));
+        Configuracao c;
+        if(!lc.isEmpty()){
+            c = lc.get(0);
+
+            c.setEstado("P");
+
+            configDao.put(c.getId(),c);
+        }
+    }
+
+    private boolean existeStock(Configuracao c1){
+         return c1.getItens().values().stream().noneMatch(i1 -> (i1.getStock() == 0));
+    }
 
     public void optimus_prime(Configuracao c, float orc){
         float choice = 0;

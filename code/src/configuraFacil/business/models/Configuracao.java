@@ -3,10 +3,9 @@ package configuraFacil.business.models;
 import configuraFacil.business.models.items.Item;
 import configuraFacil.business.models.users.Utilizador;
 
+import java.time.LocalDate;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Configuracao {
 
@@ -16,6 +15,7 @@ public class Configuracao {
     private float preco;
     private Cliente cliente;
     private Utilizador vendedor;
+    private LocalDate data;
     private Map<Integer, Item> itens;
 
 
@@ -26,16 +26,18 @@ public class Configuracao {
         this.preco = 0;
         this.cliente = null;
         this.vendedor = null;
+        this.data = null;
         this.itens = new HashMap<>();
     }
 
-    public Configuracao(int id, String estado, float orc, float prc, Cliente cliente,Utilizador vendedor, Map<Integer, Item> itens) {
+    public Configuracao(int id, String estado, float orc, float prc, Cliente cliente,Utilizador vendedor,LocalDate data, Map<Integer, Item> itens) {
         this.id = id;
         this.estado = estado;
         this.orcamento = orc;
         this.preco = prc;
         this.cliente = cliente;
         this.vendedor = vendedor;
+        this.data = data;
         this.itens = itens;
     }
 
@@ -94,6 +96,14 @@ public class Configuracao {
 
     public void setVendedor(Utilizador vendedor) {
         this.vendedor = vendedor;
+    }
+
+    public LocalDate getData() {
+        return data;
+    }
+
+    public void setData(LocalDate data) {
+        this.data = data;
     }
 
     public Map<Integer,Item> getItens() {

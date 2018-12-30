@@ -1,6 +1,5 @@
 package configuraFacil.presentation.controllers;
 
-
 import configuraFacil.business.models.Configuracao;
 import configuraFacil.business.models.items.Item;
 import configuraFacil.business.ConfiguraFacil;
@@ -17,7 +16,7 @@ import java.net.URL;
 
 public class ConsultarConfiguracaoController {
 
-
+    private ConfiguraFacil cf;
     @FXML
     private Button btnOtima;
     @FXML
@@ -34,9 +33,6 @@ public class ConsultarConfiguracaoController {
     private Circle crCor;
     @FXML
     private ListView<Item> lvItens;
-
-
-    private ConfiguraFacil cf;
 
     public void init(ConfiguraFacil cfo) {
         cf = cfo;

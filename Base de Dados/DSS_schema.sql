@@ -49,6 +49,7 @@ CREATE TABLE IF NOT EXISTS `ConfiguraFacil`.`Configuracao` (
   `Orcamento` FLOAT NULL,
   `Preco` FLOAT NOT NULL, 
   `Utilizador_idUtilizador` INT NOT NULL,
+  `Data` VARCHAR(64) NOT NULL,
   `Cliente_idCliente` INT NOT NULL,
   PRIMARY KEY (`idConfiguracao`, `Cliente_idCliente`),
   INDEX `fk_Configuracao_Utilizador_idx` (`Utilizador_idUtilizador` ASC),

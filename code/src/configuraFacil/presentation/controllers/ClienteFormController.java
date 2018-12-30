@@ -1,6 +1,5 @@
 package configuraFacil.presentation.controllers;
 
-
 import configuraFacil.business.ConfiguraFacil;
 import configuraFacil.business.models.Cliente;
 import javafx.event.ActionEvent;
@@ -10,11 +9,11 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
-
+import java.time.LocalDate;
 
 public class ClienteFormController {
 
-    ConfiguraFacil cf;
+    private ConfiguraFacil cf;
 
     @FXML
     private TextField tfNome;
@@ -47,6 +46,7 @@ public class ClienteFormController {
         //cliente da configuracao
         cf.getInUseConfig().setCliente(c);
         cf.getInUseConfig().setVendedor(cf.getLogged());
+        cf.getInUseConfig().setData(LocalDate.now());
 
         //adicionar as configuracoes
         cf.adicionarNovaConfiguracao();
