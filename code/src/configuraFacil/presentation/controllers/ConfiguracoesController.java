@@ -106,17 +106,19 @@ public class ConfiguracoesController {
                 AlertBox.alert("Configuração inválida", "Por favor, selecione uma configuração");
             }else{
                 Configuracao c = tblConfigAdmin.getSelectionModel().getSelectedItem();
+                int validada  = cf.valida(c);
+                String mensagem = "Configuração " + Integer.toString(validada) + " validade com sucesso";
 
-                if(c.getEstado().equals("N")){
-                    c.setEstado("V");
-                    cf.valida(c);
-
-                    initTable();
-                } else if (c.getEstado().equals("V")){
+                if(validada == -2)
                     AlertBox.alert("Acção Inválida", "Configuração já se encontra validada");
-                } else {
+                else if (validada == -1)
                     AlertBox.alert("Acção Inválida", "Configuração já se encontra produzida");
+                else {
+                    initTable();
+                    AlertBox.alert("Configuração validada", mensagem);
                 }
+
+                initTable();
             }
         }catch (NumberFormatException e){e.getMessage();}
     }
@@ -124,11 +126,10 @@ public class ConfiguracoesController {
     public void handleBtnProduzir(ActionEvent actionEvent) throws IOException{
        int produzido = cf.produz();
        String mensagem = "Configuração " + Integer.toString(produzido) + " produzida com sucesso";
-       if(produzido != -2)
+       if(produzido != -2) {
+           initTable();
            AlertBox.alert("Configuração produzida", mensagem);
-       else
-           AlertBox.alert("Acção Inválida", "Não existem configurações para produção");
-
-       initTable();
+       }else
+           AlertBox.alert("Acção Inválida", "Não existem configurações para produção ");
     }
 }

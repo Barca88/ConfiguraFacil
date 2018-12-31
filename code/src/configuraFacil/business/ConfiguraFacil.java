@@ -264,7 +264,17 @@ public class ConfiguraFacil {
 
     public  void encomenda(Item i){ itemDao.put(i.getId(),i);}
 
-    public  void valida(Configuracao i){ configDao.put(i.getId(),i);}
+    public  int valida(Configuracao c){
+        if(c.getEstado().equals("N")){
+            c.setEstado("V");
+            configDao.put(c.getId(),c);
+            return c.getId();
+        } else if (c.getEstado().equals("V")){
+            return -2;
+        } else {
+            return -1;
+        }
+    }
 
     public int produz(){
         List<Configuracao> lc = configDao.values().stream().filter(c1 -> c1.getEstado().equals("V")).
