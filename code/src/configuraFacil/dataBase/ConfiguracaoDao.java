@@ -208,8 +208,8 @@ public class ConfiguracaoDao implements Map<Integer,Configuracao> {
                 }
 
                 // PROCEDEMOS A INSERIR A CONFIGURAÇÃO
-                sql = "INSERT INTO Configuracao (validade,orcamento,preco,Utilizador_idUtilizador,Cliente_idCliente)\n" +
-                        "VALUES (?,?,?,?,?)\n";
+                sql = "INSERT INTO Configuracao (validade,orcamento,preco,Utilizador_idUtilizador,data,Cliente_idCliente)\n" +
+                        "VALUES (?,?,?,?,?,?)\n";
 
                 stm = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                 stm.setString(1, configuracao.getEstado());

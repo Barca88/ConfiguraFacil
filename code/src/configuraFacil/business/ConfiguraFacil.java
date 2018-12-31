@@ -265,14 +265,15 @@ public class ConfiguraFacil {
     public  void encomenda(Item i){ itemDao.put(i.getId(),i);}
 
     public  int valida(Configuracao c){
-        if(c.getEstado().equals("N")){
-            c.setEstado("V");
-            configDao.put(c.getId(),c);
-            return c.getId();
-        } else if (c.getEstado().equals("V")){
-            return -2;
-        } else {
-            return -1;
+        switch (c.getEstado()) {
+            case "N":
+                c.setEstado("V");
+                configDao.put(c.getId(), c);
+                return c.getId();
+            case "V":
+                return -2;
+            default:
+                return -1;
         }
     }
 
@@ -282,7 +283,11 @@ public class ConfiguraFacil {
         Configuracao c;
         if(!lc.isEmpty()){
             c = lc.get(0);
-            c.getItens().values().forEach(i -> i.setStock(i.getStock()-1));
+            c.getItens().values().forEach(i -> {
+                Item it = itemDao.get(i.getId());
+                it.setStock(it.getStock()-1);
+                itemDao.put(it.getId(),it);
+            });
             c.setEstado("P");
             configDao.put(c.getId(),c);
 
