@@ -20,12 +20,14 @@ public class Main extends Application {
         Parent sceneroot = FXMLLoader.load(url);
 
         //new scene
-        Scene scene = new Scene(sceneroot, 300, 275);
+        Scene scene = new Scene(sceneroot, 600, 400);
         //scene.setFill(Color.TRANSPARENT);
 
         //start window with scene
+        primaryWindow.setResizable(false);
         primaryWindow.setOnCloseRequest(e->onClose());
         //primaryWindow.initStyle(StageStyle.TRANSPARENT);
+
         primaryWindow.setScene(scene);
         primaryWindow.show();
     }

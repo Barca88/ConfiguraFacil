@@ -1,6 +1,6 @@
 package configuraFacil.presentation.controllers;
 
-import configuraFacil.presentation.controllers.SceneManager;
+
 import configuraFacil.business.ConfiguraFacil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,10 +12,10 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
 
 public class LoginController implements Initializable {
 
@@ -52,7 +52,6 @@ public class LoginController implements Initializable {
         cf = new ConfiguraFacil();
     }
 
-
     public void handleBtnVendedorAction(ActionEvent event) {
         btnBack.setVisible(true);
         apAdminLogin.setVisible(false);
@@ -82,6 +81,8 @@ public class LoginController implements Initializable {
 
     public void handleBtnBackLogin(ActionEvent actionEvent) {
         lbAviso.setText("");
+        tfNome.setText("");
+        pfPass.setText("");
         btnBack.setVisible(false);
         apAdminLogin.setTranslateX(0);
         apAdminLogin.setVisible(true);
@@ -134,7 +135,7 @@ public class LoginController implements Initializable {
             Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             SceneManager sm = new SceneManager(url, window);
             sm.newScene(3, cf);
-        }else if(cf.login(username, password, 1) == 2){
+        }else if(cf.login(username, password, 2) == 2){
             lbAviso.setText("Vendedor inexistente.");
         }else
             lbAviso.setText("Password inválida");
@@ -142,7 +143,6 @@ public class LoginController implements Initializable {
     }
 
     public void handleBtnAutenticarLogin(ActionEvent actionEvent) throws IOException {
-
 
         String username = tfNome.getText();
         String password = pfPass.getText();

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+
 /**
  * Classe que gere ligações à base de dados
  * @author ruicouto
@@ -13,7 +14,7 @@ public class Connect {
     private static final String URL = "localhost";
     private static final String DB = "ConfiguraFacil";
     private static final String USERNAME = "root"; //TODO: alterar
-    private static final String PASSWORD = "root"; //TODO: alterar
+    private static final String PASSWORD = ""; //TODO: alterar
 
     /**
      * Estabelece ligação à base de dados
@@ -22,7 +23,7 @@ public class Connect {
      * @throws ClassNotFoundException
      */
     public static Connection connect() throws SQLException, ClassNotFoundException {
-        Class.forName("com.mysql.jdbc.Driver");
+        Class.forName("com.mysql.cj.jdbc.Driver");
         //cliente deve fechar conexão!
         return DriverManager.getConnection("jdbc:mysql://"+URL+"/"+DB+"?user="+USERNAME+"&password="+PASSWORD);
     }

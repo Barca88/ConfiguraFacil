@@ -28,7 +28,7 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <AnchorPane layoutY="91.0" prefHeight="308.0" prefWidth="310.0" style="-fx-background-color: #376888;">
+      <AnchorPane layoutX="296.0" layoutY="91.0" prefHeight="308.0" prefWidth="310.0" style="-fx-background-color: #376888;">
          <children>
             <ImageView fitHeight="216.0" fitWidth="310.0" layoutX="48.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -42,7 +42,7 @@
             </Button>
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="309.0" layoutY="91.0" prefHeight="308.0" prefWidth="297.0" style="-fx-background-color: #376888;">
+      <AnchorPane layoutY="91.0" prefHeight="308.0" prefWidth="297.0" style="-fx-background-color: #376888;">
          <children>
             <ImageView fitHeight="216.0" fitWidth="297.0" layoutX="41.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                <image>

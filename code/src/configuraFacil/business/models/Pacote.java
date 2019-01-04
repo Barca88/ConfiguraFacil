@@ -10,25 +10,25 @@ public class Pacote {
     private int id;
     private float desconto;
     private String nome;
-    private Map<Long, Item> items;
+    private Map<Integer, Item> itens;
 
     public Pacote(){
         this.id = -1;
         this.desconto = 0;
         this.nome = null;
-        this.items = new HashMap<>();
+        this.itens = new HashMap<>();
     }
     public Pacote(Pacote p){
         this.id = p.getId();
         this.desconto = p.getDesconto();
         this.nome = p.getNome();
-        this.items = p.getItems();
+        this.itens = p.getItens();
     }
-    public Pacote(int id, float desconto, String nome) {
+    public Pacote(int id, float desconto, String nome,Map<Integer,Item> i) {
         this.id = id;
         this.desconto = desconto;
         this.nome = nome;
-        this.items = new HashMap<>();
+        this.itens = i;
     }
 
     public int getId() {
@@ -52,20 +52,22 @@ public class Pacote {
     public void setNome(String nome) {
         this.nome = nome;
     }
-    public Map<Long,Item> getItems(){
-        HashMap<Long,Item> r = new HashMap<Long,Item>();
-        for(Item i : this.items.values()){
+    public Map<Integer,Item> getItens(){
+        HashMap<Integer,Item> r = new HashMap<Integer,Item>();
+        for(Item i : this.itens.values()){
             r.put(i.getId(),i.clone());
         }
         return r;
     }
-    public void setItems(HashMap<Long,Item> newItems){
-        HashMap<Long,Item> r = new HashMap<Long,Item>();
-        for(Item i : newItems.values()){
+    public void setItens(HashMap<Integer,Item> newItens){
+        HashMap<Integer,Item> r = new HashMap<Integer,Item>();
+        for(Item i : newItens.values()){
             r.put(i.getId(),i.clone());
         }
-        this.items = r;
+        this.itens = r;
     }
+
+
 
     public Pacote clone(){
         return new Pacote(this);
