@@ -34,12 +34,12 @@
                   <Font name="Cantarell Bold" size="18.0" />
                </font>
             </Button>
-            <Label layoutX="331.0" layoutY="30.0" text="€" textFill="#e4dc0c">
+            <Label layoutX="328.0" layoutY="30.0" text="€" textFill="#e4dc0c">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="lblPreco" layoutX="272.0" layoutY="30.0" text="0.0" textFill="#e4dc0c">
+            <Label fx:id="lblPreco" layoutX="254.0" layoutY="30.0" text="0.0" textFill="#e4dc0c">
                <font>
                   <Font size="18.0" />
                </font>

@@ -157,17 +157,17 @@ public class ConfiguracaoController {
             desconto = cf.getDesconto(pac);
         }
 
-        preco = cf.price(c.getItens().values().stream().collect(Collectors.toList()),desconto);
+        preco = cf.price(new ArrayList<>(c.getItens().values()),desconto);
 
         lblPreco.setText(Float.toString(preco));
     }
 
     private void handleDependencies(List<Item> depend,List<Item> incomp,Item item,Item oldItem,Configuracao c){
-        List<String> nomesde = depend.stream().map(i -> i.getNome()).collect(Collectors.toList());
+        List<String> nomesde = depend.stream().map(Item::getNome).collect(Collectors.toList());
         String showd = String.join("\n", nomesde);
 
         boolean reply = AlertBox.display("O Item tem dependencias\n\n", "Deseja adicionar os seguintes itens:\n" + showd + "\nCom custo o adicional de: " + cf.price(depend, 0) + "?");
-        if (reply == true) {
+        if (reply) {
 
             for (Item i : depend) {
                 cf.removeSametype(c, i);
@@ -193,7 +193,7 @@ public class ConfiguracaoController {
 
 
         boolean resp = AlertBox.display("O Item tem incompatibilidades\n\n", "Se adicionar o item, os seguintes items serão removidos:\n\n" + showi);
-        if (resp == true) {
+        if (resp) {
 
             for(Item inc: incomp){
                 cf.removeItem(inc,c);
@@ -212,11 +212,11 @@ public class ConfiguracaoController {
         List<Item> remove = cf.oldDependent(c, newItem);
 
         if(!remove.isEmpty()) {
-            List<String> nomes = remove.stream().map(i -> i.getNome()).collect(Collectors.toList());
+            List<String> nomes = remove.stream().map(Item::getNome).collect(Collectors.toList());
             String showold_d = String.join("\n", nomes);
 
             boolean resp = AlertBox.display("Alguns Items são dependentes do item a ser alterado\n\n", "Se o remover, os seguintes items também serão removidos:\n\n" + showold_d);
-            if (resp == true) {
+            if (resp) {
 
                 for (Item rem : remove) {
                     cf.removeItem(rem, c);

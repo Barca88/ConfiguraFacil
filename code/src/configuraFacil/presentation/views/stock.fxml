@@ -29,7 +29,7 @@
                   <Image url="@../../../images/warehouse.png" />
                </image>
             </ImageView>
-            <Button fx:id="btnEncomendar" layoutX="97.0" layoutY="21.0" mnemonicParsing="false" onAction="#handleBtnEncomendar" style="-fx-background-color: #195988; -fx-background-radius: 5em;" text="Encomendar" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="btnEncomendar" layoutX="97.0" layoutY="21.0" mnemonicParsing="false" onAction="#handleBtnEncomendar" style="-fx-background-color: #195988; -fx-background-radius: 5em;" text="Atualizar" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="Cantarell Bold" size="18.0" />
                </font>
