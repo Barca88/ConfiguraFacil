@@ -3,7 +3,7 @@ package configuraFacil.presentation.controllers;
 
 import configuraFacil.business.ConfiguraFacil;
 import configuraFacil.business.models.Configuracao;
-import configuraFacil.business.models.items.Item;
+import configuraFacil.business.models.Item;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -52,7 +52,7 @@ public class ConfiguracaoOtimaController {
     }
 
     public void handleBtnFinalizarAction(ActionEvent actionEvent) throws IOException {
-        Configuracao c = cf.getInUseConfig();
+        Configuracao c = cf.consultarConfiguracao();
         float orc = 0;
 
         try{
@@ -66,7 +66,7 @@ public class ConfiguracaoOtimaController {
 
         if((c.getModelo() != null) && (c.getCor() != null) && (orc != 0)) {
             c.setOrcamento(Float.parseFloat(txtOrcamento.getText()));
-            cf.optimus_prime(c, Float.parseFloat(txtOrcamento.getText()));
+            cf.configuracaoOtima(c, Float.parseFloat(txtOrcamento.getText()));
             preco = -(cf.price(c.getItens().values().stream().collect(Collectors.toList()), 0));
             c.setPreco(preco);
 
@@ -83,8 +83,8 @@ public class ConfiguracaoOtimaController {
     }
 
     public void itemChanged(ChoiceBox<String> tipo){
-        Configuracao c = cf.getInUseConfig();
-        Item item = cf.getItems().stream().filter(i -> i.getNome().equals(tipo.getValue())).findAny().orElse(null);
+        Configuracao c = cf.consultarConfiguracao();
+        Item item = cf.cosultarStock().stream().filter(i -> i.getNome().equals(tipo.getValue())).findAny().orElse(null);
 
         try {
             cf.removeSametype(c, item);

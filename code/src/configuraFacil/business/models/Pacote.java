@@ -1,7 +1,5 @@
 package configuraFacil.business.models;
 
-import configuraFacil.business.models.items.Item;
-
 import java.util.HashMap;
 import java.util.Map;
 

@@ -1,7 +1,7 @@
 package configuraFacil.presentation.controllers;
 
 import configuraFacil.business.models.Configuracao;
-import configuraFacil.business.models.items.Item;
+import configuraFacil.business.models.Item;
 import configuraFacil.business.ConfiguraFacil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -37,36 +37,36 @@ public class ConsultarConfiguracaoController {
     public void init(ConfiguraFacil cfo) {
         cf = cfo;
 
-        lblConfig.setText("Configuração " + Integer.toString(cf.getInUseConfig().getId()));
-        lblModelo.setText(cf.getInUseConfig().getModelo());
+        lblConfig.setText("Configuração " + Integer.toString(cf.consultarConfiguracao().getId()));
+        lblModelo.setText(cf.consultarConfiguracao().getModelo());
 
-        if(cf.getInUseConfig().getPreco() < 0) {
+        if(cf.consultarConfiguracao().getPreco() < 0) {
             btnOtima.setVisible(true);
             lblCliente.setVisible(false);
             lblVendedor.setVisible(false);
-            lblPreco.setText(Float.toString(-(cf.getInUseConfig().getPreco())));
-            String cor = cf.getInUseConfig().getCor();
+            lblPreco.setText(Float.toString(-(cf.consultarConfiguracao().getPreco())));
+            String cor = cf.consultarConfiguracao().getCor();
             crCor.setFill(javafx.scene.paint.Color.valueOf(cor));
-            for(Item i : cf.getInUseConfig().getItens().values()){
+            for(Item i : cf.consultarConfiguracao().getItens().values()){
                 if(!i.getTipo().equals("Modelo") && !i.getTipo().equals("Cor"))
                     lvItens.getItems().add(i);
             }
         }else{
-            lblPreco.setText(Float.toString((cf.getInUseConfig().getPreco())));
-            String cor = cf.getInUseConfig().getCor();
+            lblPreco.setText(Float.toString((cf.consultarConfiguracao().getPreco())));
+            String cor = cf.consultarConfiguracao().getCor();
             crCor.setFill(javafx.scene.paint.Color.valueOf(cor));
-            for(Item i : cf.getInUseConfig().getItens().values()){
+            for(Item i : cf.consultarConfiguracao().getItens().values()){
                 if(!i.getTipo().equals("Modelo") && !i.getTipo().equals("Cor"))
                     lvItens.getItems().add(i);
             }
-            lblCliente.setText(cf.getInUseConfig().getCliente().getNome());
-            lblVendedor.setText(cf.getInUseConfig().getVendedor().getNome());
+            lblCliente.setText(cf.consultarConfiguracao().getCliente().getNome());
+            lblVendedor.setText(cf.consultarConfiguracao().getVendedor().getNome());
         }
 
     }
 
     public void handleBtnBack(ActionEvent actionEvent) throws IOException {
-        if(cf.getInUseConfig().getPreco() < 0){
+        if(cf.consultarConfiguracao().getPreco() < 0){
             cf.setInUseConfig(null);
             URL url = getClass().getResource("../views/configuracaoOtima.fxml");
             Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -83,7 +83,7 @@ public class ConsultarConfiguracaoController {
     }
 
     public void handleBtnFinalizar(ActionEvent actionEvent) throws IOException {
-        Configuracao c = cf.getInUseConfig();
+        Configuracao c = cf.consultarConfiguracao();
         cf.setPreco(c,-(c.getPreco()));
 
         URL url = getClass().getResource("../views/clienteform.fxml");

@@ -39,7 +39,7 @@ public class VendedoresController {
         clnNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         clnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         clnTelemovel.setCellValueFactory(new PropertyValueFactory<>("tel"));
-        tblVendedor.setItems(cf.getVendedores());
+        tblVendedor.setItems(cf.consultarVendedores());
     }
     public void handleBtnBack(ActionEvent actionEvent) throws IOException {
         URL url = getClass().getResource("../views/administrador.fxml");

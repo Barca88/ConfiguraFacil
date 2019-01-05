@@ -3,7 +3,7 @@ package configuraFacil.business;
 
 import configuraFacil.business.models.Configuracao;
 import configuraFacil.business.models.Pacote;
-import configuraFacil.business.models.items.Item;
+import configuraFacil.business.models.Item;
 import configuraFacil.business.models.users.Utilizador;
 import configuraFacil.dataBase.*;
 import javafx.collections.FXCollections;
@@ -75,7 +75,7 @@ public class ConfiguraFacil {
         this.logged = logged;
     }
 
-    public Configuracao getInUseConfig() {
+    public Configuracao consultarConfiguracao() {
         return inUseConfig;
     }
 
@@ -95,21 +95,21 @@ public class ConfiguraFacil {
         return pacotes.get(id).getDesconto();
     }
 
-    public ObservableList<Configuracao> getConfiguracoes(){
+    public ObservableList<Configuracao> consultarConfiguracoes(){
         List<Configuracao> lc = new ArrayList<>(configuracoes.values());
         return FXCollections.observableArrayList(lc);
     }
 
-    public ObservableList<Utilizador> getVendedores(){
+    public ObservableList<Utilizador> consultarVendedores(){
         List<Utilizador> lv = new ArrayList<>(utilizadores.values().stream().filter(i -> i.getClass().getSimpleName().equals("Vendedor")).collect(toList()));
         return FXCollections.observableArrayList(lv);
     }
 
-    public ObservableList<Utilizador> getFabricantes(){
+    public ObservableList<Utilizador> conssultarFabricantes(){
         List<Utilizador> lv = new ArrayList<>(utilizadores.values().stream().filter(i -> i.getClass().getSimpleName().equals("Fabricante")).collect(toList()));
         return FXCollections.observableArrayList(lv);
     }
-    public ObservableList<Item> getItems(){
+    public ObservableList<Item> cosultarStock(){
         List<Item> li = new ArrayList<>(itens.values());
         return FXCollections.observableArrayList(li);
     }
@@ -167,7 +167,7 @@ public class ConfiguraFacil {
         return FXCollections.observableArrayList(lm);
     }
 
-    public List <Item> getItemPacote(String nome){
+    public List <Item> getItensPacote(String nome){
         return new ArrayList<>(pacotes.values().stream().filter(p -> p.getNome().equals(nome)).collect(Collectors.toList()).get(0).getItens().values());
     }
 
@@ -258,13 +258,13 @@ public class ConfiguraFacil {
         c.removeItem(i);
     }
 
-    public void adicionarNovaConfiguracao(){
+    public void configuracaoCustomizada(){
         configuracoes.put(inUseConfig.getId(), inUseConfig);
     }
 
     public  void encomenda(Item i){ itens.put(i.getId(),i);}
 
-    public  int valida(Configuracao c){
+    public  int validaConfiguracao(Configuracao c){
         switch (c.getEstado()) {
             case "N":
                 c.setEstado("V");
@@ -277,7 +277,7 @@ public class ConfiguraFacil {
         }
     }
 
-    public int produz(){
+    public int produzConfiguracao(){
         List<Configuracao> lc = configuracoes.values().stream().filter(c1 -> c1.getEstado().equals("V")).
             sorted(Comparator.comparing(Configuracao::getData)).filter(this::existeStock).collect(toList());
         Configuracao c;
@@ -300,7 +300,7 @@ public class ConfiguraFacil {
          return c1.getItens().values().stream().noneMatch(i1 -> (i1.getStock() == 0));
     }
 
-    public void optimus_prime(Configuracao c, float orc){
+    public void configuracaoOtima(Configuracao c, float orc){
         float choice = 0;
         float diff_c = 0;
 
