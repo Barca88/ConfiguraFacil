@@ -197,24 +197,39 @@ public class ConfiguraFacil {
         }
     }
 
-    public int checkPacote(Configuracao c){
+    public Pacote checkPacote(Configuracao c){
         List<Pacote> pacotes = pacoteDao.values().stream().collect(toList());
-        int pId = -1;
-        List <Integer> pitens = new ArrayList<>();
+        float desconto, best_deal = 0;
+        float curr_deal;
+        double price;
+        List <Item> pitens = new ArrayList<>();
+        Pacote possivel = null;
+
         for(Pacote p : pacotes){
             for(Item i : c.getItens().values()){
                 if (p.getItens().containsKey(i.getId())){
-                    pitens.add(i.getId());
+                    pitens.add(i);
                 }
+            }
 
-            }
             if(pitens.size() == p.getItens().size()){
-                pId = p.getId();
-                break;
+                desconto = p.getDesconto();
+                price = p.getItens().values().stream().map(Item::getPreco).mapToDouble(t -> t.doubleValue()).sum();
+                curr_deal = (float) (price/desconto)/p.getItens().size();
+
+                if(possivel == null){
+                    possivel = new Pacote(p);
+                    best_deal = curr_deal;
+                }
+                else{
+                    if(curr_deal > best_deal) {possivel = new Pacote(p); best_deal = curr_deal;}
+                }
             }
-            else pitens.removeAll(p.getItens().values().stream().map(i -> i.getId()).collect(toList()));
+
+            pitens.clear();
         }
-        return pId ;
+
+        return possivel;
     }
 
     public void  addItem (Item i, Configuracao c){
@@ -324,14 +339,15 @@ public class ConfiguraFacil {
 
                 for (Item p : p_corpo) {
                     if (orc > p.getPreco()) {
-                        removeSametype(c, p);
-                        addItem(p, c);
-                        choice = p.getPreco();
-                        diff_c = choice - (p.getPreco());
+                        if(incompatibilidades(p,c.getItens()).isEmpty()) {
+                            removeSametype(c, p);
+                            addItem(p, c);
+                            choice = p.getPreco();
+                        }
                     }
                 }
 
-                orc = orc - choice + diff_c;
+                orc = orc - choice;
             }
 
             if (!tipos.contains("Jantes")) {
@@ -339,14 +355,15 @@ public class ConfiguraFacil {
 
                 for (Item p : p_jantes) {
                     if (orc > p.getPreco()) {
-                        removeSametype(c, p);
-                        addItem(p, c);
-                        choice = p.getPreco();
-                        diff_c = choice - (p.getPreco());
+                        if(incompatibilidades(p,c.getItens()).isEmpty()) {
+                            removeSametype(c, p);
+                            addItem(p, c);
+                            choice = p.getPreco();
+                        }
                     }
                 }
 
-                orc = orc - choice + diff_c;
+                orc = orc - choice;
             }
 
             if (!tipos.contains("Pneus")) {
@@ -354,14 +371,15 @@ public class ConfiguraFacil {
 
                 for (Item p : p_pneus) {
                     if (orc > p.getPreco()) {
-                        removeSametype(c, p);
-                        addItem(p, c);
-                        choice = p.getPreco();
-                        diff_c = choice - (p.getPreco());
+                        if(incompatibilidades(p,c.getItens()).isEmpty()) {
+                            removeSametype(c, p);
+                            addItem(p, c);
+                            choice = p.getPreco();
+                        }
                     }
                 }
 
-                orc = orc - choice + diff_c;
+                orc = orc - choice;
             }
 
             if (!tipos.contains("Volante")) {
@@ -369,28 +387,30 @@ public class ConfiguraFacil {
 
                 for (Item p : p_volante) {
                     if (orc > p.getPreco()) {
-                        removeSametype(c, p);
-                        addItem(p, c);
-                        choice = p.getPreco();
-                        diff_c = choice - (p.getPreco());
+                        if(incompatibilidades(p,c.getItens()).isEmpty()) {
+                            removeSametype(c, p);
+                            addItem(p, c);
+                            choice = p.getPreco();
+                        }
                     }
                 }
 
-                orc = orc - choice + diff_c;
+                orc = orc - choice;
             }
 
             if (!tipos.contains("Bancos")) {
                 List<Item> p_bancos = itemDao.values().stream().filter(i -> i.getTipo().equals("Bancos")).collect(toList());
                 for (Item p : p_bancos) {
                     if (orc > p.getPreco()) {
-                        removeSametype(c, p);
-                        addItem(p, c);
-                        choice = p.getPreco();
-                        diff_c = choice - (p.getPreco());
+                        if(incompatibilidades(p,c.getItens()).isEmpty()) {
+                            removeSametype(c, p);
+                            addItem(p, c);
+                            choice = p.getPreco();
+                        }
                     }
                 }
 
-                orc = orc - choice + diff_c;
+                orc = orc - choice;
             }
 
             if (!tipos.contains("Estofos")) {
@@ -398,14 +418,15 @@ public class ConfiguraFacil {
 
                 for (Item p : p_estofos) {
                     if (orc > p.getPreco()) {
-                        removeSametype(c, p);
-                        addItem(p, c);
-                        choice = p.getPreco();
-                        diff_c = choice - (p.getPreco());
+                        if(incompatibilidades(p,c.getItens()).isEmpty()) {
+                            removeSametype(c, p);
+                            addItem(p, c);
+                            choice = p.getPreco();
+                        }
                     }
                 }
 
-                orc = orc - choice + diff_c;
+                orc = orc - choice;
             }
 
         }catch (NullPointerException e){

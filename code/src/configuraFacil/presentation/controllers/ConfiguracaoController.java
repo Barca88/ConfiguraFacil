@@ -50,6 +50,8 @@ public class ConfiguracaoController {
     private ChoiceBox<String>  cbOpcional_5;
     @FXML
     private Label lblPreco;
+    @FXML
+    private Label lblDesconto;
 
     public void init(ConfiguraFacil cfo) {
         cf = cfo;
@@ -110,7 +112,7 @@ public class ConfiguracaoController {
 
     private void itemChanged(ChoiceBox<String> tipo, String old, String newValue) {
         Configuracao c = cf.getInUseConfig();
-
+        Pacote check = null;
         Pacote pacote = cf.getPacotes().stream().filter(i -> i.equals(newValue)).findAny().orElse(null);
         Item item = cf.getItems().stream().filter(i -> i.getNome().equals(newValue)).findAny().orElse(null);
         Item oldItem = cf.getItems().stream().filter(i -> i.getNome().equals(old)).findAny().orElse(null);
@@ -151,15 +153,20 @@ public class ConfiguracaoController {
                 e.getMessage();
         }
 
-        int pac = cf.checkPacote(c);
+        check = cf.checkPacote(c);
         float desconto = 0;
-        if(pac >= 0){
-            desconto = cf.getDesconto(pac);
+        if(pacote == null){
+            if(check != null) {
+                desconto = cf.getDesconto(check.getId());
+                cbPacote.setValue(check.getNome());
+            }
         }
+
 
         preco = cf.price(c.getItens().values().stream().collect(Collectors.toList()),desconto);
 
         lblPreco.setText(Float.toString(preco));
+        lblDesconto.setText(Float.toString(desconto));
     }
 
     private void handleDependencies(List<Item> depend,List<Item> incomp,Item item,Item oldItem,Configuracao c){
@@ -407,7 +414,6 @@ public class ConfiguracaoController {
     }
 
     public void pacoteChanged(){
-        Configuracao c = cf.getInUseConfig();
 
         List<Item> itens = cf.getItemPacote(cbPacote.getValue());
 
