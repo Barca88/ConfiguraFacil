@@ -184,6 +184,7 @@ public class ConfiguracaoDao implements Map<Integer,Configuracao> {
                 ResultSet rs2 = stm.executeQuery();
 
                 if (rs2.next()) { // EXISTE CLIENTE -> METEMOS O ID CERTO
+                    id_Cli = rs2.getInt(1);
                     cliente.setId(id_Cli);
 
                 } else { //NÃO EXISTE CLIENTE -> INSERE NA BD
