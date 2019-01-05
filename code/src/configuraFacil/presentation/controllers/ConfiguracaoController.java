@@ -105,9 +105,9 @@ public class ConfiguracaoController {
             Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             SceneManager sm = new SceneManager(url, window);
             sm.newScene(5, cf);
-        }else if(c.getModelo() == null && c.getCor() == null) AlertBox.alert("Configuração Incompleta!", "Por favor, escolha o Modelo e a Cor do Carro");
-            else if(c.getCor() == null) AlertBox.alert("Configuração Incompleta!", "Por favor, escolha a Cor do Carro");
-                else AlertBox.alert("Configuração Incompleta!", "Por favor, escolha o Modelo do Carro");
+        }else if(c.getModelo() == null && c.getCor() == null) AlertBox.alert("Configuração Incompleta!", "\nPor favor, escolha o Modelo e a Cor do Carro");
+            else if(c.getCor() == null) AlertBox.alert("Configuração Incompleta!", "\nPor favor, escolha a Cor do Carro");
+                else AlertBox.alert("Configuração Incompleta!", "\nPor favor, escolha o Modelo do Carro");
     }
 
     private void itemChanged(ChoiceBox<String> tipo, String old, String newValue) {
@@ -173,7 +173,7 @@ public class ConfiguracaoController {
         List<String> nomesde = depend.stream().map(Item::getNome).collect(Collectors.toList());
         String showd = String.join("\n", nomesde);
 
-        boolean reply = AlertBox.display("O Item tem dependencias\n\n", "Deseja adicionar os seguintes itens:\n" + showd + "\nCom custo o adicional de: " + cf.price(depend, 0) + "?");
+        boolean reply = AlertBox.display("O Item tem dependências!", "\nDeseja adicionar os seguintes itens:\n" + showd + "\nCom custo o adicional de: " + cf.price(depend, 0) + "?");
         if (reply) {
 
             for (Item i : depend) {
@@ -199,7 +199,7 @@ public class ConfiguracaoController {
         String showi = String.join("\n", nomesde);
 
 
-        boolean resp = AlertBox.display("O Item tem incompatibilidades\n\n", "Se adicionar o item, os seguintes items serão removidos:\n\n" + showi);
+        boolean resp = AlertBox.display("O Item tem Incompatibilidades!", "\nSe adicionar o item, os seguintes items serão removidos:\n\n" + showi);
         if (resp) {
 
             for(Item inc: incomp){
@@ -222,7 +222,7 @@ public class ConfiguracaoController {
             List<String> nomes = remove.stream().map(Item::getNome).collect(Collectors.toList());
             String showold_d = String.join("\n", nomes);
 
-            boolean resp = AlertBox.display("Alguns Items são dependentes do item a ser alterado\n\n", "Se o remover, os seguintes items também serão removidos:\n\n" + showold_d);
+            boolean resp = AlertBox.display("Alguns Items são dependentes do item a ser alterado", "\nSe o remover, os seguintes items também serão removidos:\n\n" + showold_d);
             if (resp) {
 
                 for (Item rem : remove) {
