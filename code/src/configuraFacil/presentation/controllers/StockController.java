@@ -1,6 +1,6 @@
 package configuraFacil.presentation.controllers;
 
-import configuraFacil.business.models.items.Item;
+import configuraFacil.business.models.Item;
 import configuraFacil.business.ConfiguraFacil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -45,7 +45,7 @@ public class StockController {
         clnNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         clnQuantidade.setCellValueFactory(new PropertyValueFactory<>("stock"));
         clnPreco.setCellValueFactory(new PropertyValueFactory<>("preco"));
-        tblStock.setItems(cf.getItems());
+        tblStock.setItems(cf.cosultarStock());
     }
 
 
@@ -64,7 +64,7 @@ public class StockController {
         }
     }
 
-    public void handleBtnEncomendar(ActionEvent actionEvent) throws IOException{
+    public void handleBtnAtualizar(ActionEvent actionEvent) throws IOException{
         try{
 
             if(tblStock.getSelectionModel().getSelectedItem() != null) {

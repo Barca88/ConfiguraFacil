@@ -3,7 +3,7 @@ package configuraFacil.presentation.controllers;
 import configuraFacil.business.ConfiguraFacil;
 import configuraFacil.business.models.Configuracao;
 import configuraFacil.business.models.Pacote;
-import configuraFacil.business.models.items.Item;
+import configuraFacil.business.models.Item;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -97,7 +97,7 @@ public class ConfiguracaoController {
     }
 
     public void handleBtnFinalizarAction(ActionEvent actionEvent) throws IOException {
-        Configuracao c = cf.getInUseConfig();
+        Configuracao c = cf.consultarConfiguracao();
         c.setPreco(preco);
 
         if((c.getModelo() != null) && (c.getCor() != null)) {
@@ -111,11 +111,12 @@ public class ConfiguracaoController {
     }
 
     private void itemChanged(ChoiceBox<String> tipo, String old, String newValue) {
-        Configuracao c = cf.getInUseConfig();
         Pacote check = null;
+        Configuracao c = cf.consultarConfiguracao();
+
         Pacote pacote = cf.getPacotes().stream().filter(i -> i.equals(newValue)).findAny().orElse(null);
-        Item item = cf.getItems().stream().filter(i -> i.getNome().equals(newValue)).findAny().orElse(null);
-        Item oldItem = cf.getItems().stream().filter(i -> i.getNome().equals(old)).findAny().orElse(null);
+        Item item = cf.cosultarStock().stream().filter(i -> i.getNome().equals(newValue)).findAny().orElse(null);
+        Item oldItem = cf.cosultarStock().stream().filter(i -> i.getNome().equals(old)).findAny().orElse(null);
 
         List<Item> depend = cf.dependencias(item, c.getItens());
         List<Item> incomp = cf.incompatibilidades(item, c.getItens());
@@ -162,7 +163,6 @@ public class ConfiguracaoController {
             }
         }
 
-
         preco = cf.price(c.getItens().values().stream().collect(Collectors.toList()),desconto);
 
         lblPreco.setText(Float.toString(preco));
@@ -170,11 +170,11 @@ public class ConfiguracaoController {
     }
 
     private void handleDependencies(List<Item> depend,List<Item> incomp,Item item,Item oldItem,Configuracao c){
-        List<String> nomesde = depend.stream().map(i -> i.getNome()).collect(Collectors.toList());
+        List<String> nomesde = depend.stream().map(Item::getNome).collect(Collectors.toList());
         String showd = String.join("\n", nomesde);
 
         boolean reply = AlertBox.display("O Item tem dependencias\n\n", "Deseja adicionar os seguintes itens:\n" + showd + "\nCom custo o adicional de: " + cf.price(depend, 0) + "?");
-        if (reply == true) {
+        if (reply) {
 
             for (Item i : depend) {
                 cf.removeSametype(c, i);
@@ -200,7 +200,7 @@ public class ConfiguracaoController {
 
 
         boolean resp = AlertBox.display("O Item tem incompatibilidades\n\n", "Se adicionar o item, os seguintes items serão removidos:\n\n" + showi);
-        if (resp == true) {
+        if (resp) {
 
             for(Item inc: incomp){
                 cf.removeItem(inc,c);
@@ -219,11 +219,11 @@ public class ConfiguracaoController {
         List<Item> remove = cf.oldDependent(c, newItem);
 
         if(!remove.isEmpty()) {
-            List<String> nomes = remove.stream().map(i -> i.getNome()).collect(Collectors.toList());
+            List<String> nomes = remove.stream().map(Item::getNome).collect(Collectors.toList());
             String showold_d = String.join("\n", nomes);
 
             boolean resp = AlertBox.display("Alguns Items são dependentes do item a ser alterado\n\n", "Se o remover, os seguintes items também serão removidos:\n\n" + showold_d);
-            if (resp == true) {
+            if (resp) {
 
                 for (Item rem : remove) {
                     cf.removeItem(rem, c);
@@ -413,9 +413,11 @@ public class ConfiguracaoController {
         }
     }
 
-    public void pacoteChanged(){
 
-        List<Item> itens = cf.getItemPacote(cbPacote.getValue());
+    public void pacoteChanged(){
+        Configuracao c = cf.consultarConfiguracao();
+
+        List<Item> itens = cf.getItensPacote(cbPacote.getValue());
 
         for(Item item : itens){
             String i_tipo = item.getTipo();

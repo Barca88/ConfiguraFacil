@@ -44,12 +44,12 @@ public class ClienteFormController {
 
 
         //cliente da configuracao
-        cf.getInUseConfig().setCliente(c);
-        cf.getInUseConfig().setVendedor(cf.getLogged());
-        cf.getInUseConfig().setData(LocalDate.now());
+        cf.consultarConfiguracao().setCliente(c);
+        cf.consultarConfiguracao().setVendedor(cf.getLogged());
+        cf.consultarConfiguracao().setData(LocalDate.now());
 
         //adicionar as configuracoes
-        cf.adicionarNovaConfiguracao();
+        cf.configuracaoCustomizada();
 
         URL url = getClass().getResource("../views/vendedor.fxml");
         Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();

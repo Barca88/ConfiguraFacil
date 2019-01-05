@@ -1,4 +1,4 @@
-package configuraFacil.business.models.items;
+package configuraFacil.business.models;
 
 
 import java.util.List;

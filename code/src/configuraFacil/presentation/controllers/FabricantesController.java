@@ -39,7 +39,7 @@ public class FabricantesController {
         clnNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         clnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         clnTelemovel.setCellValueFactory(new PropertyValueFactory<>("tel"));
-        tblFabricante.setItems(cf.getFabricantes());
+        tblFabricante.setItems(cf.conssultarFabricantes());
     }
 
     public void handleBtnBack(ActionEvent actionEvent) throws IOException {

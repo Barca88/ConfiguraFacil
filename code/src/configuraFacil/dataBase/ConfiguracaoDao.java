@@ -3,9 +3,8 @@ package configuraFacil.dataBase;
 
 import configuraFacil.business.models.Cliente;
 import configuraFacil.business.models.Configuracao;
-import configuraFacil.business.models.items.Item;
+import configuraFacil.business.models.Item;
 import configuraFacil.business.models.users.Utilizador;
-import configuraFacil.business.models.users.Vendedor;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

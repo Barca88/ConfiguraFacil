@@ -1,6 +1,5 @@
 package configuraFacil.business.models;
 
-import configuraFacil.business.models.items.Item;
 import configuraFacil.business.models.users.Utilizador;
 
 import java.time.LocalDate;
@@ -143,7 +142,5 @@ public class Configuracao {
             itens.put(0,m);
         if(cor >= 0)
             itens.put(1,c);
-
-
     }
 }

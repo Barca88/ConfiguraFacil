@@ -1,7 +1,7 @@
 package configuraFacil.dataBase;
 
 
-import configuraFacil.business.models.items.Item;
+import configuraFacil.business.models.Item;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

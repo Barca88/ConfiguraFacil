@@ -65,7 +65,7 @@ public class ConfiguracoesController {
         clnOrcamentoConfig.setCellValueFactory(new PropertyValueFactory<>("orcamento"));
         clnPrecoConfig.setCellValueFactory(new PropertyValueFactory<>("preco"));
         clnDataConfig.setCellValueFactory(new PropertyValueFactory<>("data"));
-        tblConfigAdmin.setItems(cf.getConfiguracoes());
+        tblConfigAdmin.setItems(cf.consultarConfiguracoes());
     }
 
     public void handleBtnBack(ActionEvent actionEvent) throws IOException {
@@ -106,7 +106,7 @@ public class ConfiguracoesController {
                 AlertBox.alert("Configuração inválida", "Por favor, selecione uma configuração");
             }else{
                 Configuracao c = tblConfigAdmin.getSelectionModel().getSelectedItem();
-                int validada  = cf.valida(c);
+                int validada  = cf.validaConfiguracao(c);
                 String mensagem = "Configuração " + Integer.toString(validada) + " validade com sucesso";
 
                 if(validada == -2)
@@ -124,7 +124,7 @@ public class ConfiguracoesController {
     }
 
     public void handleBtnProduzir(ActionEvent actionEvent) throws IOException{
-       int produzido = cf.produz();
+       int produzido = cf.produzConfiguracao();
        String mensagem = "Configuração " + Integer.toString(produzido) + " produzida com sucesso";
        if(produzido != -2) {
            initTable();
