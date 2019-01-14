@@ -1,6 +1,6 @@
 # ConfiguraFacil
 
-Este projecto consiste na criação de um sistema que possibilita a compra de um carro passando assim pelo processo de costomização do mesmo. 
+Este projecto consiste na criação de um sistema que possibilita a compra de um carro passando assim pelo processo de customização do mesmo. 
 
 ## Contribuidores
 
@@ -9,3 +9,10 @@ Este projecto consiste na criação de um sistema que possibilita a compra de um
 * a75480 - [Marco Gonçalves](https://github.com/Barca88)
 * a75496 - [Fernando Pereira](https://github.com/Videira59)
 * a75569 - [João Leal](https://github.com/Shaman37)
+
+### Data Base
+
+ * $ systemctl start mariadb.service
+
+ * Open dbeaver
+
