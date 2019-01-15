@@ -10,9 +10,9 @@ Este projecto consiste na criação de um sistema que possibilita a compra de um
 * a75496 - [Fernando Pereira](https://github.com/Videira59)
 * a75569 - [João Leal](https://github.com/Shaman37)
 
-### Data Base
+### Base de Dados
 
  * $ systemctl start mariadb.service
 
- * Open dbeaver
+ * $ dbeaver
 
